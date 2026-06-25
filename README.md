@@ -1,3 +1,5 @@
+<img style="width:100%" alt="Knowledge Graph banner logo" src="https://raw.githubusercontent.com/learning-commons-org/.github/refs/heads/main/assets/agent_skills_hero.jpg" />
+
 # Learning Commons Agent Skills
 
 Instructional agent skills + the evaluations rubrics used to help develop and grade their outputs.
