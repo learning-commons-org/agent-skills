@@ -1,6 +1,6 @@
-# agent-skills
+# Learning Commons Agent Skills
 
-K-12 instructional agent skills + the grading kit that evaluates them.
+Instructional agent skills + the evaluations rubrics used to help develop and grade their outputs.
 
 This repo serves two audiences:
 
