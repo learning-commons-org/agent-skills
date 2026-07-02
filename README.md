@@ -11,6 +11,8 @@ Use cases include:
 * **Lesson planning**: Builds classroom-ready, standards-aligned lesson plans, optionally aligned to a teacher's curriculum.  
 * **Lesson differentiation**: Adapts an existing lesson into tiered versions (below / at / above proficiency-level) and for specific student needs, keeping core content consistent across tiers.
 
+The initial set of skills and evals in this repository was co-developed with [Anthropic](https://www.anthropic.com/). A companion [repository from Anthropic](https://github.com/anthropics/PLACEHOLDER) will be published to accompany this work.
+
 To get started, see [Quick Start](#quick-start) below and the [skills/](skills/) directory for what each skill does.
 
 ## **Repository contents**
