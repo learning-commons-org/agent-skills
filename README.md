@@ -31,7 +31,7 @@ npx skills add learning-commons-org/agent-skills
 
 This installs the skills into any agent runtime that supports the open skills format (e.g. Claude Code, Cursor, Codex).
 
-### 2\. Connect the Knowledge Graph (recommended)
+### 2\. Connect Knowledge Graph (recommended)
 
 The skills are grounded in the Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) via its MCP server — not required, but strongly recommended for accurate, standards- and pedagogy-aligned output. Create an API key in the [Learning Commons Platform](https://platform.learningcommons.org/), then add the server to your agent. For example, in Claude Code:
 
@@ -48,7 +48,7 @@ Prompt your agent with a typical teaching request — the matching skill loads a
 - *"I need a lesson for tomorrow on rounding to the nearest hundred for my 3rd graders."*  
 - *"Differentiate this 6th grade food webs lesson for students below / at / and above proficiency level (find the lesson here: https://www.calacademy.org/educators/lesson-plans/how-stable-is-your-food-web)"*
 
-See [skills/test-prompts.md](skills/test-prompts.md) for more examples.
+See [skills/example-prompts.md](skills/example-prompts.md) for more examples.
 
 ### 4\. Evaluate the output
 
