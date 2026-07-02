@@ -4,7 +4,7 @@
 
 Agent Skills are open, ready-to-use skills that help AI assistants produce high-quality, standards-aligned K-12 teaching materials. Each skill packages the instructions, references, and guardrails an agent needs to reliably complete a teacher workflow — so the same task produces consistent, classroom-ready results.
 
-The skills are developed to be grounded in learning science and leverage the Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph). They are built to be cross-platform and model-agnostic: usable with any agent runtime that supports the open skills format.
+The skills are developed to be grounded in learning science and leverage Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph). They are built to be cross-platform and model-agnostic: usable with any agent runtime that supports the open skills format.
 
 Use cases include:
 
@@ -33,7 +33,7 @@ This installs the skills into any agent runtime that supports the open skills fo
 
 ### 2\. Connect Knowledge Graph (recommended)
 
-The skills are grounded in the Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) via its MCP server — not required, but strongly recommended for accurate, standards- and pedagogy-aligned output. Create an API key in the [Learning Commons Platform](https://platform.learningcommons.org/), then add the server to your agent. For example, in Claude Code:
+The skills are grounded in Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) via its MCP server — not required, but strongly recommended for accurate, standards- and pedagogy-aligned output. Create an API key in the [Learning Commons Platform](https://platform.learningcommons.org/), then add the server to your agent. For example, in Claude Code:
 
 ```shell
 claude mcp add --transport http learning-commons-kg \
@@ -63,7 +63,7 @@ We want to hear from you. For questions or feedback, please [open an issue](http
 **Learn more about our work or partner with us to:**
 
 * Co-develop new skills for K-12 workflows  
-* Get early access to new skills, tools, and the Knowledge Graph  
+* Get early access to new skills, tools, and Knowledge Graph  
 * Receive personalized support from the Learning Commons team
 
 Contact us [here](https://learningcommons.org/contact/?utm_source=github&utm_medium=agent-skills&utm_campaign=partner).

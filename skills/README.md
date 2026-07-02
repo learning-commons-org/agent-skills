@@ -2,7 +2,7 @@
 
 This directory contains Learning Commons' agent skills for K-12 education — each one packages the instructions, references, and guardrails an AI agent needs to reliably complete a specific teaching workflow, like planning a standards-aligned lesson or differentiating it across proficiency levels.
 
-These skills are one part of Learning Commons AI developer tools for education. They are designed to be cross-platform and model-agnostic, and they produce stronger, better-grounded results when paired with the Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) — which supplies the standards, curriculum, learning progressions, and learning science datasets the skills draw on.
+These skills are one part of Learning Commons AI developer tools for education. They are designed to be cross-platform and model-agnostic, and they produce stronger, better-grounded results when paired with Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) — which supplies the standards, curriculum, learning progressions, and learning science datasets the skills draw on.
 
 ## **Available skills**
 
@@ -21,7 +21,7 @@ npx skills add learning-commons-org/agent-skills
 
 ## **How the skills work**
 
-The skills are grounded in the Learning Commons Knowledge Graph through a set of MCP tools that let the agent resolve standards, understand their more granular learning components, trace learning progressions, and find aligned curriculum lessons and common misconceptions. When the Knowledge Graph is unavailable, the skills still run and fall back to the model's general knowledge — but outputs grounded in the Knowledge Graph are more accurate and better aligned to specific state standards.
+The skills are grounded in Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) through a set of MCP tools that let the agent resolve standards, understand their more granular learning components, trace learning progressions, and find aligned curriculum lessons and common misconceptions. When Knowledge Graph is unavailable, the skills still run and fall back to the model's general knowledge — but outputs grounded in Knowledge Graph are more accurate and better aligned to specific state standards.
 
 ## **Pedagogical foundations**
 
