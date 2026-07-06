@@ -25,6 +25,8 @@ To get started, see [Quick Start](#quick-start) below and the [skills/](skills/)
 
 ## **Quick Start**
 
+This quick start guide walks you through getting set up with the Learning Commons skills and MCP server inside a coding agent. It's an easy install and a great way to explore how the skills work. You can also clone this repo and use these skills and the MCP server with an LLM directly through APIs — the route you'd take to build them into your own product experience.
+
 ### 1\. Install the skills
 
 ```shell
