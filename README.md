@@ -37,7 +37,7 @@ This installs the skills into any agent runtime that supports the open skills fo
 
 ### 2\. Connect Knowledge Graph (recommended)
 
-The skills are grounded in Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) via its MCP server — not required, but strongly recommended for accurate, standards- and pedagogy-aligned output. Create an API key in the [Learning Commons Platform](https://platform.learningcommons.org/), then add the server to your agent. For example, in Claude Code:
+The skills are grounded in Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) via its MCP server — not required, but strongly recommended for accurate, standards- and pedagogy-aligned output. Create an API key in the [Learning Commons Platform](https://platform.learningcommons.org/), then add the server to your agent. Knowledge Graph datasets carry various licenses, some tools might be inaccessible for certain users. For example, in Claude Code:
 
 ```shell
 claude mcp add --transport http learning-commons-kg \
