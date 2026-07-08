@@ -39,7 +39,7 @@ You'll have to do some manual setup to use the rubrics, or you can feed them int
 1. Start with a set of lesson materials (you can use the skills in this repo to generate a new set)
 2. Use an LLM and pass the lesson materials and associated rubric CSVs along with an LLM as judge prompt to instruct the model to score the lesson materials as either `0` or `1` against each rubric criterion
 
-You can use this system prompt to set up your LLM as judge:
+You can use this system prompt to set up your LLM as judge (this is the exact system prompt we've used in our evaluation harness):
 
 ```
 You are a rigorous educational content evaluator. Your job is to assess whether
