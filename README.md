@@ -35,6 +35,8 @@ npx skills add learning-commons-org/agent-skills
 
 This installs the skills into any agent runtime that supports the open skills format (e.g. Claude Code, Cursor, Codex).
 
+> **Note for Claude Code:** if your project doesn't have a `.claude/` directory yet, run `mkdir -p .claude` before installing.
+
 ### 2\. Connect Knowledge Graph (recommended)
 
 The skills are grounded in Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) via its MCP server — not required, but strongly recommended for accurate, standards- and pedagogy-aligned output. Create an API key in the [Learning Commons Platform](https://platform.learningcommons.org/), then add the server to your agent. Knowledge Graph datasets carry various licenses, some tools might be inaccessible for certain users. For example, in Claude Code:

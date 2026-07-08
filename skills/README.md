@@ -19,6 +19,8 @@ Each skill folder includes its own instructions (`SKILL.md`). See [example-promp
 npx skills add learning-commons-org/agent-skills
 ```
 
+> **Note for Claude Code:** if your project doesn't have a `.claude/` directory yet, run `mkdir -p .claude` before installing.
+
 ## **How the skills work**
 
 The skills are grounded in Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) through a set of MCP tools that let the agent resolve standards, understand their more granular learning components, trace learning progressions, and find aligned curriculum lessons and common misconceptions. When Knowledge Graph is unavailable, the skills still run and fall back to the model's general knowledge — but outputs grounded in Knowledge Graph are more accurate and better aligned to specific state standards.
