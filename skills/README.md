@@ -15,11 +15,11 @@ Each skill folder includes its own instructions (`SKILL.md`). See [example-promp
 
 ## **Installation**
 
+> **Note for Claude Code:** if your project doesn't have a `.claude/` directory yet, run `mkdir -p .claude` before installing.
+
 ```shell
 npx skills add learning-commons-org/agent-skills
 ```
-
-> **Note for Claude Code:** if your project doesn't have a `.claude/` directory yet, run `mkdir -p .claude` before installing.
 
 ## **How the skills work**
 
