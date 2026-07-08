@@ -47,7 +47,6 @@
 ### Science
 
 - Differentiate this 6th grade food webs lesson for students below / at / and above proficiency level (link here: https://www.calacademy.org/educators/lesson-plans/how-stable-is-your-food-web)
-- Differentiate this 10th grade natural selection lesson for students below / at / and above proficiency level (link here: https://www.biointeractive.org/classroom-resources/activity-natural-selection-and-adaptation)
 
 ### Social studies
 
