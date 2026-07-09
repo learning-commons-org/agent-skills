@@ -35,7 +35,8 @@
 
 ### Math
 
-- Differentiate this 2nd grade addition and subtraction lesson for students below / at / and above proficiency level (link here: https://d1yqpar94jqbqm.cloudfront.net/documents/EM_TEKS_G2_M5_TE_ENG.pdf)
+- Differentiate Illustrative Mathematics grade 2 unit 4 lesson 3 for students below / at / and above proficiency level
+- Differentiate Illustrative Mathematics' 7th grade lesson "Comparing Relationships with Tables" for students below / at / and above proficiency level
 - Differentiate this 6th grade one-step equations lesson for students below / at / and above proficiency level (link here: https://greatminds.org/hubfs/knowledge/resources/math/EM_Basic_Curriculum_Files/Teacher_Editions/G6_TeacherEditions/EM_G6_M4_TeacherEdition.pdf)
 - Differentiate this Algebra 2 transformations of functions lesson for students below / at / and above proficiency level (link here: https://learn.k20center.ou.edu/lesson/295)
 
@@ -47,6 +48,8 @@
 ### Science
 
 - Differentiate this 6th grade food webs lesson for students below / at / and above proficiency level (link here: https://www.calacademy.org/educators/lesson-plans/how-stable-is-your-food-web)
+- Differentiate OpenSciEd's 6th grade unit 2 lesson 3 on thermal energy for students below / at / and above proficiency level
+- Differentiate the OpenSciEd biology lesson "Natural Selection and Adaptation" for students below / at / and above proficiency level
 
 ### Social studies
 
