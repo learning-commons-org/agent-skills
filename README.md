@@ -29,6 +29,8 @@ This quick start guide walks you through getting set up with the Learning Common
 
 ### 1\. Install the skills
 
+> **Note for Claude Code:** if your project doesn't have a `.claude/` directory yet, run `mkdir -p .claude` before installing.
+
 ```shell
 npx skills add learning-commons-org/agent-skills
 ```
