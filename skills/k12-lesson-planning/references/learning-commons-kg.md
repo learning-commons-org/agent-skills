@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Anthropic, PBC
+SPDX-FileCopyrightText: 2026 Learning Commons
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Learning Commons Knowledge Graph — call sequences
 
 Used by `k12-lesson-planning` Step 2 **only when the LC Knowledge Graph tools are available**.
@@ -14,13 +20,21 @@ Resolve the standard with `find_standard_statement`, passing `academicSubject` a
 
 When a returned standard has children, they come back in its `subStandards` array — use whichever is most relevant to the user's request, the standard itself or one of its sub-standards.
 
-From the chosen standard, extract: the verbatim statement text, its `code`, and `caseIdentifierUUID` (store — required for all subsequent calls).
+**Cap at 3 search attempts total.** Results from the wrong grade band or course count as
+a miss — a high-school US History request answered with elementary codes means the search
+terms missed, so spend the remaining attempts with different keywords (the course name,
+the era, the standard family) rather than falling back early. If no usable standard after
+3 calls to `find_standard_statement`, stop searching — proceed with the best-matching
+standard from training knowledge for the grade and topic, and add the partial-coverage
+footer to the lesson plan. Never call `find_curriculum_lessons` to locate a standard.
+
+From the chosen standard, extract: the verbatim statement text, its `code`, and `caseIdentifierUUID` (store — required for all subsequent calls). When the statement has lettered sub-parts, the verbatim quote is the sub-part(s) this lesson targets, with the parent named by code.
 
 ## Mathematics
 
 Call BEFORE drafting. Not calling when connected is a critical failure. Make all calls, extract only what is specified below, then proceed directly to Step 3 — do not summarize findings in chat.
 
-**Available tools:** `find_standard_statement`, `find_standards_progression_from_standard`, `find_misconceptions_for_standard`, `find_learning_components_from_standard`, `list_standards_for_mathematical_practice`, `find_lessons_for_standard`, `find_materials_for_lesson`.
+**Available tools:** `find_standard_statement`, `find_standards_progression_from_standard`, `find_misconceptions_for_standard`, `find_learning_components_from_standard`, `list_standards_for_mathematical_practice`, `find_curriculum_lessons`, `find_materials_for_lesson`.
 
 1. **Standard**: Resolve the standard per *Resolving the standard* above with `academicSubject="Mathematics"`. Use the verbatim statement text exactly as written in the lesson plan's standard callout.
 
@@ -30,7 +44,7 @@ Call BEFORE drafting. Not calling when connected is a critical failure. Make all
 
 4. **Misconceptions**: Call `find_misconceptions_for_standard(caseIdentifierUUID, subject="Mathematics")` → extract: the 3 most relevant misconceptions. For each keep: the student behavior and the teacher move. Strip all IM or EEDI attribution. If no results, draft 3 from training knowledge.
 
-5. **Lesson materials**: Call `find_lessons_for_standard(caseIdentifierUUID, author="Illustrative Mathematics")` → select the single most relevant lesson (grade-level match first). Call `find_materials_for_lesson(lessonIdentifier, materialSource=["lesson", "activity"])` for the lesson overview and activity materials in one call → extract: (a) activity names and sequence, (b) problem types and unknown positions addressed, (c) any explicit discourse moves. Discard full activity narratives and student-facing text — these must not be reproduced verbatim.
+5. **Lesson materials**: Call `find_curriculum_lessons(caseIdentifierUUID=<uuid from step 1>, author="Illustrative Mathematics")` → select the single most relevant lesson (grade-level match first). Call `find_materials_for_lesson(lessonIdentifier, materialSource=["lesson", "activity"])` for the lesson overview and activity materials in one call → extract: (a) activity names and sequence, (b) problem types and unknown positions addressed, (c) any explicit discourse moves. Discard full activity narratives and student-facing text — these must not be reproduced verbatim.
 
 6. **SMPs**: Choose 2–3 from training knowledge. No KG call needed.
 
@@ -64,13 +78,13 @@ Call BEFORE drafting. Not calling when connected is a critical failure. Make all
 
 Call BEFORE drafting. Not calling when connected is a critical failure. Make all calls in sequence, extract only what is specified, then proceed directly to Step 3 — do not summarize findings in chat.
 
-**Available tools:** `find_standard_statement`, `find_lessons_for_standard`, `find_materials_for_lesson`.
+**Available tools:** `find_standard_statement`, `find_curriculum_lessons`, `find_materials_for_lesson`.
 
 Note: `find_learning_components_from_standard` and `find_standards_progression_from_standard` do **not** return data for science standards — do not call them.
 
 1. **Standard**: Resolve the standard per *Resolving the standard* above with `academicSubject="Science"` (the code is an NGSS Performance Expectation, e.g. `MS-LS2-3`, `3-LS1-1`, `HS-PS1-1`). Use the verbatim statement text exactly as written in Section 1.
 
-2. **OpenSciEd unit and lesson**: Call `find_lessons_for_standard(caseIdentifierUUID)` → select the single most relevant lesson (grade-level match first, then closest topic match). Call `find_materials_for_lesson(lessonIdentifier, materialSource=["activity"])` → extract: (a) unit anchoring phenomenon; (b) unit driving question; (c) this lesson's investigative phenomenon or question; (d) this lesson's position in the unit storyline; (e) which SEP(s) and CCC(s) are foregrounded; (f) any specific routines or activity structures used. **Do NOT reproduce OSE student-facing text, investigation prompts, or discussion questions verbatim — these must be rewritten as original content.**
+2. **OpenSciEd unit and lesson**: Call `find_curriculum_lessons(caseIdentifierUUID=<uuid from step 1>, author="OpenSciEd")` → select the single most relevant lesson (grade-level match first, then closest topic match). Call `find_materials_for_lesson(lessonIdentifier, materialSource=["activity"])` → extract: (a) unit anchoring phenomenon; (b) unit driving question; (c) this lesson's investigative phenomenon or question; (d) this lesson's position in the unit storyline; (e) which SEP(s) and CCC(s) are foregrounded; (f) any specific routines or activity structures used. **Do NOT reproduce OSE student-facing text, investigation prompts, or discussion questions verbatim — these must be rewritten as original content.**
 
 **If KG not connected:** draft from best knowledge; add footer: *"Generated without the Learning Commons Knowledge Graph. Standards and OpenSciEd alignment reflect general best practice."*
 

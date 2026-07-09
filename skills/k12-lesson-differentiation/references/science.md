@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Anthropic, PBC
+SPDX-FileCopyrightText: 2026 Learning Commons
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Science — differentiation pedagogy
 
 Loaded by `k12-lesson-differentiation` when the subject is **science**.
@@ -13,12 +19,12 @@ If a lesson was produced or discussed earlier in this conversation, use it direc
 Read the file first. Confirm: grade level, Performance Expectation (PE), anchoring phenomenon, lesson structure and phases, which SEP(s) and CCC(s) are foregrounded. If the file is unreadable on first attempt, surface the error clearly and ask the teacher to re-share. Do NOT silently fabricate a lesson.
 
 **Scenario B2 — Teacher links a source lesson by URL**
-Fetch the URL with the web fetch tool and read its content first (it handles both web pages and PDFs). Then confirm grade level, Performance Expectation (PE), anchoring phenomenon, lesson structure and phases, and foregrounded SEP(s)/CCC(s) exactly as in Scenario B. If the fetch fails or returns unusable content, surface the error clearly and ask the teacher to paste the lesson text or upload the file. Do NOT silently fabricate a lesson.
+Fetch the URL and read its content first. Then confirm grade level, Performance Expectation (PE), anchoring phenomenon, lesson structure and phases, and foregrounded SEP(s)/CCC(s) exactly as in Scenario B. If the fetch fails or returns unusable content, surface the error clearly and ask the teacher to paste the lesson text or upload the file. Do NOT silently fabricate a lesson.
 
 **Fetching the lesson completes Step 1 only — it does NOT replace standards grounding.** Continue to Step 2 — Ground in standards. Skipping Step 2 after a URL fetch is the same critical failure as skipping it for an uploaded lesson.
 
 **Scenario C — No source lesson present**
-Ask ONE question before proceeding:
+Ask before proceeding:
 > "Happy to differentiate. Do you have a specific lesson in mind? You can paste it, share a file, or tell me the grade + topic + standard and I'll work from that."
 
 **Detect OpenSciEd use.** OpenSciEd is confirmed when either:
@@ -80,7 +86,7 @@ Reducing cognitive scope for below-level students — removing a dimension, repl
 **Below-level scaffolds must:**
 - Help students access and make sense of their observations (structured observation prompts, annotated diagrams)
 - Provide a scaffold for moving from observation to a data representation (guided data table, partial model template to populate)
-- Support construction of a CER with a sentence frame — NOT provide the explanation itself
+- Support construction of a CER with a sentence support — NOT provide the explanation itself
 
 **The sensemaking conflict is non-negotiable.** Do not smooth over the cognitive conflict between prior conception and observation for below-level students — help them name it: *"I thought ____ but I observed ____. Now I think ____."*
 
@@ -106,7 +112,7 @@ Failure modes to avoid:
 Acceptable scaffolds:
 
 - ✓ **Guiding/analysis questions** that sequence observation → connection → meaning: *"What changed? What stayed the same? What do you think caused that?"*
-- ✓ **Sentence frames for CER**: *"I claim ____. My evidence is ____. This supports my claim because ____."*
+- ✓ **Sentence supports for CER**: *"I claim ____. My evidence is ____. This supports my claim because ____."*
 - ✓ **Partial model templates** — a structured diagram students populate, not a completed diagram they label.
 - ✓ **Vocabulary support** — word banks or brief glossaries at the top of the task (header-level). Include everyday-language definition.
 - ✓ **Structured observation sheet** with explicit prompts (*"Draw what you see. Label any changes. Circle anything unexpected."*)
@@ -119,7 +125,7 @@ Acceptable scaffolds:
 
 | Type | Counts toward cap? |
 |---|:-:|
-| Embedded — printed on every problem or task (organizer, sentence frame, hint text) | YES |
+| Embedded — printed on every problem or task (organizer, sentence support, hint text) | YES |
 | Header-level features — vocabulary box, CER frame at top of worksheet | NO |
 | Teacher-side tools — support stations available on request, conferring prompts | NO |
 
@@ -140,7 +146,7 @@ Pick a primary scaffold first. Only add a second if it contributes a genuinely d
 **If OSE-confirmed, three additional elements are non-negotiable across all tiers:**
 - **Consensus model** — all tiers contribute to and revise the class consensus model. Below: partial model template. At: blank model. Above: extend the model to account for an additional case.
 - **Driving question board** — all tiers add to and reference the DQB.
-- **CER structure** — consistent across tiers; only the frame support differs (Below: sentence frame. At: prompt only. Above: counter-argument + rebuttal added.)
+- **CER structure** — consistent across tiers; only the frame support differs (Below: sentence support. At: prompt only. Above: counter-argument + rebuttal added.)
 
 In addition: **each student worksheet ends with one reflective prompt, present on all three tiers:** *"What are you still wondering about?"* Store it as `shared.reflect_prompt` and name it in each tier's **Worksheet tasks** line in the lesson plan — a printed task the plan never mentions is a failure.
 
@@ -187,13 +193,13 @@ Reject if: more of the same investigation, a longer worksheet, or a notation swa
 
 **If tier scope is not specified, ask ONE combined question before generating:**
 
-> "I'll differentiate this into below / at / above grade-level tiers — are those the right three? And any specific learner needs I should know about (ELL levels, IEP goal areas)? If not, I'll apply UDL defaults (sentence frames and vocabulary support across all tiers)."
+> "I'll differentiate this into below / at / above grade-level tiers — are those the right three? And any specific learner needs I should know about (ELL levels, IEP goal areas)? If not, I'll apply UDL defaults (sentence supports and vocabulary support across all tiers)."
 
 If scope is already specified, apply defaults silently and proceed.
 
 **Defaults applied silently when not specified:**
 - Tiers: below / at / above
-- UDL features: CER sentence frames and vocabulary glossary in **all three** student worksheets (not Below only — rubric O5)
+- UDL features: CER sentence supports and vocabulary glossary in **all three** student worksheets (not Below only — rubric O5)
 - Scope: full lesson (all phases + exit ticket / CER task)
 - OSE structure: applied if OSE-confirmed; not applied otherwise
 
@@ -203,7 +209,7 @@ If scope is already specified, apply defaults silently and proceed.
 - Can produce an observation but needs structure to connect it to a model or CER independently
 - The proximate conceptual prerequisite (identified per R3) may not be secure
 
-Design default below-level scaffolding accordingly: structured observation prompts → misconception-surfacing sentence frame → CER frame. Do not pre-scaffold the explanation content.
+Design default below-level scaffolding accordingly: structured observation prompts → misconception-surfacing sentence support → CER frame. Do not pre-scaffold the explanation content.
 
 If the inferred gap is wider than one within-band conceptual step, add a flag to the Next Steps block that Tier 2/3 support may be needed beyond lesson-level differentiation.
 
@@ -231,7 +237,7 @@ length budget — cut phase or tier section prose first.**
 
 **PE:** [verbatim]  **Grade:** [X]  **Duration:** [X min]
 **Anchoring Phenomenon:** [one sentence]
-*Learner needs: [If no specific needs were provided: "UDL defaults applied — CER sentence frames and vocabulary support across all tiers." If learner needs were specified, describe them here instead.]*
+*Learner needs: [If no specific needs were provided: "UDL defaults applied — CER sentence supports and vocabulary support across all tiers." If learner needs were specified, describe them here instead.]*
 
 ## Learning Objective
 [One statement covering all tiers. For OSE-confirmed: "Students will figure out [DCI element] by using [SEP] to make sense of [phenomenon]."]
@@ -299,7 +305,7 @@ paragraph.]
 
 ### Document content — worksheets (`id: worksheet_below` / `worksheet_at` / `worksheet_above`)
 
-No teacher notes, look-fors, or rationale in any worksheet. Vocabulary, CER sentence frames,
+No teacher notes, look-fors, or rationale in any worksheet. Vocabulary, CER sentence supports,
 the "If you finish early" anchor task, and the reflective prompt are pulled from `shared` so
 they are identical across tiers by construction.
 
@@ -309,7 +315,7 @@ Reasoning*; the sensemaking frame is introduced as *"Check your thinking"*.
 
 | Level | Worksheet features |
 |---|---|
-| Below | Same phenomenon and investigation as At. Scaffolds embedded per R4 with fade pattern per R7. Structured observation sheet, partial model template, CER sentence frame at header level. |
+| Below | Same phenomenon and investigation as At. Scaffolds embedded per R4 with fade pattern per R7. Structured observation sheet, partial model template, CER sentence support at header level. |
 | At | Source worksheet preserved or lightly reformatted. Standard CER prompt. |
 | Above | Same investigation + extension prompt per R7. CER + counter-argument / rebuttal prompt. |
 
@@ -321,7 +327,7 @@ Reasoning*; the sensemaking frame is introduced as *"Check your thinking"*.
 ## Vocabulary
 [`from_shared: vocabulary` — the renderer formats the term–meaning pairs itself; never type a pipe-character table into a `text` field]
 
-**You can use these sentence frames:**
+**You can use these sentence supports:**
 - "I claim ____. My evidence is ____. This supports my claim because ____."
 - "I thought ____ but I observed ____. Now I think ____."
 
@@ -329,7 +335,7 @@ Reasoning*; the sensemaking frame is introduced as *"Check your thinking"*.
 
 [Tasks pulled ONE AT A TIME, each with its scaffold directly above it — per task N: at most
 ONE scaffold block (Below only, "For Task N — ...", per R4/R7 fade), then
-`{"type": "from_shared", "key": "problems", "only": N}`. Investigation/CER task text
+`{"type": "from_shared", "key": "tN", "label": "N"} followed by a workspace block`. Investigation/CER task text
 identical on all three tiers; never re-typed. Writing space after each task is automatic —
 do not add answer boxes for tasks.]
 [Tier-only add-ons (e.g. Above "Go further" extension) as their own headed sections]
@@ -350,7 +356,7 @@ do not add answer boxes for tasks.]
 - `shared.subject`: `"Science"`
 - `shared.standard_code` / `shared.standard_text`: the Performance Expectation, verbatim
 - `shared.anchor_task`: the anchoring phenomenon
-- `shared.problems[]`: the investigation and CER tasks shared by ALL tiers (with `difficulty`)
-- `shared.sentence_frames[]`: CER frames
+- `shared.t1`..`tN`: the investigation and CER tasks shared by ALL tiers, one task per key — faceted {teacher: "the difficulty and what to watch for, as a plain sentence", student: <the task>}
+- `shared.sentence_frames`: CER frames as plain text with blanks sized for handwriting, placed with the task's writing space
 - Teacher document: **integrated differentiated lesson plan** (organized by phase), max 5 pages; worksheets max 2 pages each
 - **Copyright:** do NOT reproduce OpenSciEd (OSE) student-facing text verbatim — this applies to investigation instructions, phenomenon descriptions, and CER prompts drawn from OSE materials.

@@ -1,8 +1,12 @@
+# Copyright 2026 Anthropic, PBC
+# Copyright 2026 Learning Commons
+# SPDX-License-Identifier: Apache-2.0
+
 """Shared-content helpers used by all artifact renderers.
 
-The master lesson JSON has a `shared` block holding every piece of content that appears in more
+The material-source JSON has a `shared` block holding every piece of content that appears in more
 than one artifact (standard, anchor task, problems, exit ticket, look-fors, vocabulary,
-misconceptions, sentence frames). Renderers expand it via `expand_from_shared`, so shared
+misconceptions, sentence supports). Renderers expand it via `expand_from_shared`, so shared
 content is written once and can never drift between artifacts.
 """
 from __future__ import annotations
@@ -44,6 +48,20 @@ _BULLET_LINE = re.compile(r"^\s*(?:[•▪‣◦]|[-–])\s+")
 # preserve single newlines as line breaks.
 _ENUM_MIDPROSE = re.compile(r"(?<=[.!?:;])[ \t]+(?=\((?:[a-h]|\d{1,2})\)\s)")
 
+# Standards bodies write sub-parts as "A. Describe ... B. Describe ..." mid-prose; a verbatim
+# standard then renders as a wall of text. Break before each capital-letter marker -- but only
+# when the text carries a real enumeration (both "A." and "B." present after sentence ends),
+# so initials like "Emmett J. Scott" never trigger it.
+_CAP_MARKER = re.compile(r"(?<=[.?])[ \t]+(?=([A-H])\.\s+[A-Z])")
+
+
+def _repair_cap_subparts(text: str) -> str:
+    letters = {m.group(1) for m in _CAP_MARKER.finditer(text)}
+    if not {"A", "B"} <= letters:
+        return text
+    return _CAP_MARKER.sub("\n", text)
+
+
 
 def _repair_enum_breaks(blk: dict) -> list[dict]:
     """Put mid-prose enumerated sub-parts ('(a) …', '(2) …') on their own lines."""
@@ -55,7 +73,7 @@ def _repair_enum_breaks(blk: dict) -> list[dict]:
                      left=[rb for b in blk.get("left", []) for rb in _repair_enum_breaks(b)],
                      right=[rb for b in blk.get("right", []) for rb in _repair_enum_breaks(b)])]
     if blk.get("type") in ("paragraph", "labeled", "callout") and isinstance(blk.get("text"), str):
-        fixed = _ENUM_MIDPROSE.sub("\n", blk["text"])
+        fixed = _repair_cap_subparts(_ENUM_MIDPROSE.sub("\n", blk["text"]))
         if fixed != blk["text"]:
             return [dict(blk, text=fixed)]
     return [blk]
@@ -214,176 +232,137 @@ def _doc_text(sections: list[dict]) -> str:
     return "\n".join(parts)
 
 
-def _bul(items):
-    return {"type": "bullets", "items": items}
+
+# Keys in `shared` that are document/identity metadata, never expanded as content blocks.
+_IDENTITY_KEYS = {"grade", "subject", "duration", "curriculum", "standard_code",
+                  "standard_text", "prerequisite_standard", "smps"}
 
 
-_TASK_LEAD = re.compile(r"\s*\**\s*(task|problem|question)\s*\d", re.IGNORECASE)
-_TASK_TITLE = re.compile(
-    r"^\s*((?:task|problem|question)\s*\d+\s*(?:[—–-]\s*[^.:!?\n]{1,60})?[.:]?)[ \t]*",
-    re.IGNORECASE)
+def _is_block(v) -> bool:
+    return isinstance(v, dict) and ("type" in v or "blocks" in v)
 
 
-def _task_prefix(i: int, p: dict) -> str:
-    """Number a task — unless its text already starts with 'Task N'/'Problem N', which
-    would render as the double-numbered '1. Task 1 — …'."""
-    return "" if _TASK_LEAD.match(str(p.get("text", ""))) else f"**{i}.** "
+def _as_blocks(v) -> list[dict]:
+    """Coerce a shared-registry value into renderer blocks. Accepts a block dict, a list of
+    block dicts, a typeless dict carrying the text/label/items field shapes (the schema's
+    stable contract — a `{label, text}` value renders as a labeled block, never as its
+    Python repr), or anything else (-> a single paragraph)."""
+    if v is None or v == "":
+        return []
+    if _is_block(v):
+        return [v]
+    if isinstance(v, dict) and v.get("items"):
+        return [{"type": "list", **{k: v[k] for k in ("label", "items") if k in v}}]
+    if isinstance(v, dict) and v.get("text"):
+        btype = "labeled" if v.get("label") else "paragraph"
+        return [{"type": btype, **{k: v[k] for k in ("label", "text") if k in v}}]
+    if isinstance(v, list) and v and all(_is_block(x) for x in v):
+        return list(v)
+    if isinstance(v, list):
+        return [{"type": "list", "items": [str(x) for x in v]}]
+    return [{"type": "paragraph", "text": str(v)}]
 
 
-def _bold_task_lead(text: str) -> str:
-    """Bold a 'Task N — Title.' lead so tasks carry the same visual weight as the labeled
-    blocks around them. No-op when the lead is already bold or absent. Newlines after the
-    title are preserved — they are the boundary between the title line and the body."""
-    m = _TASK_TITLE.match(text)
-    if m and "**" not in m.group(1):
-        rest = text[m.end():]
-        sep = "" if rest.startswith("\n") else "\n" if rest else ""
-        return f"**{m.group(1).strip()}**{sep}{rest}"
-    return text
+def _facet_text(v) -> str:
+    """Flatten a plain facet (string / paragraph / list blocks) to text, or '' if it
+    contains richer blocks that should render as-is."""
+    blocks = _as_blocks(v)
+    if not blocks or not all(b.get("type") in ("paragraph", "list") for b in blocks):
+        return ""
+    return "\n".join(b.get("text", "") if b.get("type") == "paragraph"
+                     else "\n".join(f"- {it}" for it in b.get("items", []))
+                     for b in blocks)
 
 
-def coerce_shared(shared: dict) -> dict:
-    """Tolerate slightly-off shapes (strings where dicts/lists are expected) so a render never
-    fails on a minor schema deviation."""
-    s = dict(shared or {})
-    et = s.get("exit_ticket")
-    if isinstance(et, str):
-        s["exit_ticket"] = {"prompt": et, "buckets": ["Got it", "Almost there", "Needs re-teaching"]}
-    if isinstance(s.get("anchor_task"), dict):
-        s["anchor_task"] = s["anchor_task"].get("text") or s["anchor_task"].get("prompt") or ""
-    for key, field in (("problems", "text"), ("vocabulary", "term"),
-                       ("look_fors", "name"), ("misconceptions", "what"),
-                       ("sentence_frames", None)):
-        val = s.get(key)
-        if isinstance(val, list):
-            fixed = []
-            for item in val:
-                if isinstance(item, dict) or field is None and isinstance(item, str):
-                    fixed.append(item)
-                elif isinstance(item, str) and field:
-                    fixed.append({field: item})
-                elif isinstance(item, dict) and field is None:
-                    fixed.append(str(item))
-            s[key] = fixed
-        elif isinstance(val, str) and val:
-            s[key] = [val] if field is None else [{field: val}]
-    return s
+def _faceted(val: dict, audience: str) -> list[dict]:
+    """Expand a {teacher?, student?, stimulus?} value.
+
+    Student pages: stimulus + student facet only — teacher script never reaches the worksheet,
+    and a null/absent student facet renders nothing (so oral/teacher-led tasks leave no trace).
+
+    Teacher pages: stimulus + teacher facet as plain script, then the
+    student facet as ONE quoted "Students see" line — the teacher reads their own script and
+    the exact prompt students will work from, the way a printed teacher edition shows both.
+    Neither facet is a callout: callouts are reserved for the few moments a teacher must not
+    miss, and a page where every task is boxed highlights nothing."""
+    out: list[dict] = list(_as_blocks(val.get("stimulus")))
+    if audience == "teacher":
+        t_blocks = _as_blocks(val.get("teacher"))
+        if len(t_blocks) == 1 and t_blocks[0].get("type") == "list":
+            # A list-form script renders as a real list — one glanceable move per line —
+            # not a paragraph with dash-prefixed lines.
+            out.append(t_blocks[0])
+        else:
+            t = _facet_text(val.get("teacher"))
+            if t:
+                out.append({"type": "instructions", "text": t})
+            else:
+                out.extend(t_blocks)
+        s = _facet_text(val.get("student"))
+        if s:
+            out.append({"type": "labeled", "label": "Students see", "text": s})
+        else:
+            out.extend(_as_blocks(val.get("student")))
+    else:
+        out.extend(_as_blocks(val.get("student")))
+    return out
 
 
 def expand_from_shared(key: str, shared: dict, audience: str = "teacher",
                        blk: dict | None = None) -> list[dict]:
     """Expand a `{"type": "from_shared", "key": ...}` block into plain renderer blocks.
 
-    audience: "teacher" (lesson plan / observation) or "student" (worksheet) — controls wording.
-    blk: the original from_shared block, for option keys (e.g. problems' "only").
+    The registry is freeform: any key the model registered in `shared` resolves the same way.
+    The only special case is `standard`, which is stored under `standard_code`/`standard_text`
+    rather than a single key.
+
+    audience: "teacher" (lesson plan / observation) or "student" (worksheet).
+    blk: the originating from_shared block — carries an optional `label` for numbered tasks.
     """
-    shared = coerce_shared(shared)
+    shared = dict(shared or {})
     if key == "standard":
-        # Stored as standard_code/standard_text, not under a "standard" key — must be
-        # resolved BEFORE the generic empty-value guard below, which silently dropped
-        # the target-standard callout from every document that requested it.
         if not (shared.get("standard_text") or shared.get("standard_code")):
             return []
         return [{"type": "callout", "kind": "special",
-                 "label": f"{shared.get('standard_code', '')} — Target Standard".strip(" —"),
+                 "label": f"{shared.get('standard_code', '')} — Target standard".strip(" —"),
                  "text": shared.get("standard_text", "")}]
+
     val = shared.get(key)
-    if not val:
+    if val is None or val == "" or val == []:
         return []
+    if key in _IDENTITY_KEYS:
+        return [{"type": "paragraph", "text": str(val)}]
 
-    if key == "anchor_task":
-        label = "Anchor task" if audience == "teacher" else "Try this together"
-        return [{"type": "callout", "kind": "student-task", "label": label, "text": str(val)}]
+    if isinstance(val, dict) and not _is_block(val) and (
+            "teacher" in val or "student" in val or "stimulus" in val):
+        out = _faceted(val, audience)
+    else:
+        out = _as_blocks(val)
 
-    if key == "vocabulary":
-        # Headerless two-column table — the table itself is the visual marker for "this is a
-        # vocab list" (first column bolds automatically). Short lists stay as bullets.
-        if len(val) >= 5:
-            return [{"type": "table",
-                     "rows": [[v.get("term", ""), v.get("definition", "")] for v in val]}]
-        return [_bul([f"**{v.get('term', '')}** — {v.get('definition', '')}" for v in val])]
-
-    if key == "misconceptions":
-        return [{"type": "table",
-                 "headers": ["What students do", "Why it happens", "Teacher move"],
-                 "rows": [[m.get("what", ""), m.get("why", ""), m.get("move", "")] for m in val]}]
-
-    if key == "look_fors":
-        return [_bul([f"**{lf.get('name', '')}** — {lf.get('what_it_means', '')} "
-                      f"*Teacher move: {lf.get('teacher_move', '')}*" for lf in val])]
-
-    if key == "sentence_frames":
-        return [_bul([f"*{s}*" for s in val])]
-
-    if key == "exit_ticket":
-        blocks = [{"type": "callout", "kind": "student-task",
-                   "label": "Exit ticket" if audience == "teacher" else "",
-                   "text": val.get("prompt", "")}]
-        if audience == "teacher" and val.get("buckets"):
-            # Buckets may be plain labels ("Got it") or dicts with explicit sort criteria
-            # ({"label": ..., "criteria": ...}) — render criteria when present.
-            blocks.append({"type": "h3", "text": "Sort student work"})
-            blocks.append({"type": "cards", "items": [
-                ({"title": b.get("label", ""),
-                  "text": b.get("criteria") or b.get("description") or ""}
-                 if isinstance(b, dict) else {"title": str(b), "text": ""})
-                for b in val["buckets"]]})
-        return blocks
-
-    if key == "problems":
-        letters = "ABCDEF"
-        sel = list(enumerate(val, 1))
-        only = (blk or {}).get("only")
-        if only:  # {"type": "from_shared", "key": "problems", "only": 2} → just task 2
-            # Tolerate malformed values ("1-2", "Task 2") — fall back to the whole set
-            # rather than crashing the render on a minor schema deviation.
-            try:
-                wanted = {int(x) for x in (only if isinstance(only, (list, tuple)) else [only])}
-            except (TypeError, ValueError):
-                wanted = None
-            if wanted:
-                sel = [(i, p) for i, p in sel if i in wanted]
-        if audience == "teacher":
-            # Ordered list only when showing the full set 1..N — a subset via `only` must
-            # keep the original numbers so the teacher plan and student worksheet agree.
-            indices = [i for i, _ in sel]
-            full_set = indices == list(range(1, len(indices) + 1))
-            items = []
-            for i, p in sel:
-                tag = f" *({p['difficulty']})*" if p.get("difficulty") else ""
-                choices = p.get("choices") or []
-                ch = ("  " + "  ".join(f"**{letters[j]})** {c}" for j, c in enumerate(choices[:6]))
-                      if choices else "")
-                prefix = "" if full_set else _task_prefix(i, p)
-                items.append(_bold_task_lead(f"{prefix}{p.get('text', '')}") + f"{tag}{ch}")
-            if full_set:
-                return [{"type": "list", "ordered": True, "items": items}]
-            return [_bul(items)]
-        # Student worksheets: each task is its own block group with writing space after it
-        # (grade-banded by the renderer), so students always have room to answer — and a
-        # tier document can interleave scaffolds using "only".
-        blocks = []
-        for i, p in sel:
-            group: list[dict] = [{"type": "paragraph",
-                                  "text": _bold_task_lead(
-                                      f"{_task_prefix(i, p)}{p.get('text', '')}")}]
-            choices = p.get("choices") or []
-            if choices:
-                group.append(_bul([f"**{letters[j]})**  {c}" for j, c in enumerate(choices[:6])]))
-            space: dict = {"type": "answer_box"}
-            if p.get("work_space_pt"):
-                space["height_pt"] = p["work_space_pt"]
-            elif choices:
-                space["height_pt"] = 60  # choices carry the answer; space is for showing work
-            group.append(space)
-            blocks.append({"type": "group", "blocks": group})
-        return blocks
-
-    return [{"type": "paragraph", "text": str(val)}]
+    # `{type: from_shared, key: p1, label: "1"}` — fold the label into the first text-bearing
+    # block so a numbered prompt renders on one line, not an orphan number above a paragraph.
+    # A label must never render alone. Dispatch on the first block's FIELDS, not its
+    # type name — type names change (callout -> instructions broke the old version of
+    # this); the text/label/items field shapes are the schema's stable contract.
+    label = (blk or {}).get("label")
+    if label and out:
+        first = out[0]
+        if first.get("label"):
+            out[0] = {**first, "label": f"{label}. {first['label']}"}
+        elif first.get("text"):
+            out[0] = {"type": "labeled", "label": str(label), "text": first["text"]}
+        elif first.get("items"):
+            items = list(first["items"])
+            out[0] = {"type": "labeled", "label": str(label), "text": str(items[0])}
+            if items[1:]:
+                out.insert(1, {**first, "items": items[1:]})
+        else:
+            out.insert(0, {"type": "labeled", "label": str(label), "text": ""})
+    return out
 
 
 def expand_blocks(blocks: list, shared: dict, audience: str = "teacher") -> list[dict]:
-    """Replace any from_shared blocks in a block list (recursing into columns)."""
+    """Replace any from_shared blocks in a block list (recursing into columns and groups)."""
     out: list[dict] = []
     for blk in blocks or []:
         btype = blk.get("type")
@@ -393,6 +372,8 @@ def expand_blocks(blocks: list, shared: dict, audience: str = "teacher") -> list
             out.append({"type": "columns",
                         "left": expand_blocks(blk.get("left", []), shared, audience),
                         "right": expand_blocks(blk.get("right", []), shared, audience)})
+        elif btype == "group":
+            out.append({**blk, "blocks": expand_blocks(blk.get("blocks", []), shared, audience)})
         else:
             out.append(blk)
     return out
@@ -489,7 +470,12 @@ DEFAULT_THEME = {
 HEX = re.compile(r"^#[0-9A-Fa-f]{3,8}$")
 
 # Legacy block-type names -> canonical names. Keeps existing lesson JSONs rendering.
-ALIASES = {"subheading": "h3", "bullets": "list", "answer_box": "workspace"}
+ALIASES = {"subheading": "h3", "bullets": "list", "answer_box": "workspace",
+           "data_table": "table",
+           # frame_bank retired as a component: legacy JSON renders as a plain
+           # labeled list — sentence supports are ordinary text the model
+           # composes, not a boxed special.
+           "frame_bank": "list"}
 
 
 def btype(blk: dict) -> str:
@@ -662,9 +648,12 @@ def md_tokens(text) -> list:
 
 def table_row_height(blk: dict, theme: Theme, *, full_blank: bool) -> float:
     """Minimum height (pt) for a table row containing empty writing-space cells.
-    Honors explicit empty_row_height_pt; falls back to grade band for student docs."""
+    Honors explicit empty_row_height_pt / row_height_pt (both names are used by
+    models; reading only one silently dropped the other in docx); falls back to
+    grade band for student docs."""
     try:
-        explicit = float(blk.get("empty_row_height_pt", 0) or 0)
+        explicit = float(blk.get("empty_row_height_pt")
+                         or blk.get("row_height_pt") or 0)
     except (TypeError, ValueError):
         explicit = 0.0
     band = theme.answer_row
@@ -679,7 +668,7 @@ def preamble_blocks(data: dict) -> list[dict]:
     and the first section. Shared by both formats so the preamble can never drift."""
     blocks: list[dict] = []
     if data.get("standard_text"):
-        label = f"{data.get('standard_code', '')} — Target Standard".strip(" —")
+        label = f"{data.get('standard_code', '')} — Target standard".strip(" —")
         blocks.append({"type": "callout", "kind": "special", "label": label,
                        "text": data["standard_text"]})
     if data.get("prerequisite_standard"):

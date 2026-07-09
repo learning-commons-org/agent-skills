@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Anthropic, PBC
+SPDX-FileCopyrightText: 2026 Learning Commons
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # ELA — differentiation pedagogy
 
 Loaded by `k12-lesson-differentiation` when the subject is **ela**.
@@ -13,12 +19,12 @@ If a lesson was produced or discussed earlier in this conversation, use it direc
 Read the file first. Confirm: grade level, ELA strand (reading, writing, or combined), standard, learning objective, and lesson structure. Also identify the text(s) used if present. If the file is unreadable on first attempt, surface the error clearly and ask the teacher to re-share. Do NOT silently fabricate a lesson.
 
 **Scenario B2 — Teacher links a source lesson by URL**
-Fetch the URL with the web fetch tool and read its content first (it handles both web pages and PDFs). Then confirm grade level, ELA strand, standard, learning objective, lesson structure, and text(s) used exactly as in Scenario B. If the fetch fails or returns unusable content, surface the error clearly and ask the teacher to paste the lesson text or upload the file. Do NOT silently fabricate a lesson.
+Fetch the URL and read its content first. Then confirm grade level, ELA strand, standard, learning objective, lesson structure, and text(s) used exactly as in Scenario B. If the fetch fails or returns unusable content, surface the error clearly and ask the teacher to paste the lesson text or upload the file. Do NOT silently fabricate a lesson.
 
 **Fetching the lesson completes Step 1 only — it does NOT replace standards grounding.** Continue to Step 2 — Ground in standards. Skipping Step 2 after a URL fetch is the same critical failure as skipping it for an uploaded lesson.
 
 **Scenario C — No source lesson present**
-Ask ONE question before proceeding:
+Ask before proceeding:
 > "Happy to differentiate. Do you have a specific lesson in mind? You can paste it, share a file, or tell me the grade + strand (reading, writing, or both) + standard and I'll work from that."
 
 ---
@@ -63,7 +69,7 @@ The tiers map to a progression from supported access to independent analysis:
 
 | Tier | Cognitive entry point |
 |---|---|
-| Below | Supported access → scaffolded production. Student works with the grade-level text using chunked reading, pre-taught vocabulary, annotation guides, and sentence frames to reach the task. |
+| Below | Supported access → scaffolded production. Student works with the grade-level text using chunked reading, pre-taught vocabulary, annotation guides, and sentence supports to reach the task. |
 | At | Standard engagement. Student reads the grade-level text and completes the task as designed. |
 | Above | Independent analysis / synthesis. Student reads the grade-level text and moves beyond retrieval to author's craft, evaluation, cross-text connection, or generative production. |
 
@@ -90,7 +96,7 @@ Do not include this flag for grades 6–12 unless there is a specific signal of 
 
 ### R4 — Below-level scaffolds
 
-**Scaffolds support thinking without revealing answers. Use sentence frames, graphic organizers, annotation cues, and vocabulary supports. NEVER answer-revealing hints. NEVER simplified content substitutes.**
+**Scaffolds support thinking without revealing answers. Use sentence supports, graphic organizers, annotation cues, and vocabulary supports. NEVER answer-revealing hints. NEVER simplified content substitutes.**
 
 Failure modes to avoid:
 
@@ -104,7 +110,7 @@ Acceptable scaffolds:
 
 - ✓ Chunked reading with guided annotation cues: "As you read this paragraph, mark: the main idea (circle), one piece of evidence (underline), one word you don't know (?)"
 - ✓ Vocabulary support: 3–5 pre-taught key terms, defined in student-friendly language, available during reading and writing.
-- ✓ Sentence frames that structure thinking without completing it: "The author uses ______ to show ______." / "My claim is ______. One reason is ______."
+- ✓ Sentence supports that structure thinking without completing it: "The author uses ______ to show ______." / "My claim is ______. One reason is ______."
 - ✓ Graphic organizers matched to the literacy task (see table below).
 - ✓ Read-aloud or partner reading permission (teacher-side, not embedded in worksheet) — appropriate as an access bridge for students with decoding gaps who are receiving phonics intervention separately. Not a substitute for that intervention. See R3.5.
 - ✓ Reduced number of text evidence examples required — while preserving the task type (e.g., find 1 example instead of 3, not switch to a different task type).
@@ -134,8 +140,8 @@ The test: does the scaffold leave the intellectual work to the student, or does 
 
 | Type | Counts toward cap? |
 |---|:-:|
-| Embedded — printed on every task (organizer, sentence frame, annotation cue) | YES |
-| Header-level features — vocabulary box, sentence frames at top of page | NO |
+| Embedded — printed on every task (organizer, sentence support, annotation cue) | YES |
+| Header-level features — vocabulary box, sentence supports at top of page | NO |
 | Teacher-side supports — read-aloud permission, conferring prompts, manipulatives | NO |
 
 **Pick a primary scaffold first.** Only add a second if it contributes a genuinely different mode (e.g., visual organizer + linguistic frame). If the second scaffold asks the student to do the same mental work as the primary, drop it.
@@ -205,13 +211,13 @@ If only one meaningful extension fits, include only that one.
 
 **If tier scope is not specified, ask ONE combined question before generating:**
 
-> "I'll differentiate this into below / at / above grade-level tiers — are those the right three? And any specific learner needs I should know about (ELL levels, IEP goals)? If not, I'll apply UDL defaults (sentence frames and vocabulary support across all tiers)."
+> "I'll differentiate this into below / at / above grade-level tiers — are those the right three? And any specific learner needs I should know about (ELL levels, IEP goals)? If not, I'll apply UDL defaults (sentence supports and vocabulary support across all tiers)."
 
 If scope is already specified, apply defaults silently and proceed.
 
 **Defaults applied silently when not specified:**
 - Tiers: below / at / above
-- UDL features: sentence frames and vocabulary glossary in **all three** student materials (not Below only — rubric O5)
+- UDL features: sentence supports and vocabulary glossary in **all three** student materials (not Below only — rubric O5)
 - Scope: full lesson (all phases + exit ticket)
 - Text: same grade-level text across all tiers (never substituted)
 
@@ -253,14 +259,14 @@ the bold fields).
 # Differentiation Plan: [Lesson Title]
 
 **Standard:** [verbatim]  **Grade:** [X]  **Strand:** [RL/RI/W/SL/L]  **Duration:** [X min]  **Curriculum:** [name if confirmed / General]
-*Learner needs: [If no specific needs were provided: "UDL defaults applied — sentence frames and vocabulary support across all tiers." If learner needs were specified, describe them here instead.]*
+*Learner needs: [If no specific needs were provided: "UDL defaults applied — sentence supports and vocabulary support across all tiers." If learner needs were specified, describe them here instead.]*
 
 ## Learning Objective
 [Same objective across all tiers — preserved from source lesson]
 
 ## Differentiation Overview
 [1 short paragraph, ≤3 sentences: approach, text confirmed as shared across all tiers,
-prerequisite named by code + ≤10-word gist (for K–5, note if the foundational literacy flag
+prerequisite named by code + short gist (for K–5, note if the foundational literacy flag
 applies per R3.5), forward standard named by code + gist. Never paste full standard text
 here — the target standard is already verbatim in the header. Use CCSS if state uses
 CCSS/CCSS-aligned. Source from state vertical alignment when state is known; footnote CCSS code
@@ -339,7 +345,7 @@ Format by strand:
 ## Vocabulary
 [`from_shared: vocabulary` — the renderer formats the term–meaning pairs itself; never type a pipe-character table into a `text` field]
 
-**You can use these sentence frames:**
+**You can use these sentence supports:**
 - "The author uses ______ to show ______."
 - "My claim is ______. One reason is ______."
 
@@ -349,7 +355,7 @@ Format by strand:
 at most ONE scaffold block (Below only, R7 fade: Task 1's block may combine a primary +
 secondary scaffold if genuinely different modes; Task 2 gets one lighter scaffold; Task 3+
 gets none — the absence is intentional and silent), then
-`{"type": "from_shared", "key": "problems", "only": N}`. Task text identical on all three
+`{"type": "from_shared", "key": "tN", "label": "N"} followed by a workspace block`. Task text identical on all three
 tiers; never re-typed. Writing space after each task is automatic — do not add answer
 boxes for tasks.]
 [Tier-only add-ons (e.g. Above "Go further" extension) as their own headed sections]
@@ -369,6 +375,6 @@ boxes for tasks.]
 
 - `shared.subject`: `"ELA"`
 - `shared.anchor_task`: the shared text + essential question
-- `shared.problems[]`: the core reading/writing tasks shared by ALL tiers (with `difficulty`)
+- `shared.t1`..`tN`: the core reading/writing tasks shared by ALL tiers, one task per key — faceted {teacher: "the difficulty and what to watch for, as a plain sentence", student: <the task>}
 - Teacher document: differentiation plan, max 3 pages; student materials max 2 pages each
 - **Copyright:** do NOT reproduce the source lesson's student-facing text verbatim — rewrite as original content.

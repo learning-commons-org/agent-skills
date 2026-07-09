@@ -1,7 +1,14 @@
 ---
 name: k12-lesson-differentiation
-description: Adapts an existing K-12 lesson (math, ELA, science, or social studies) for students at different proficiency levels (below / at / above grade level). Do NOT load this skill when the request is only for grading, a rubric, assessment feedback, or a quiz. Triggers on explicit asks to differentiate, tier, or scaffold a lesson, and on implicit signals like "my students are at different levels" or "I have struggling and advanced students". Produces 1 teacher-facing differentiation plan + 3 student-ready tier documents in Turn 1, all rendered from one master JSON via bundled scripts (HTML previews first, editable Word documents on confirmation; shared content is written once so tiers cannot drift). Uses the Learning Commons Knowledge Graph when connected; works without it. Not for creating a new lesson from scratch (use k12-lesson-planning), forming reading groups, grading, or quizzes.
+description: Adapts an existing K-12 lesson (math, ELA, science, or social studies) for students at different proficiency levels (below / at / above grade level). Load this skill BEFORE asking the teacher any clarifying question about the lesson, tiers, or student levels. Triggers on explicit asks to differentiate, tier, or scaffold a lesson, and on implicit signals like "my students are at different levels". Produces 1 teacher-facing differentiation plan + 3 student-ready tier documents as editable Word documents in Turn 1, rendered from one material-source JSON via bundled scripts (shared content is written once so tiers cannot drift). Uses the Learning Commons Knowledge Graph when connected; works without it. This skill adapts a lesson the teacher brings or names. Not for creating a new lesson from scratch — a new-lesson request that asks for differentiated or leveled materials is k12-lesson-planning's job, one package. Not for grading, rubrics, assessment feedback, or quizzes.
+license: Complete terms in LICENSE
 ---
+
+<!--
+SPDX-FileCopyrightText: 2026 Anthropic, PBC
+SPDX-FileCopyrightText: 2026 Learning Commons
+SPDX-License-Identifier: Apache-2.0
+-->
 
 # K-12 Lesson Differentiation
 
@@ -12,6 +19,17 @@ design). Works with or without the Learning Commons Knowledge Graph connector.
 "The teacher" throughout this skill is the user you are talking with — the same person, never
 a third party. "Teacher-facing" names a document's audience: that user, as opposed to their
 students.
+
+---
+
+## Keeping the teacher posted
+
+Before any tool work, say in one or two sentences what you're about to make (e.g. *"I'll
+read your lesson, ground it in the standard and curriculum materials, design the three
+tiers, and build the worksheets — Word documents in a few minutes."*). If a task-list or to-do tool is available, also add those same 3–5 steps there
+in one call so they check off visibly; skip this when there's no such tool. Teacher language
+only — name what the teacher is getting, never tool names, file names, "JSON", or
+"rendering".
 
 ---
 
@@ -77,18 +95,28 @@ state signals and store as `state`:
 Follow the subject file's source-lesson section: Scenario A (lesson exists earlier in this
 conversation — use it directly, do not re-ask), Scenario B (teacher uploads a lesson — read it
 first; if unreadable, say so and ask to re-share, never silently fabricate), Scenario B2
-(teacher links a lesson by URL — fetch and read it with the web fetch tool; if the fetch fails,
+(teacher links a lesson by URL — fetch and read it; if the fetch fails,
 ask them to paste or upload; fetching completes Step 1 only — the KG calls in Step 2 are still
-mandatory), or Scenario C (no source lesson present — ask the subject file's ONE question before
-proceeding).
+mandatory), Scenario B3 (math or science only — teacher names a curriculum lesson by position or title —
+e.g. "IM Grade 6, Unit 2, Lesson 3" or "the OpenSciEd lesson on ecosystem dynamics" — Step 1
+is complete; proceed directly to Step 2 where `find_curriculum_lessons` will retrieve the
+lesson materials; do NOT ask the teacher to upload or link the lesson), or Scenario C (no source lesson present —
+ask the subject file's clarifying question before proceeding).
+
+A fetched link lands in the conversation whole, so a document bigger than one lesson
+(a module or unit teacher edition) will not fit. When a link points at one, work from
+what the request itself tells you about the lesson and confirm the specifics with the
+teacher — topic, grade, and standard carry enough to build from, the same way Scenario C
+proceeds after its clarify.
 
 **Learner needs check (silent, runs every time):** Before generating, scan the conversation
 for any mention of ELL levels, WIDA levels, IEP goal areas, 504 accommodations, or specific
 student needs. If found, incorporate into the tier design — especially the Below tier.
+Say "home language," not a specific language, unless the teacher names one.
 
 If no learner needs are mentioned AND the pre-generation R8 ask hasn't fired (scope was already
 specified), add one sentence to the FIRST response: "No specific learner needs were provided —
-I've applied UDL defaults (sentence frames and vocabulary across all tiers). Share any ELL
+I've applied UDL defaults (sentence supports and vocabulary across all tiers). Share any ELL
 levels, IEP goals, or specific student data and I'll adjust."
 
 This check must run even when scope is specified. Learner variability information should be
@@ -139,25 +167,25 @@ full rule (P9).
 ## Step 4 — Output (Turn 1)
 
 Four artifacts — **1 teacher-facing plan + 3 student tier documents (below / at / above)** —
-are all rendered by a bundled script from **one master `differentiation.json`**. Anything that
+are all rendered by a bundled script from **one `differentiation.json` (the material source)**. Anything that
 appears in more than one artifact (standard, problem/task set, exit ticket, vocabulary,
-sentence frames, misconceptions) lives ONCE in the JSON's `shared` block and is pulled into
+sentence supports, misconceptions) lives ONCE in the JSON's `shared` block and is pulled into
 each document with `{"type": "from_shared", "key": …}` blocks, so the teacher plan and the
 tier documents cannot drift apart — and R6 (same context, same core tasks across tiers) is
 enforced structurally.
 
 Never write layout code, never re-type content into another format, and never edit a generated
-HTML/Word document directly — every change goes into `differentiation.json` and is re-rendered
+document directly — every change goes into `differentiation.json` and is re-rendered
 (re-rendering is instant).
 
 **Plain language with the teacher.** The machinery above is invisible to the teacher: never
 mention JSON, HTML, schemas, scripts, rendering, file names (`differentiation.json`), or code
-in any teacher-facing message. Say *"Here's your differentiation plan — the three tier
-documents are on their way"*, not *"I've rendered the HTML preview from differentiation.json"*.
-The only format words a teacher sees are **"preview"** and **"editable copy"** (the Word document).
-This applies to every turn: presenting artifacts, the satisfaction ask, revision summaries,
-and error messages (if generation fails, say the documents couldn't be created — not that a
-script or JSON failed).
+in any teacher-facing message — and never link or name the `.html` files the render command
+also writes. Say *"Here's your differentiation plan — the three tier documents are on their
+way"*, not *"I've rendered differentiation.json"*. The only format word in your prose is
+"Word document". This applies to every
+turn: presenting artifacts, the satisfaction ask, revision summaries, and error messages (if
+generation fails, say the documents couldn't be created — not that a script or JSON failed).
 
 **Density rules — hard requirements for every document.** Teachers consistently flag dense
 walls of text. Structure beats prose:
@@ -188,7 +216,7 @@ walls of text. Structure beats prose:
    problem/task, the extension and each of its printed sub-parts, anything printed on one tier
    only, the exit ticket, "If you finish early," "Reflect." Each must appear in that tier's
    **Worksheet tasks** line in the plan, with its scaffold named (e.g., "P1 (tape diagram +
-   sentence frame)" not just "P1"). A printed task the plan never names fails — a named
+   sentence support)" not just "P1"). A printed task the plan never names fails — a named
    scaffold the worksheet does not print fails — and so does a plan line naming a task or
    organizer no tier document prints.
 
@@ -213,11 +241,11 @@ must be named on every tier, not only in the teacher plan. Fix mismatches before
 ### 4a. Write the complete `differentiation.json` (Turn 1)
 
 1. Write `differentiation.json`: top-level `theme`, the **`shared` block** (write this FIRST —
-   see the subject mapping for `subject`, `anchor_task`, and `problems[]`, plus the standard
-   verbatim, `exit_ticket`, `vocabulary[]`, `sentence_frames[]`, `misconceptions[]`,
-   `anchor_activity` (early-finisher task in student-facing second person — directions only,
-   no rationale), `reflect_prompt` (the closing reflective question)), and a `documents` array
-   with 4 entries: `{"id": "teacher_plan", "audience": "teacher", …}` and
+   the identity fields, the standard verbatim, each tier task under its own key (`t1`, `t2`, …),
+   the exit ticket, and composed blocks for vocabulary, sentence supports, and misconceptions;
+   also `anchor_activity` (early-finisher task in student-facing second person — directions
+   only, no rationale) and `reflect_prompt` (the closing reflective question)), and a
+   `documents` array with 4 entries: `{"id": "teacher_plan", "audience": "teacher", …}` and
    `{"id": "worksheet_below" / "worksheet_at" / "worksheet_above", "audience": "student", …}`.
    Each document's `sections` follow the subject file's document content templates.
 
@@ -227,17 +255,16 @@ must be named on every tier, not only in the teacher plan. Fix mismatches before
    ```
    theme: {primary: "#…"}
    shared:
-     subject, grade, standard_code, standard_text,
-     anchor_task, anchor_activity, reflect_prompt, sentence_frames[]
-     vocabulary[]:    {term, definition}
-     problems[]:      {text, difficulty}
-     exit_ticket:     {prompt, buckets[]}
-     misconceptions[]:{what, why, move}
+     subject, grade, standard_code, standard_text        (required identity)
+     <any key you choose>: string
+                         | block | block[]
+                         | {teacher: …, student: … or null}
+     (only `standard` is special — it assembles standard_code+standard_text)
    documents[]: {id: teacher_plan|worksheet_below|worksheet_at|worksheet_above,
                  audience: teacher|student, eyebrow, title, meta,
                  sections[]: {heading, blocks[]}}
      block types:
-       {type: from_shared, key, only?: int}
+       {type: from_shared, key, label?}
        {type: labeled, label, text} | {type: paragraph, text}
        {type: callout, kind: special|student-task|teacher-note|student-note, label, text}
        {type: h2, text} | {type: h3, text} | {type: list, label?, ordered?, items[]}
@@ -245,6 +272,16 @@ must be named on every tier, not only in the teacher plan. Fix mismatches before
        {type: table, headers[]?, rows[[]], empty_row_height_pt?}
        {type: cards, items[{title, text}]} | {type: workspace, size: small|med|large}
    ```
+
+   **`shared` is a content registry.** Register each tier task under its own key (`t1`,
+   `t2`, …), the exit ticket as `exit_ticket`, and any other content that appears on more
+   than one document, under keys you choose. A key's value can be a string, a composed
+   block (a vocabulary `table`, a misconceptions `table`, sentence-support text with its writing space), or a
+   faceted object `{teacher: …, student: …}` — on a **student** page only the `student`
+   facet renders; on the **teacher** page both render (the teacher facet as a teacher-note,
+   then the student facet as a "What students see" callout). Key names carry no special
+   rendering — compose vocabulary, misconceptions, and sort buckets as blocks yourself
+   (`references/example_differentiation.json` shows each pattern).
 
    (`references/example_differentiation.json` is a filled-in worked example if
    values-in-context would help, but reading it is not required.) Keep writing tight; no emoji in JSON content.
@@ -256,7 +293,7 @@ must be named on every tier, not only in the teacher plan. Fix mismatches before
    | `callout` `kind: special` | The one anchoring fact per artifact — the target standard. Typically once. |
    | `callout` `kind: student-task` | Any task students do: anchor task, exit ticket prompt, a tier task shown in the plan. |
    | `callout` `kind: teacher-note` | An aside the teacher reads but does not say aloud: conferring moves, a watch-for. |
-   | `callout` `kind: student-note` | A reminder students read on their worksheet: sentence frames, a hint card. |
+   | `callout` `kind: student-note` | A reminder students read on their worksheet: a hint card, a key fact. (A sentence support students write from is plain text near its task, not a callout.) |
    | `list` `ordered: true` | A numbered sequence — the problem set, procedure steps. Unordered otherwise. |
    | `list` with `label` | A titled enumeration — several discrete items under one label. |
    | `cards` | 2–4 parallel items of roughly equal length — tier summaries, sort buckets. Never for long or unbalanced items. |
@@ -281,30 +318,35 @@ must be named on every tier, not only in the teacher plan. Fix mismatches before
    and extension blocks (R6).
    **Every tier document pulls task text with `from_shared` blocks — never re-type, reword,
    or split task text into a document's own blocks** (so the plan and all three tiers stay
-   verbatim-consistent — reworded tasks drift apart in revision). Pull tasks ONE AT A TIME
-   so scaffolds sit with their task:
-   `{"type": "from_shared", "key": "problems", "only": 1}` renders Task 1 with its writing
-   space already included (grade-sized). Other prompts students answer (the exit ticket,
-   Reflect, If you finish early, a tier-only extension) are followed by a `workspace` block.
+   verbatim-consistent — reworded tasks drift apart in revision). Each task has its own
+   `shared` key, pulled one at a time so scaffolds sit with their task:
+   `{"type": "from_shared", "key": "t1", "label": "1"}` renders Task 1 as a numbered item;
+   follow each task — and every other prompt students answer (the exit ticket, Reflect,
+   If you finish early, a tier-only extension) — with a `workspace` block.
    The required order within the section is strict: for each task N — at most ONE
    scaffold block for task N (merge multiple supports into one labeled block; never two
-   "Before Task N" blocks), then the task via `"only": N`. A scaffold must NEVER appear
+   "Before Task N" blocks), then the task via its key. A scaffold must NEVER appear
    after its target task, and nothing sits between a scaffold and its task.
    That is how the R7 fade pattern is expressed — Task 1 gets a scaffold block, Task 2's is
    lighter, later tasks have none. A tier-only task (the Above extension, an Above-only
    sub-question) is its own headed block — never an edit to shared task text. Below-tier scaffolds follow R4; the Above-tier extension passes R7's quality
    test. Asset framing rules (below) apply to every student-facing block.
 
-### 4b. Render all four previews — one command, same turn
+### 4b. Render all four Word documents — one command, same turn
 
 ```bash
 bash scripts/render_all.sh differentiation.json "$OUTPUT_DIR"
 ```
 
-This writes `$OUTPUT_DIR/teacher_plan.html`, `$OUTPUT_DIR/worksheet_below.html`,
-`$OUTPUT_DIR/worksheet_at.html`, and `$OUTPUT_DIR/worksheet_above.html` in one invocation —
-no copy step needed. Present all four to the teacher together (teacher plan first in your
-message).
+This writes `$OUTPUT_DIR/teacher_plan.docx`, `$OUTPUT_DIR/worksheet_below.docx`,
+`$OUTPUT_DIR/worksheet_at.docx`, and `$OUTPUT_DIR/worksheet_above.docx` in one invocation,
+plus `.html` working files — no copy step needed; leave everything
+the script writes in place (downstream tooling reads the working files). Then list
+`$OUTPUT_DIR` and confirm every document has both its `.docx` and `.html`; if either is
+missing or tiny, rerun the script. Present all four Word documents to the teacher together —
+attach the teacher plan last so it lands on top (chat surfaces stack newest-first). If the script errors, fix
+`differentiation.json` (it is almost always malformed JSON) and rerun. If file generation
+fails entirely, say so clearly — do not silently fall back to a chat-only delivery.
 
 ### 4c. The close (every output turn)
 
@@ -321,20 +363,19 @@ the chat message itself — saying it only inside the printed plan does not coun
    frames for your newcomer ELLs").
 2. **Three lesson-specific next steps (first output turn).** Offer 3–4 iteration options in
    chat, one short line each, specific to THIS lesson (e.g., a tiered ELD layer with
-   WIDA-banded sentence frames; IEP-goal-specific scaffolds for a named goal area; a fourth
+   WIDA-banded sentence supports; IEP-goal-specific scaffolds for a named goal area; a fourth
    intervention tier below the prerequisite; tightening scope to the exit ticket only). The
    subject reference's FA follow-up prompt counts as one of them when it fits.
 3. **The satisfaction ask.** Ask whether the teacher is satisfied with **all four artifacts**
-   or wants changes, and state that the next step is sending editable copies. Do not render them
-   before they confirm, and do not skip the ask — on every output turn, including revisions.
+   or wants changes. Do not skip the ask — on every output turn, including revisions.
 
 ### 4d. Revisions — one edit, every artifact stays in sync
 
-Make **targeted edits to `differentiation.json`**, then re-render all four previews (instant).
+Make **targeted edits to `differentiation.json`**, then re-render all four documents (instant).
 Rules that keep the artifacts consistent:
 
 - If the change touches shared content (context, numbers, tasks, exit ticket, vocabulary,
-  sentence frames, misconceptions), edit it **in `shared`** — it propagates to the teacher
+  sentence supports, misconceptions), edit it **in `shared`** — it propagates to the teacher
   plan and every tier document automatically.
 - **Consistency sweep after any context/number/task change:** after editing `shared`, re-read
   every prose block in all four documents' `sections` and update every sentence that still
@@ -346,22 +387,7 @@ Rules that keep the artifacts consistent:
 - Styling: top-level `theme` applies to all four documents; per-document `theme` overrides
   stay available.
 
-### 4e. Render editable Word documents (only after the teacher confirms, any subset)
-
-```bash
-pip list 2>/dev/null | grep -qi python-docx || pip install -q "python-docx==1.1.2"
-python scripts/render_documents.py differentiation.json --format docx           # all four
-# or a subset: --only teacher_plan worksheet_below
-```
-
-Because every document renders from the same `differentiation.json` with the same theme,
-the editable copies match the previews the teacher approved.
-
-If the script errors, fix `differentiation.json` (it is almost always malformed JSON) and
-rerun. If file generation fails entirely, say so clearly — do not silently fall back to a
-chat-only delivery.
-
-### 4f. Fallback — bespoke generation code (exception path only)
+### 4e. Fallback — bespoke generation code (exception path only)
 
 Only if the user explicitly asks for an artifact or layout the bundled renderer cannot express
 (a different document type, landscape poster, slide deck, etc.): write generation code from
@@ -392,14 +418,14 @@ design, not announced supports.
 - ❌ "Task 1 (Scaffolded) / Task 2 (Guided) / Task 3 (Independent)" — a student who sees these labels knows they are on the easier version.
 - ❌ "Use this if you need it" / "Here is a sentence starter" — names the support as a crutch.
 - ❌ Any header, label, or aside that distinguishes scaffolded tasks from unscaffolded ones.
-- ✓ The organizer, annotation frame, or sentence frame simply appears as part of the task layout.
+- ✓ The organizer, annotation frame, or sentence support simply appears as part of the task layout.
 - ✓ Tasks are numbered without scaffold-level labels.
-- ✓ Sentence frames at the top of the document are introduced universally: "You can use these sentence frames:" — not "Use these if you get stuck."
+- ✓ Sentence supports at the top of the document are introduced universally: "You can use these sentence supports:" — not "Use these if you get stuck."
 
 ---
 
 ## Step 5 — Complete
 
-The skill is complete when the teacher has confirmed the previews (4c) and received the editable copies
-they asked for (4e). The closing message pairs the FA follow-up prompt from the subject
+The skill is complete when the teacher has confirmed they are satisfied with all four Word
+documents (4c). The closing message pairs the FA follow-up prompt from the subject
 reference's R8 section with the lesson-specific next-step options from 4c.

@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# Copyright 2026 Anthropic, PBC
+# Copyright 2026 Learning Commons
+# SPDX-License-Identifier: Apache-2.0
+
 """Render lesson JSON -> a styled, self-contained HTML preview (the teacher-facing view).
 
 Design-system spec (Figma "Artifact visual design principles", Jun 2026):
@@ -82,6 +86,8 @@ def css(theme: Theme) -> str:
 
 
 def render_block(blk: dict, theme: Theme) -> str:
+    # Adding a block type or text field? Add it to _shared/parity_fixture.json in
+    # the same commit — check_render_parity.py only guards what the fixture exercises.
     t = _btype(blk)
     if t == "paragraph":
         return f"<p>{md(blk.get('text', ''))}</p>"
@@ -152,6 +158,9 @@ def render_block(blk: dict, theme: Theme) -> str:
                     + "</tr>")
         rows = []
         for r in blk.get("rows", []):
+            # An underscore run is the model writing "blank to fill in" — render it as a
+            # real blank cell, not literal underscores.
+            r = ["" if str(c).strip().strip("_") == "" and "_" in str(c) else c for c in r]
             full_blank = not any(str(c).strip() for c in r)
             row_h = table_row_height(blk, theme, full_blank=full_blank)
             cells = []
@@ -161,12 +170,74 @@ def render_block(blk: dict, theme: Theme) -> str:
                     style = f" style=\"height:{row_h:g}pt\""
                 cells.append(f"<td{style}>{md(c)}</td>")
             rows.append("<tr>" + "".join(cells) + "</tr>")
-        klass = " class=\"headless\"" if not headers else ""
+        classes = [] if headers else ["headless"]
+        if blk.get("display") == "large":
+            classes.append("display-large")
+        klass = f" class=\"{' '.join(classes)}\"" if classes else ""
         return f"<table{klass}>{head}{''.join(rows)}</table>"
     if t == "columns":
         left = "".join(render_block(b, theme) for b in blk.get("left", []))
         right = "".join(render_block(b, theme) for b in blk.get("right", []))
         return f"<div class=\"cols\"><div>{left}</div><div>{right}</div></div>"
+    if t == "source_card":
+        bits = " · ".join(md(str(blk.get(k))) for k in ("author", "date", "origin")
+                          if blk.get(k))
+        title = md(blk.get("title", ""))
+        excerpt = md(blk.get("excerpt") or blk.get("text") or "")
+        meta = f"<span class=\"sc-meta\"> — {bits}</span>" if bits else ""
+        return (f"<div class=\"sourcecard\"><div class=\"sc-head\"><b>{title}</b>{meta}</div>"
+                f"<div class=\"sc-body\">{excerpt}</div></div>")
+    if t == "fill_table":
+        headers = blk.get("headers") or []
+        row_h = table_row_height(blk, theme, full_blank=True)
+        head = ("<tr>" + "".join(f"<th>{md(h)}</th>" for h in headers) + "</tr>") if headers else ""
+        try:
+            cols = max(1, len(headers) or int(blk.get("cols") or 2))
+        except (TypeError, ValueError):
+            cols = 2
+        cols = min(cols, 12)
+        rows_val = blk.get("rows")
+        if isinstance(rows_val, list):
+            # Mixed rows: a non-empty list renders its cells (a worked example);
+            # an empty list [] renders a blank write-in row.
+            body = ""
+            for r in rows_val[:50]:
+                cells = list(r)[:cols] if isinstance(r, list) else []
+                cells += [""] * (cols - len(cells))
+                tds = "".join(
+                    f"<td>{md(c)}</td>" if str(c).strip()
+                    else f"<td style=\"height:{row_h:g}pt\"></td>" for c in cells)
+                body += f"<tr>{tds}</tr>"
+        else:
+            try:
+                n = int(blk.get("blank_rows") or rows_val or 3)
+            except (TypeError, ValueError):
+                n = 3
+            n = min(max(1, n), 50)
+            body = ("<tr>" + (f"<td style=\"height:{row_h:g}pt\"></td>" * cols) + "</tr>") * n
+        return f"<table>{head}{body}</table>"
+    if t == "number_line":
+        lo, hi = blk.get("min", 0), blk.get("max", 10)
+        try:
+            ticks = int(blk.get("ticks") or 10)
+        except (TypeError, ValueError):
+            ticks = 10
+        ticks = min(max(1, ticks), 100)
+        marks = blk.get("marks") or []
+        try:
+            lo_f, hi_f = float(lo), float(hi)
+            span = hi_f - lo_f or 1.0
+        except (TypeError, ValueError):
+            lo_f, hi_f, span = 0.0, float(ticks), float(ticks)
+        tick_html = "".join(
+            f"<span class=\"nl-tick\" style=\"left:{(i/ticks)*100:.2f}%\">"
+            f"<span class=\"nl-lab\">{md(lo if i == 0 else hi if i == ticks else '')}</span></span>"
+            for i in range(ticks + 1))
+        mark_html = "".join(
+            f"<span class=\"nl-mark\" style=\"left:{((float(m)-lo_f)/span)*100:.2f}%\"></span>"
+            for m in marks if isinstance(m, (int, float)))
+        return (f"<div class=\"numberline\"><div class=\"nl-bar\">{tick_html}{mark_html}"
+                f"</div></div>")
     # NEVER dump raw JSON into the page — a printed worksheet with {"type": ...} on it is a
     # blocking print-safety failure (caught in eval 6/2; "list" and "labeled_box" in the wild).
     if blk.get("text"):

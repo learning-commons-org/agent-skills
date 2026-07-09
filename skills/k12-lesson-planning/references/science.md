@@ -1,8 +1,14 @@
+<!--
+SPDX-FileCopyrightText: 2026 Anthropic, PBC
+SPDX-FileCopyrightText: 2026 Learning Commons
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Science — lesson pedagogy
 
 Loaded by `k12-lesson-planning` when the subject is **science**.
 
-## Clarify (one question max)
+## Clarify
 
 Before asking anything, assess the following from all available conversation signals:
 
@@ -12,13 +18,13 @@ Before asking anything, assess the following from all available conversation sig
 
 **3. Grade band.** Determine from grade level which band applies:
 - **K–2**: concrete phenomena, teacher-facilitated sensemaking, oral and drawn models
-- **3–5**: transitional — written CER begins, mechanistic models, simple data analysis
+- **3–5**: transitional — written Claim-Evidence-Reasoning (CER) begins, mechanistic models, simple data analysis
 - **6–8**: integrated across disciplines, quantitative reasoning, formal argumentation
 - **9–12**: mathematical modeling, extended investigations, societal/ethical dimensions
 
 **4. Standard and phenomenon context.** Note whether the teacher has specified a state or NGSS Performance Expectation code (e.g., `MS-LS2-3`) or a topic. Note whether they've specified an anchoring phenomenon or unit context. If not, draw from the KG calls (see learning-commons-kg.md). Flag any selections in Section 1 as suggested.
 
-Then ask at most ONE question. Priority: (1) grade level if missing, (2) topic or standard if missing, (3) unit position if helpful context (4) state if not inferable. Infer everything else. Defaults applied silently: NGSS, 45–60 min, universal access design.
+When key information is missing, ask. Priority: (1) grade level if missing, (2) topic or standard if missing, (3) unit position if helpful context (4) state if not inferable. Infer everything else. Defaults applied silently: NGSS, 45–60 min, universal access design.
 
 ---
 
@@ -64,7 +70,7 @@ Phases: Launch Phenomenon → Investigation → Sensemaking Discussion → Model
 
 - **Launch Phenomenon — 5–10 min**: Show or do the phenomenon directly — something students can observe, touch, or watch. Do NOT explain it. Ask: "What do you notice? What do you wonder?" Record student observations and questions. Post the lesson's driving question in simple language.
 - **Investigation — 15–20 min**: Hands-on exploration. Students observe, sort, measure, or build. Activity generates concrete data or observations relevant to the phenomenon. Instructions are brief, visual, and modeled. Students record through drawing + simple labels — not fill-in-the-blank worksheets.
-- **Sensemaking Discussion — 10 min**: Teacher facilitates whole-class discussion using students' observations as raw material. Ask students to share what they noticed and connect it to the driving question. Teacher does NOT reveal the explanation — students construct it. Record emerging ideas on board. Sentence frames: "I noticed… / I think… because…"
+- **Sensemaking Discussion — 10 min**: Teacher facilitates whole-class discussion using students' observations as raw material. Ask students to share what they noticed and connect it to the driving question. Teacher does NOT reveal the explanation — students construct it. Record emerging ideas on board.
 - **Model/Representation — 5–10 min**: Students draw a model to explain what they think is happening. For OSE-confirmed: students update a class consensus model displayed on the wall. Focus on: what you can see AND what you can't see but infer.
 - **Exit Ticket — 3–5 min**: One drawing or oral prompt: "Draw what you think is happening and tell me why."
 
@@ -75,14 +81,14 @@ Phases: Launch Phenomenon → Investigation → Sensemaking Discussion → Model
 
 ---
 
-#### Grades 3–5: Written CER Begins, Mechanistic Models
+#### Grades 3–5: Written Claim-Evidence-Reasoning Begins, Mechanistic Models
 
-Phases: Launch Phenomenon → Investigation → Sensemaking Discussion → CER Writing → Model Update → Exit Ticket
+Phases: Launch Phenomenon → Investigation → Sensemaking Discussion → Claim-Evidence-Reasoning Writing → Model Update → Exit Ticket
 
 - **Launch Phenomenon — 5–10 min**: Present a specific, puzzling observable event. Do NOT reveal the explanation. Ask: "What do you notice? What do you wonder? What questions do we need to answer to explain this?" Post the driving question. Connect explicitly to prior lessons: "Last time we figured out ___. Does that help us here?"
 - **Investigation — 15–20 min**: Students carry out an investigation (lab, data analysis, or scientific text analysis) to gather evidence. Assign a clear SEP role: are they planning an investigation, analyzing data, or constructing an explanation from a text? Students record data in a structured format. Look-fors: 3+ named, with specific student behaviors and teacher moves.
-- **Sensemaking Discussion — 10–15 min**: Think-Write-Pair-Share → whole class. Teacher sequences student responses from simple observations toward mechanistic explanations. Push explicitly toward the CCC: "What pattern do you notice in your data? What does that tell us about cause and effect here?" Required sentence frames: "My evidence is… / This makes me think… / I agree/disagree with ___ because the data shows…"
-- **CER Writing — 10 min**: Students write a structured response. Claim–Evidence–Reasoning format required. Sentence starters provided: *Claim:* "I think ___ because…" / *Evidence:* "In the investigation, I observed…" / *Reasoning:* "This connects to [CCC] because…"
+- **Sensemaking Discussion — 10–15 min**: Think-Write-Pair-Share → whole class. Teacher sequences student responses from simple observations toward mechanistic explanations. Push explicitly toward the CCC: "What pattern do you notice in your data? What does that tell us about cause and effect here?"
+- **Claim-Evidence-Reasoning Writing — 10 min**: Students write a structured response. Claim–Evidence–Reasoning format required.
 - **Model Update — 5 min**: Students add to or revise their model to incorporate today's new understanding. What changed? What does the model now show that it didn't before?
 - **Exit Ticket — 3–5 min**: A new small phenomenon (not the one investigated). Students apply today's CCC/DCI: "Use what you figured out today to explain why ___." Sort: *Got it* / *Almost there* / *Needs re-teaching*.
 
@@ -95,12 +101,12 @@ Phases: Launch Phenomenon → Investigation → Sensemaking Discussion → CER W
 
 #### Grades 6–8: Integrated, Quantitative, Formal Argumentation
 
-Phases: Launch Phenomenon → Investigation → Argumentation Discussion → CER/Explanation → Model Revision → Formative Check
+Phases: Launch Phenomenon → Investigation → Argumentation Discussion → Claim-Evidence-Reasoning Explanation → Model Revision → Formative Check
 
 - **Launch Phenomenon — 5–10 min**: Present a specific, complex observable event. Students write a brief initial explanation before investigating (they will return to this). Post the unit driving question. Connect to the unit storyline: "We've been trying to explain ___. Last lesson we figured out ___. Here's something new that our model needs to be able to explain."
 - **Investigation — 20–25 min**: Students carry out a quantitative investigation or data analysis. Assign the SEP explicitly. Mathematical reasoning is central — graphs, rates, proportions, computational models as appropriate. Students should be analyzing, interpreting, and making sense of data — not just recording it. Look-fors: 3+ named, with specific behaviors and teacher moves for both the SEP in use and the foregrounded CCC.
-- **Argumentation Discussion — 15 min**: Students defend claims with data. Teacher facilitates evidence-based argumentation — not just sharing answers. Require students to cite specific data points, not just patterns. Push toward the CCC explicitly: "What does your data tell us about [energy and matter / systems / cause and effect]?" Required sentence frames: "My claim is ___, and I have evidence that… / I want to challenge that because the data shows… / I agree, and I can add…" For OSE-confirmed: update class consensus model or tracking board as part of discussion.
-- **CER/Explanation — 10 min**: Written evidence-based explanation. Grades 6–7: CER format. Grade 8: introduce competing explanations — students must address and rebut an alternative explanation.
+- **Argumentation Discussion — 15 min**: Students defend claims with data. Teacher facilitates evidence-based argumentation — not just sharing answers. Require students to cite specific data points, not just patterns. Push toward the CCC explicitly: "What does your data tell us about [energy and matter / systems / cause and effect]?" For OSE-confirmed: update class consensus model or tracking board as part of discussion.
+- **Claim-Evidence-Reasoning Explanation — 10 min**: Written evidence-based explanation. Grades 6–7: Claim-Evidence-Reasoning format. Grade 8: introduce competing explanations — students must address and rebut an alternative explanation.
 - **Model Revision — 5–10 min**: Revise the explanatory model (individual and/or class consensus) to reflect new understanding. What does the model now explain that it couldn't before? What does it still not explain?
 - **Formative Check — 5 min**: Students compare their opening quick-write to their revised explanation: "What changed in your thinking? What specific evidence caused that change?"
 
@@ -131,12 +137,16 @@ Phases: Launch Phenomenon → Investigation → Scientific Argumentation → Exp
 
 ### Section structure — all grade bands
 
-1. **At a Glance** — standard verbatim in a `special` callout; anchoring phenomenon (title / brief description, or [suggested] flag); materials list
-2. **Three-Dimensional Learning Targets** — state each dimension explicitly and separately: SEP target ("Students will [practice verb] to [purpose]"); DCI target ("Students will understand that [specific content idea]"); CCC target ("Students will apply [named CCC] to [specific use]"). Do not merge dimensions into a single vague objective.
-3. **Unit Storyline Context** — 2–3 sentences: what anchoring phenomenon is the unit built around? Where does this lesson fall in the arc? What did students figure out last time, and how does today's investigation advance the explanation?
-4. **Anticipated Student Ideas & Misconceptions** — up to 3 entries from the KG OSE-materials call or training knowledge, each formatted: *What students think* / *Why it persists* / *Teacher move*
-5. **Rationale** — 3 non-negotiables specific to this grade band and standard, each with a 1–2 sentence rationale grounded in three-dimensional learning principles and HQIM criteria
-6. **Lesson Sequence** — phases per grade band above; in every investigation phase: 3+ look-fors each naming the specific student behavior, why it matters for the 3D standard, and what to do; in every discussion phase: specific science-based prompts (not generic) + 2–3 sentence frames per phase
+1. **At a glance** — standard verbatim in a `special` callout; a one-line lesson arc naming the phases with minutes so the period's shape is visible before any detail; anchoring phenomenon (title / brief description, or [suggested] flag); materials list — name each item plainly (e.g. "Data-recording cards"); the offer to produce printable items belongs in your chat message, never inside a document
+2. **Three-dimensional learning targets** — state each dimension explicitly and separately, with framework names spelled out: Science and Engineering Practice ("Students will [practice verb] to [purpose]"); Disciplinary Core Idea ("Students will understand that [specific content idea]"); Crosscutting Concept ("Students will apply [named concept] to [specific use]"). Do not merge dimensions into a single vague objective.
+3. **Unit storyline context** — 2–3 sentences. When the teacher has said where this lesson sits in a unit, place it: what students figured out last time, how today advances the explanation. When they haven't, write the lesson to stand alone and connect it by concept, not by position — name the ideas it builds on and the ones it pairs with ("builds on what students know about living things; pairs naturally with cells whenever you teach them"). Schools sequence topics their own way; a placement guess from the standards' canonical order is only right for schools that follow it.
+4. **Vocabulary** — a reference list of the terms this lesson introduces, with
+   student-friendly definitions. A term is here because a phase teaches it (anchored to
+   something concrete — the diagram, an analogy, what students just observed); a term on a
+   student page that no phase teaches is a gap in the lesson, not in this list.
+5. **Anticipated student ideas & misconceptions** — up to 3 entries from the KG OSE-materials call or training knowledge, each formatted: *What students think* / *Why it persists* / *Teacher move*
+6. **Lesson sequence** — phases per grade band above; in every investigation phase: 3+ look-fors each naming the specific student behavior, why it matters for the 3D standard, and what to do; in every discussion phase: specific science-based prompts (not generic)
+7. **Design notes** — last section, after the exit ticket: 2–3 elements to keep intact when adapting, each with a brief reason grounded in three-dimensional learning, including the lesson's central representation (model, diagram, or data display) and its one-sentence why.
 
 → **Section structure complete. Proceed immediately to Step 4 to generate output files.**
 
@@ -149,15 +159,24 @@ The exit ticket is the last phase in Lesson Sequence (`from_shared:exit_ticket` 
 
 ## Writing lesson.json — science mapping
 
-When you reach Step 4 (Output) in SKILL.md, map science content to the master JSON like this:
+When you reach Step 4 (Output) in SKILL.md, map science content to the material-source JSON like this:
 
 - `shared.subject`: `"Science"`
 - `shared.standard_code` / `shared.standard_text`: the Performance Expectation, verbatim
-- `shared.anchor_task`: the anchoring phenomenon + investigation prompt
-- `shared.problems[]`: investigation tasks and CER/explanation tasks (one entry each, with `difficulty`)
-- `shared.exit_ticket`: the exit ticket prompt + the three sort buckets
-- Three-dimensional learning targets: three separated bullets, one per dimension, each labeled (SEP / DCI / CCC)
-- `observation_template`: prefix each look-for name with its dimension (`[SEP]`, `[DCI]`, `[CCC]`)
-- `student_materials.headings`: override `warmup` to `"What do you notice?"`, `practice` to `"Investigation"`
-- Artifact set: **all three** (lesson plan + student materials + observation template)
+- `shared.anchor_task`: the anchoring phenomenon —
+  `{teacher: <how to present it without explaining it>, student: <what students observe/do>}`.
+- Each investigation or explanation task as `shared.t1`..`tN`:
+  `{teacher: <facilitation script>, student: <the task as students read it>, stimulus?: [data
+  table or diagram blocks both pages show]}`.
+- `shared.exit_ticket`: `{student: <prompt>, teacher?: <collection note>}`. The sort
+  criteria are a `cards` block you place in the lesson plan after pulling the exit
+  ticket (see `example_lesson.json`).
+- Three-dimensional learning targets: three separated bullets, one per dimension, each
+  labeled with the spelled-out name (Science and Engineering Practice / Disciplinary Core
+  Idea / Crosscutting Concept).
+- In the observation template, prefix each look-for with its dimension so the teacher sees
+  which one they're watching for.
+- `shared.vocabulary`, `shared.misconceptions`, `shared.look_fors` as in the SKILL.md schema.
+- Student-page section headings in plain inquiry language ("What do you notice?",
+  "Investigation") — you compose them directly in the document's sections.
 

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Anthropic, PBC
+SPDX-FileCopyrightText: 2026 Learning Commons
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Social Studies — lesson pedagogy
 
 Loaded by `k12-lesson-planning` when the subject is **social studies / history**. This subject
@@ -14,7 +20,7 @@ Lessons follow the C3 Framework inquiry arc:
 
 ## Gather inputs
 
-If the user has not already provided the following, ask for them before generating — collect all in one question:
+If the user has not already provided the following, ask for them before generating:
 
 - **Grade band**: K–2, 3–5, 6–8, or 9–12
 - **Topic or era**: e.g., "Reconstruction," "the civil rights movement," "ancient Rome," "World War I"
@@ -49,98 +55,61 @@ Examples by grade band:
 ## Build the lesson plan
 
 Build the lesson plan with the following sections — these become the `sections` array of the
-master `lesson.json` in Step 4 — Output (one JSON section per `##` heading below; the template's
+`lesson.json` (the material source) in Step 4 — Output (one JSON section per `##` heading below; the template's
 formatting hints map to renderer block types: blockquotes → `callout` blocks, bold labels →
 `labeled` blocks, lists → `bullets`). Adjust vocabulary, task complexity, and source type by
 grade band (see guidance below).
 
 **For all lessons**
-Include at least one visual scaffold with a teacher-facing rationale justifying the choice.
+Include at least one visual scaffold that appears concretely on the student page — the
+`source_card` excerpts themselves, a `fill_table` evidence organizer, or a timeline —
+registered in `shared` and pulled via
+`from_shared` so the same scaffold appears in the lesson plan with the teacher-facing
+rationale beside it.
 
 Be sure that overall timing and timing for each section is realistic - do not overload the lesson.
 
 ---
 
-### Lesson Plan Template
+### Section structure — teaching order
 
-```
-# [Topic] — History Lesson Plan
-**Grade Band:** [K–2 / 3–5 / 6–8 / 9–12]
-**Discipline:** History
-**Estimated Time:** [30–45 min for K–5 / 45–60 min for 6–12]
-**Standard:** [Authoritative standard code + text]
-**C3 Dimensions:** [list the relevant C3 dimensions touched]
-
----
-
-## Compelling Question
-[The unit-level question this lesson contributes to]
-
-## This Lesson's Supporting Question
-[A narrower question this single lesson investigates — one of 3–5 that would make up the full unit]
-
----
-
-## Context Notes
-**Lesson goal:** 1-2 distinct SWBATs
-**Assumed prior knowledge:** [What students need to already know for this lesson to work — be specific]
-**Unit arc position:** [Where this lesson fits, e.g., "Lesson 2 of ~5; students have already been introduced to [X]. This lesson builds toward [Y]."]
-**Coherence note:** [Brief flag if this lesson depends heavily on cumulative knowledge — useful for teachers who are using this as a standalone]
-**Anticipated challenges:** 2–3 misconceptions specific to this topic and source set, each formatted: *What students do* / *Why it happens* / *Teacher move*
-**Rationale**: 2-3 non-negotiables specific to the lesson, each with a 1–2 sentence rationale grounded in C3 principles and the standard
-
----
-
-## Background Knowledge (Teacher-Facing, ~5–10 min)
-[3–5 paragraphs of substantive content the teacher delivers or assigns before source work. This is explicit instruction — not a discovery activity. Write it as teacher-facing prose, not student-facing. Include key vocabulary to introduce, core facts students need, and the conceptual frame that makes the sources meaningful.]
-
-**Key vocabulary:** [4–6 terms with brief definitions appropriate to grade band]
-
----
-
-## Source Set (2 sources)
-[Do not reproduce source text. Instead, describe each source and provide a pointer to where it can be found.]
-
-**Source 1**
-- Type: [e.g., photograph, letter, speech excerpt, political cartoon, map, data table]
-- Description: [What it is, who created it, approximate date, what it shows]
-- Why it was chosen: [What perspective or aspect of the question it illuminates]
-- Where to find it: [Collection name + URL if known, e.g., Library of Congress, SHEG/Reading Like a Historian, DBQ Project, Gilder Lehrman, National Archives. If not sure of url, give a candidate and flag with something like "suggested - verify before using"]
-
-**Source 2**
-- Type:
-- Description:
-- Why it was chosen:
-- Where to find it:
-
-**Source pairing rationale:** [1–2 sentences on why these two sources work together — what tension, contrast, or complementary perspective they create]
-
----
-
-## Guided Analysis Questions
-[5 questions total, scaffolded from lower to higher order. Adjust complexity by grade band — see guidance below.]
-
-1. [Observation / literal comprehension]
-2. [Sourcing: Who made this? When? Why?]
-3. [Contextualization: What was happening at the time that helps explain this?]
-4. [Corroboration or comparison: How does Source 2 confirm, complicate, or contradict Source 1?]
-5. [Connection to compelling question: What does this evidence suggest about [compelling question]?]
-
----
-
-## Formative Task
-[A short, grade-appropriate written or spoken task that asks students to answer the supporting question using evidence from the sources. See grade-band guidance below.]
-
-**Prompt:** [The actual student-facing prompt]
-**Success criteria:** [2–3 bullet points describing what a strong response includes]
-
----
-
-## Optional Extension
-[One activity for students who finish early or need enrichment — should deepen the inquiry, not just add more content]
-```
-
----
+1. **At a glance** — grade band; time; standard verbatim in a `special` callout (the ONE
+   verbatim quote — everywhere else standards go by code + short gist); a one-line lesson arc
+   naming the phases with their minutes (e.g. "Hook 5 -> source work 20 -> discussion 15 ->
+   exit 10") so the shape of the lesson is visible before any detail; the lesson's C3 inquiry
+   focus in plain words (e.g. "C3: evaluating sources and using evidence"); materials.
+2. **Compelling & supporting questions** — the unit-level question, and the narrower question
+   this single lesson investigates (one of the 3–5 that would make up the full unit).
+3. **Lesson goals & background for the teacher** — 1–2 SWBATs; assumed prior knowledge,
+   specific; 2–3 anticipated challenges for this topic and source set (*what students do* /
+   *why it happens* / *teacher move*); Key
+   vocabulary (4–6 terms, defined at grade level, each introduced at the moment the
+   lesson needs it). The background content itself lives inside the lesson sequence, in the
+   phase that delivers it.
+4. **Source set (2 sources)** — sources are real, high-quality, and specifically cited
+   (title, author, date, archive). If you have web search, confirm before using. A
+   public-domain text source (pre-1929, government documents) gets an excerpt reproduced, sized to the analysis the questions ask of it
+   as a `source_card`; an image, photograph, political cartoon, or copyrighted text isn't
+   reproduced — name it (title, citation, where to find it) in Materials and the phase that
+   uses it. Register each reproduced source in `shared` under its own key. For each source:
+   the card itself (its citation carries where the text lives — full URL when you verified it
+   resolves this session; otherwise the archive and collection by name, nothing more — the
+   same rule covers call numbers and catalog IDs, which appear only verified) plus
+   ONE sentence of why this source, as a labeled line. Procurement details, search tips, and
+   alternate locations don't help a teacher mid-prep — leave them out. Close the section with
+   one sentence on the pairing — the tension or contrast the two sources create.
+5. **Lesson sequence** — phases in teaching order, minutes summing exactly to the period:
+   background knowledge (this phase carries its content inline — the short labeled chunks
+   the teacher actually says, a half page at most, never an essay) → source work with
+   **2–3 guided analysis questions** (scaffolded:
+   observe → source or contextualize → corroborate and connect to the supporting question) →
+   discussion → exit ticket.
+6. **Exit ticket** — students answer the supporting question with evidence from the sources.
+   Sized to the minutes remaining in the period: a claim plus one or two pieces of cited
+   evidence, per the grade band below — never a take-home essay. 2–3 success-criteria bullets.
+7. **Design notes** — 2–3 elements to keep intact when adapting, each with a one-sentence
+   reason grounded in the standard, including the lesson's central organizer or source-work
+   structure and its one-sentence why.
 
 ## Grade-Band Guidance
 
@@ -149,42 +118,82 @@ Apply these adjustments throughout the lesson:
 **K–2**
 - Background knowledge delivered as read-aloud or class discussion, not independent reading
 - Sources: photographs, illustrations, artifacts, oral histories — avoid dense text
-- Analysis questions use sentence starters and are discussed orally before writing
-- Formative task: drawing + 1–2 dictated or written sentences; or a class discussion with teacher-recorded responses
+- Analysis questions are discussed orally before writing
+- Exit ticket: drawing + 1–2 dictated or written sentences; or a class discussion with teacher-recorded responses
 - Vocabulary: 4 words max, defined with visuals or gestures
 
 **3–5**
 - Background knowledge can be a short informational text (Lexile 600–850) or teacher-led mini-lecture
 - Sources: accessible primary sources with some scaffolding (sentence-level glosses on hard vocabulary); photographs and short documents work well
-- Analysis questions answered in writing, with sentence frames provided
-- Formative task: 1 paragraph using the claim-evidence-reasoning structure
+- Analysis questions answered in writing
+- Exit ticket: 1 paragraph using the claim-evidence-reasoning structure
 - Vocabulary: 5–6 words; students interact with words before source reading
 
 **6–8**
 - Background knowledge as assigned reading or lecture notes; students should be able to read and annotate independently
 - Sources: more complex primary sources (letters, speeches, political cartoons, data); students expected to do basic sourcing independently
-- Analysis questions answered in writing without sentence frames
-- Formative task: short constructed response (1–2 paragraphs), evidence-based; may include a claim + two pieces of evidence
+- Analysis questions answered in writing
+- Exit ticket: short constructed response (1–2 paragraphs), evidence-based; may include a claim + two pieces of evidence
 - Vocabulary: disciplinary terms emphasized (e.g., "corroborate," "perspective," "contextualize")
 
 **9–12**
 - Background knowledge delivered via complex texts; students expected to take notes and synthesize
 - Sources: challenging primary and secondary sources; students source, contextualize, and corroborate independently
 - Analysis questions push toward argument construction and acknowledgment of counterevidence
-- Formative task: thesis-driven paragraph or short essay; must include a claim, evidence, reasoning, and acknowledgment of complexity
+- Exit ticket: a claim with cited evidence and reasoning, acknowledging complexity — sized to the minutes remaining
 - Vocabulary: discipline-specific and college-level terms assumed or quickly reviewed
 
 ## Writing lesson.json — social studies mapping
 
-When you reach Step 4 (Output) in SKILL.md, map social studies content to the master JSON like this:
+When you reach Step 4 (Output) in SKILL.md, register social-studies content in `shared` and
+compose `documents[]` like this:
 
-- `shared.subject`: `"Social Studies"`
-- `shared.standard_code` / `shared.standard_text`: the authoritative standard, verbatim
-- `shared.anchor_task`: the supporting question + the source set (each source as described in the template — type, description, why chosen, where to find it; never reproduced source text)
-- `shared.problems[]`: the 5 guided analysis questions (one entry each)
-- `shared.exit_ticket`: the formative task `prompt`; `buckets` = three sort entries using the standard labels *Got it* / *Almost there* / *Needs re-teaching* — derive criteria from the success criteria in the template (e.g. "Got it: thesis-level claim with two pieces of cited evidence and reasoning", "Almost there: claim present but evidence underdeveloped or reasoning implicit", "Needs re-teaching: summary only — no claim, no cited evidence"). Each bucket must be `{"label": …, "criteria": …}`.
-- `shared.vocabulary[]`: the key vocabulary terms with definitions
-- Artifact set: **all three** (lesson plan + student materials + observation template)
-  - `student_materials`: source pointers, the guided analysis questions with answer space, and the formative task — no teacher content anywhere (no background-knowledge prose, no success-criteria rationale)
-  - `observation_template`: 2 columns — *Evidence of Student Thinking* / *Instructional Move* — with look-fors drawn from the analysis questions as row labels
-- Alongside the preview, briefly note: which source collection(s) likely have the recommended sources, and any coherence flag about assumed prior knowledge
+- `shared.subject`: `"Social Studies"`.
+- `shared.supporting_question`: the supporting question (one sentence, student-facing).
+- Each source as its own key — `shared.source_a`, `shared.source_b`: a `source_card` block
+  (title, author, date, origin, **excerpt** — reproduce a public-domain excerpt sized to the analysis when
+  the source is pre-1929 or government text). A source you cannot reproduce (an image,
+  political cartoon, photograph, copyrighted text) is named in the lesson plan — title,
+  citation, where to find it — not represented on the student page.
+  When you write an excerpt that paraphrases or composites period
+  language rather than quoting a specific document verbatim, set `origin` to
+  `"adapted from <publication>, <year>"` so the card is honest about provenance — and cite
+  the collection, not a page number: page-precise citations ("p. 254") belong only on text
+  quoted verbatim from that page, and every quotation is attributed to the document it
+  actually comes from. Register
+  each *Why this source* line under a teacher-only key (`shared.source_a_rationale`, etc.)
+  so it never renders on the student page — one sentence; the citation already says where
+  the text lives.
+- Each guided analysis question as `shared.q1`..`q3` (2–3 questions): `{student: <question>}`. Every question names its target — "Source A", "Source B", or "both sources" — a student with two sources in hand can't act on "this source".
+- `shared.exit_ticket`: `{student: <exit-ticket prompt>, teacher?: <collection note>}`.
+  The three sort entries (standard labels, explicit criteria) are a `cards` block you place
+  in the lesson plan after pulling the exit ticket (see `example_lesson.json`).
+- `shared.vocabulary`, `shared.misconceptions`, `shared.look_fors` as in the SKILL.md schema.
+
+**Documents to emit.** Social-studies inquiry lessons always have written analysis
+questions, so **always include `id: "student_materials"`** alongside `lesson_plan` and
+`observation_template`. When sources are registered, also include `id: "source_packet"`
+(one `from_shared` per source, plus a one-line "Read these with the worksheet" note). The
+student worksheet opens with "*See your Source Packet for Source A and Source B.*"
+
+**Student page layout** (the `id: "student_materials"` document):
+
+```
+sections:
+  "Supporting question"    callout(student-task) from_shared:supporting_question
+  "Sources"                from_shared:source_a ; from_shared:source_b
+  "Analyze the sources"    for each question k:
+                             group[ {type: from_shared, key: qk, label: "k"},
+                                    answer_box ]
+                           page_break
+  "Make your claim"        group[ from_shared:exit_ticket, answer_box ~180pt ]
+```
+
+The Background-Knowledge Builder, source-pairing rationale, and *Why chosen / Where to find
+it* live only in the `lesson_plan` document — pull them with their teacher-only keys there.
+
+**Observation template layout**: as in `references/math.md`, with `fill_table` headers
+`[Student, Evidence of thinking, Instructional move]`.
+
+Alongside the documents, briefly note which source collection(s) likely have the recommended
+sources, and any coherence flag about assumed prior knowledge.

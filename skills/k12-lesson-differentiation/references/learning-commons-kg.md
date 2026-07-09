@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Anthropic, PBC
+SPDX-FileCopyrightText: 2026 Learning Commons
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Learning Commons Knowledge Graph — call sequences (differentiation)
 
 Used by `k12-lesson-differentiation` Step 2 **only when the LC Knowledge Graph connector is
@@ -23,7 +29,7 @@ From the chosen standard, extract: the verbatim statement text, its `code`, and 
 
 Note any standard code the source lesson names — the resolution step searches by it when present.
 
-**Available tools:** `find_standard_statement`, `find_standards_progression_from_standard`, `find_misconceptions_for_standard`, `find_learning_components_from_standard`.
+**Available tools:** `find_standard_statement`, `find_standards_progression_from_standard`, `find_misconceptions_for_standard`, `find_learning_components_from_standard`, `find_curriculum_lessons`, `find_materials_for_lesson`.
 
 1. **Standard**: Resolve the standard per *Resolving the standard* above with
    `academicSubject="Mathematics"` and, when state is known from Step 0 state detection,
@@ -37,6 +43,14 @@ Note any standard code the source lesson names — the resolution step searches 
 3. **Misconceptions**: Call `find_misconceptions_for_standard(caseIdentifierUUID, subject="Mathematics")` → extract the 3 most relevant misconceptions. For each, keep: the student behavior and the teacher move. Strip all IM or EEDI attribution. If no results, draft 3 from training knowledge.
 
 4. **Learning components** (optional, for teacher plan): Call `find_learning_components_from_standard(caseIdentifierUUID)` → extract up to 5 sub-skill descriptions. Use to verify R2: all components must appear across all tiers.
+
+5. **IM lesson materials** (only when BOTH conditions hold: IM is confirmed as the curriculum AND the teacher named the lesson — Scenario B3 — rather than uploading or linking it): Call `find_curriculum_lessons` with `author="Illustrative Mathematics"`. Use the mode that matches what the teacher provided:
+   - **Teacher named by position** (e.g., "Grade 6, Unit 2, Lesson 3"): use `ordinalName="Grade N, Unit N, Lesson N"`. Expand abbreviations first.
+   - **Teacher named by title**: use `lessonName="<content words from the title>"`. No grade/unit/lesson numbers.
+
+   If multiple candidates return, echo `fullOrdinalName` and `lessonName` back to the teacher to confirm. Once confirmed, call `find_materials_for_lesson(lessonIdentifier, materialSource=["lesson", "activity"])` → extract: (a) activity names and sequence, (b) problem types and unknown positions addressed, (c) discourse moves. Use to ground tier task design in the actual lesson structure — do not reproduce student-facing text verbatim.
+
+   If the teacher uploaded or linked the lesson (Scenarios B or B2), skip this step — lesson content is already available.
 
 **If KG not connected:** proceed from best knowledge; add footer to teacher plan: *"Generated without the Learning Commons KG. Prerequisite grounding and misconceptions reflect general best practice."*
 
@@ -74,7 +88,7 @@ Note any standard code the source lesson names — the resolution step searches 
 
 Note any NGSS Performance Expectation code the source lesson names — the resolution step searches by it when present.
 
-**Available tools:** `find_standard_statement`, `find_lessons_for_standard`, `find_materials_for_lesson`.
+**Available tools:** `find_standard_statement`, `find_curriculum_lessons`, `find_materials_for_lesson`.
 
 Note: `find_learning_components_from_standard` and `find_standards_progression_from_standard` do **not** return data for science standards — do not call them.
 
@@ -85,8 +99,13 @@ Note: `find_learning_components_from_standard` and `find_standards_progression_f
    When jurisdiction is passed and the KG returns a state-specific standard, use that
    standard's code and text verbatim.
 
+2. **Find the source lesson in the KG** using `find_curriculum_lessons` with `author="OpenSciEd"`. This call serves double duty: it retrieves lesson context AND, for Scenario B3, it is how the lesson is identified in the first place (the teacher named it rather than uploading or linking it). Use exactly ONE mode per call:
 
-2. **`find_lessons_for_standard(caseIdentifierUUID)`** → select the single most relevant OpenSciEd lesson (grade-level match first). Then **`find_materials_for_lesson(lessonIdentifier)`** → extract: (a) anchoring phenomenon; (b) unit driving question; (c) this lesson's investigative phenomenon or question; (d) lesson position in the unit storyline; (e) which SEPs and CCCs are foregrounded; (f) any routines or activity structures used.
+   - **Curriculum position known** (teacher named the lesson by position — Scenario B3 — or unit/lesson number is visible in the uploaded/fetched lesson — e.g., "Science Grade 5, Unit 2, Lesson 3"): use `ordinalName="Science Grade 5, Unit 2, Lesson 3"`. Expand abbreviations before passing (G5 U2 L3 → Science Grade 5, Unit 2, Lesson 3). This is the most precise mode; prefer it when available.
+   - **Title known but no position** (teacher named the lesson by title — Scenario B3 — or title is visible in the uploaded/fetched source): use `lessonName="<words from the lesson title>"`. Pass distinctive content words only — omit grade/unit/lesson numbers. Results come back best-match-first.
+   - **Standard UUID only** (uploaded/fetched lesson with no recoverable position or title — not applicable for Scenario B3): use `caseIdentifierUUID=<uuid from step 1>`. Note: OpenSciEd lessons align to Multi-State (NGSS) standards only — a state-specific PE UUID with no exact crosswalk returns no results.
+
+   If multiple candidates return, echo their `fullOrdinalName` and `lessonName` back to the teacher to confirm which lesson is meant before fetching materials. Once confirmed, call **`find_materials_for_lesson(lessonIdentifier)`** → extract: (a) anchoring phenomenon; (b) unit driving question; (c) this lesson's investigative phenomenon or question; (d) lesson position in the unit storyline; (e) which SEPs and CCCs are foregrounded; (f) any routines or activity structures used.
 
 3. **Progression.** From the lesson materials or KG data, identify: (a) the prior-grade PE or DCI element that the below-level scaffold should route students *up from*; (b) the forward PE that the above-level extension should preview. Name both verbatim. Omitting either is a critical failure.
 

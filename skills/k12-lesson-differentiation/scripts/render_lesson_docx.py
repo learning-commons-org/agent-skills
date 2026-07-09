@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# Copyright 2026 Anthropic, PBC
+# Copyright 2026 Learning Commons
+# SPDX-License-Identifier: Apache-2.0
+
 """Render lesson JSON -> an editable .docx (the teacher-editable deliverable).
 
 Same input schema and block vocabulary as render_lesson_html.py; consumes the same
@@ -68,7 +72,6 @@ def setup_styles(doc, theme: Theme):
         st.font.color.rgb = _hex_rgb(color)
         st.paragraph_format.space_before = Pt(before)
         st.paragraph_format.space_after = Pt(after)
-    s["LC Instr"].font.italic = True
     s["LC Eyebrow"].font.all_caps = True
 
 
@@ -247,7 +250,7 @@ def _emit_callout(doc, blk, theme):
         add_md(lp, label_text(blk), bold=True)
     text = blk.get("text") or blk.get("body") or blk.get("content") or ""
     if text:
-        add_md(cell.add_paragraph(), text, italic=(kind == "teacher-note"))
+        add_md(cell.add_paragraph(), text)
     doc.add_paragraph(style="LC Muted")
 
 
@@ -341,13 +344,22 @@ def _emit_table(doc, blk, theme):
         for i, h in enumerate(headers):
             _shade_cell(hr.cells[i])
             add_md(hr.cells[i].paragraphs[0], str(h).rstrip(": "), bold=True)
+    large = blk.get("display") == "large"
     for r in rows:
         tr = tbl.add_row()
         cells = [str(r[i]) if i < len(r) else "" for i in range(ncols)]
+        # Underscore runs are write-in blanks, not text.
+        cells = ["" if c.strip().strip("_") == "" and "_" in c else c for c in cells]
         full_blank = not any(c.strip() for c in cells)
         for i, v in enumerate(cells):
-            add_md(tr.cells[i].paragraphs[0], v,
-                   bold=(not headers and i == 0 and v.strip() != ""))
+            p = tr.cells[i].paragraphs[0]
+            add_md(p, v, bold=(large and v.strip() != "")
+                   or (not headers and i == 0 and v.strip() != ""))
+            if large:
+                from docx.enum.text import WD_ALIGN_PARAGRAPH
+                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                for run in p.runs:
+                    run.font.size = Pt(18)
         if any(not c.strip() for c in cells):
             tr.height = Pt(table_row_height(blk, theme, full_blank=full_blank))
             tr.height_rule = WD_ROW_HEIGHT_RULE.AT_LEAST
@@ -363,6 +375,49 @@ def _emit_columns(doc, blk, theme):
             emit_block(cell, b, theme)
 
 
+def _emit_source_card(doc, blk, theme):
+    head = " · ".join(str(blk.get(k))
+                      for k in ("title", "author", "date", "origin") if blk.get(k))
+    _emit_callout(doc, {"kind": "student-task", "label": head,
+                        "text": blk.get("excerpt") or blk.get("text") or ""}, theme)
+
+
+def _emit_fill_table(doc, blk, theme):
+    headers = blk.get("headers") or []
+    try:
+        cols = max(1, len(headers) or int(blk.get("cols") or 2))
+    except (TypeError, ValueError):
+        cols = 2
+    cols = min(cols, 12)
+    rows_val = blk.get("rows")
+    if isinstance(rows_val, list):
+        # Mixed rows: a non-empty list renders its cells (a worked example);
+        # an empty list [] renders a blank write-in row.
+        rows = []
+        for r in rows_val[:50]:
+            cells = list(r)[:cols] if isinstance(r, list) else []
+            rows.append(cells + [""] * (cols - len(cells)))
+    else:
+        try:
+            n = int(blk.get("blank_rows") or rows_val or 3)
+        except (TypeError, ValueError):
+            n = 3
+        rows = [[""] * cols for _ in range(min(max(1, n), 50))]
+    fwd = {"headers": headers, "rows": rows}
+    for k in ("row_height_pt", "empty_row_height_pt"):
+        if blk.get(k):
+            fwd[k] = blk[k]
+    _emit_table(doc, fwd, theme)
+
+
+def _emit_number_line(doc, blk, theme):
+    add_md(doc.add_paragraph(),
+           f"*Number line: {blk.get('min', 0)} to {blk.get('max', 10)} — mark your answer.*")
+    _emit_workspace(doc, {"height_pt": 40}, theme)
+
+
+# Adding a block type or text field? Add it to _shared/parity_fixture.json in the
+# same commit — check_render_parity.py only guards fields the fixture exercises.
 _EMITTERS = {
     "paragraph": _emit_paragraph,
     "labeled": _emit_labeled,
@@ -381,6 +436,9 @@ _EMITTERS = {
     "page_break": _emit_page_break,
     "table": _emit_table,
     "columns": _emit_columns,
+    "source_card": _emit_source_card,
+    "fill_table": _emit_fill_table,
+    "number_line": _emit_number_line,
 }
 
 

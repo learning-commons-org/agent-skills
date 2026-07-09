@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Anthropic, PBC
+SPDX-FileCopyrightText: 2026 Learning Commons
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Social Studies — differentiation pedagogy
 
 Loaded by `k12-lesson-differentiation` when the subject is **social studies**.
@@ -23,12 +29,12 @@ inferred from the standard code.
 
 
 **Scenario B2 — Teacher links a source lesson by URL**
-Fetch the URL with the web fetch tool and read its content first (it handles both web pages and PDFs). Then confirm grade level, subject (history / civics / geography / economics), standard, learning objective, and lesson structure exactly as in Scenario B. If the fetch fails or returns unusable content, surface the error clearly and ask the teacher to paste the lesson text or upload the file. Do NOT silently fabricate a lesson.
+Fetch the URL and read its content first. Then confirm grade level, subject (history / civics / geography / economics), standard, learning objective, and lesson structure exactly as in Scenario B. If the fetch fails or returns unusable content, surface the error clearly and ask the teacher to paste the lesson text or upload the file. Do NOT silently fabricate a lesson.
 
 **Fetching the lesson completes Step 1 only — it does NOT replace standards grounding.** Continue to Step 2 — Ground in standards. Skipping Step 2 after a URL fetch is the same critical failure as skipping it for an uploaded lesson.
 
 **Scenario C — No source lesson present**
-Ask ONE question before proceeding (combine with state question if state is also unknown):
+Ask before proceeding (include state if state is also unknown):
 > "Happy to differentiate. Do you have a specific lesson in mind? You can paste it, share a file, or tell me the grade + topic + standard and I'll work from that."
 
 ---
@@ -97,7 +103,7 @@ Failure modes to avoid:
 
 Acceptable scaffolds:
 
-- ✓ Sentence frames for historical/civic analysis: "This source shows ___ because ___. This matters because ___."
+- ✓ Sentence supports for historical/civic analysis: "This source shows ___ because ___. This matters because ___."
 - ✓ Guided annotation frames (e.g., SOAPS: Source, Occasion, Audience, Purpose, Subject; or HAPP: Historical context, Audience, Purpose, Point of view) — pre-structured with prompts, not pre-filled answers.
 - ✓ Tiered texts: same topic and essential question, different reading complexity. Same questions across all tiers.
 - ✓ Visual primary sources (photographs, maps, political cartoons) as concrete entry points before transitioning to text-based sources.
@@ -127,8 +133,8 @@ The test: does the scaffold leave the disciplinary thinking to the student, or d
 
 | Type | Counts toward cap? |
 |---|:-:|
-| Embedded — printed directly on the task (organizer, sentence frame, annotation prompt) | YES |
-| Header-level features — vocabulary box, sentence frames at top of worksheet | NO |
+| Embedded — printed directly on the task (organizer, sentence support, annotation prompt) | YES |
+| Header-level features — vocabulary box, sentence supports at top of worksheet | NO |
 | Teacher-side tools — tiered texts available on request, conferring prompts | NO |
 
 **Pick a primary scaffold first.** Only add a second if it contributes a genuinely different mode. If the second asks the student to do the same cognitive work, drop it.
@@ -223,7 +229,7 @@ the bold fields).
 # Differentiation Plan: [Lesson Title]
 
 **Standard:** [verbatim]  **Grade:** [X]  **State:** [X]  **Duration:** [X min]  **Discipline:** [history / civics / geography / economics]
-*Learner needs: [If no specific needs were provided: "UDL defaults applied — sentence frames and vocabulary support across all tiers." If learner needs were specified, describe them here instead.]*
+*Learner needs: [If no specific needs were provided: "UDL defaults applied — sentence supports and vocabulary support across all tiers." If learner needs were specified, describe them here instead.]*
 
 ## Learning Objective
 [Same objective across all tiers — preserved from source lesson]
@@ -292,7 +298,7 @@ across tiers by construction.
 ## Vocabulary
 [`from_shared: vocabulary` — the renderer formats the term–meaning pairs itself; never type a pipe-character table into a `text` field]
 
-**You can use these sentence frames:**
+**You can use these sentence supports:**
 - "This source shows ___ because ___. This matters because ___."
 - "My strategy was ______ because ______."
 
@@ -300,7 +306,7 @@ across tiers by construction.
 
 [Tasks pulled ONE AT A TIME, each with its scaffold directly above it — per task N: at most
 ONE scaffold block (Below only, "For Task N — ...", per R4/R7 fade), then
-`{"type": "from_shared", "key": "problems", "only": N}`. Source-analysis task text
+`{"type": "from_shared", "key": "tN", "label": "N"} followed by a workspace block`. Source-analysis task text
 identical on all three tiers; never re-typed. Writing space after each task is automatic —
 do not add answer boxes for tasks.]
 [Tier-only add-ons (e.g. Above "Go further" extension) as their own headed sections]
@@ -320,6 +326,6 @@ do not add answer boxes for tasks.]
 
 - `shared.subject`: `"Social Studies"`
 - `shared.anchor_task`: the essential/compelling question
-- `shared.problems[]`: the source analysis tasks shared by ALL tiers (with `difficulty`)
+- `shared.t1`..`tN`: the source analysis tasks shared by ALL tiers, one task per key — faceted {teacher: "the difficulty and what to watch for, as a plain sentence", student: <the task>}
 - Teacher document: differentiation plan, max 3 pages; worksheets max 2 pages each
 - **Copyright:** do NOT reproduce primary source text or curriculum source-set descriptions verbatim — provide citations and pointers only; student-facing analysis tasks must be original.
