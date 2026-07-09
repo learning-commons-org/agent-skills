@@ -1,3 +1,7 @@
+/* Copyright 2026 Anthropic, PBC
+   Copyright 2026 Learning Commons
+   SPDX-License-Identifier: Apache-2.0 */
+
 /* Lesson artifact stylesheet — designer-editable.
    :root vars (--primary, --text, --muted, --rule, --border, --title-size, --body-size)
    are injected by render_lesson_html.css(). Everything else lives here. */
@@ -24,7 +28,7 @@ p{margin:0 0 8pt}
 .listlabel{margin:10pt 0 2pt}
 ul,ol{margin:0 0 10pt;padding-left:20pt}li{margin:0 0 5pt}
 ul.check{list-style:none;padding-left:4pt}ul.check li:before{content:"\2713  "}
-.instr{font-style:italic;color:var(--text);margin:8pt 0 10pt}
+.instr{color:var(--text);margin:8pt 0 10pt}
 
 /* --- callouts (icon-differentiated, B+W-safe) -------------------------- */
 .co{border:1pt solid var(--border);border-radius:6pt;padding:10pt 12pt;margin:6pt 0 12pt;
@@ -34,7 +38,6 @@ ul.check{list-style:none;padding-left:4pt}ul.check li:before{content:"\2713  "}
 .co.special{border-color:#5BB088}
 .co.task{border-color:#9FB8D8}
 .co.tnote{border-color:#E8C98A}
-.co.tnote p{font-style:italic}
 .co.snote{border-color:#E8C98A}
 
 /* --- tables ------------------------------------------------------------ */
@@ -63,8 +66,26 @@ table.headless td:first-child{font-weight:600}
 .ansline{border-bottom:0.7pt solid #C9CFD4}
 .cols{display:flex;gap:24pt}.cols>div{flex:1;min-width:0}
 
+/* --- registry block types (source_card, number_line) -------------------- */
+.sourcecard{border:0.8pt solid var(--border);border-left:3pt solid var(--primary);
+            border-radius:4pt;padding:9pt 12pt;margin:6pt 0 14pt;page-break-inside:avoid}
+.sourcecard .sc-head{font-size:9.5pt;margin-bottom:5pt}
+.sourcecard .sc-meta{color:var(--muted);font-weight:400}
+.sourcecard .sc-body{font-size:9.5pt;line-height:1.55;white-space:pre-wrap}
+.numberline{margin:10pt 0 18pt;padding:0 8pt}
+.numberline .nl-bar{position:relative;height:28pt;border-top:1.5pt solid var(--text);margin-top:14pt}
+.numberline .nl-tick{position:absolute;top:-6pt;width:0;border-left:1pt solid var(--text);height:10pt}
+.numberline .nl-lab{position:absolute;top:11pt;left:0;transform:translateX(-50%);
+                    font-size:8.5pt;white-space:nowrap}
+.numberline .nl-mark{position:absolute;top:-10pt;width:0;height:0;border-left:5pt solid transparent;
+                     border-right:5pt solid transparent;border-top:8pt solid var(--primary);
+                     transform:translateX(-5pt)}
+
 /* --- misc -------------------------------------------------------------- */
-.pagebreak{page-break-after:always;border:none;border-top:1px dashed #CCC;margin:18pt 0}
+.pagebreak{page-break-after:always;border:none;margin:0;height:0}
 .footer{color:var(--muted);font-size:8pt;margin-top:20pt}
 
 @media print{.page{padding:0}body{background:#fff}}
+
+/* --- large display tables (K-2 word grids, sort cards) ------------------ */
+table.display-large td{font-size:18pt;font-weight:600;text-align:center;padding:10pt 12pt;letter-spacing:0.5pt}

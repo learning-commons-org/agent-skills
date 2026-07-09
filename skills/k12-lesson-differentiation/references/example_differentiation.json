@@ -4,43 +4,49 @@
     "grade": "Grade 4",
     "standard_code": "4.NF.B.3.d",
     "standard_text": "Solve word problems involving addition and subtraction of fractions referring to the same whole and having like denominators, e.g., by using visual fraction models and equations to represent the problem.",
-    "vocabulary": [
-      {
-        "term": "denominator",
-        "definition": "The bottom number of a fraction — how many equal parts the whole is split into."
-      },
-      {
-        "term": "like denominators",
-        "definition": "Fractions whose wholes are split into the same number of parts."
-      }
-    ],
-    "sentence_frames": [
-      "I know ____ and ____. The part I don't know is ____.",
-      "My strategy was ____ because ____."
-    ],
-    "misconceptions": [
-      {
-        "what": "Adds denominators as well as numerators (3/8 + 2/8 = 5/16)",
-        "why": "Treats numerator and denominator as separate whole numbers",
-        "move": "Return to the tape diagram: how many eighths in all?"
-      }
-    ],
-    "problems": [
-      {
-        "text": "Maria's family ate 3/8 of a veggie pizza and 2/8 of the same pizza later. How much of the pizza did they eat in all?",
-        "difficulty": "core"
-      },
-      {
-        "text": "After eating, 1/8 of the pizza fell on the floor. How much pizza is left to share?",
-        "difficulty": "stretch"
-      }
-    ],
+    "t1": {
+      "teacher": "Core task — watch for adding denominators (3/8 + 2/8 = 5/16).",
+      "student": "Maria's family ate 3/8 of a veggie pizza and 2/8 of the same pizza later. How much of the pizza did they eat in all?"
+    },
+    "t2": {
+      "teacher": "Stretch task — subtraction from the combined amount; expect tape-diagram or equation strategies.",
+      "student": "After eating, 1/8 of the pizza fell on the floor. How much pizza is left to share?"
+    },
     "exit_ticket": {
-      "prompt": "Jon says 4/6 + 1/6 = 5/12. Is he right? Use a picture or equation to prove your answer.",
-      "buckets": [
-        "Got it",
-        "Almost there",
-        "Needs re-teaching"
+      "teacher": "Sort responses: *Got it* — correct with a convincing picture or equation; *Almost there* — right answer, shaky justification; *Needs re-teaching* — added denominators.",
+      "student": "Jon says 4/6 + 1/6 = 5/12. Is he right? Use a picture or equation to prove your answer."
+    },
+    "vocabulary": {
+      "type": "table",
+      "rows": [
+        [
+          "denominator",
+          "The bottom number of a fraction — how many equal parts the whole is split into."
+        ],
+        [
+          "like denominators",
+          "Fractions whose wholes are split into the same number of parts."
+        ]
+      ]
+    },
+    "sentence_frames": {
+      "type": "labeled",
+      "label": "Finish these sentences",
+      "text": "I know ____________ and ____________. The part I don't know is ____________.\nMy strategy was ____________ because ____________."
+    },
+    "misconceptions": {
+      "type": "table",
+      "headers": [
+        "What students do",
+        "Why it happens",
+        "Teacher move"
+      ],
+      "rows": [
+        [
+          "Adds denominators as well as numerators (3/8 + 2/8 = 5/16)",
+          "Treats numerator and denominator as separate whole numbers",
+          "Return to the tape diagram: how many eighths in all?"
+        ]
       ]
     },
     "anchor_activity": "Finished early? Choose one problem from this page and prove your answer a second way, using a tape diagram. Then write one new question about the pizza whose answer is more than one whole, and solve it.",
@@ -67,6 +73,20 @@
             {
               "type": "paragraph",
               "text": "All three tiers work the same pizza context with the same core problems. Only the supports differ."
+            },
+            {
+              "type": "from_shared",
+              "key": "t1",
+              "label": "1"
+            },
+            {
+              "type": "from_shared",
+              "key": "t2",
+              "label": "2"
+            },
+            {
+              "type": "from_shared",
+              "key": "exit_ticket"
             }
           ]
         },
@@ -111,12 +131,7 @@
         },
         {
           "heading": "Formative check",
-          "blocks": [
-            {
-              "type": "from_shared",
-              "key": "exit_ticket"
-            }
-          ]
+          "blocks": []
         },
         {
           "heading": "Anchor activity",
@@ -151,7 +166,7 @@
           ]
         },
         {
-          "heading": "Sentence frames",
+          "heading": "Sentence supports",
           "blocks": [
             {
               "type": "from_shared",
@@ -182,8 +197,28 @@
               "empty_row_height_pt": 26
             },
             {
+              "type": "callout",
+              "kind": "student-note",
+              "label": "For Problem 1 — try it with the diagram",
+              "text": "The pizza below is cut into 8 equal slices. Shade the slices Maria's family ate first, then shade the slices they ate later a different way."
+            },
+            {
               "type": "from_shared",
-              "key": "problems"
+              "key": "t1",
+              "label": "1"
+            },
+            {
+              "type": "workspace",
+              "size": "large"
+            },
+            {
+              "type": "from_shared",
+              "key": "t2",
+              "label": "2"
+            },
+            {
+              "type": "workspace",
+              "size": "large"
             },
             {
               "type": "workspace",
@@ -197,6 +232,10 @@
             {
               "type": "from_shared",
               "key": "exit_ticket"
+            },
+            {
+              "type": "workspace",
+              "size": "large"
             },
             {
               "type": "workspace",
@@ -245,7 +284,7 @@
           ]
         },
         {
-          "heading": "Sentence frames",
+          "heading": "Sentence supports",
           "blocks": [
             {
               "type": "from_shared",
@@ -258,7 +297,21 @@
           "blocks": [
             {
               "type": "from_shared",
-              "key": "problems"
+              "key": "t1",
+              "label": "1"
+            },
+            {
+              "type": "workspace",
+              "size": "large"
+            },
+            {
+              "type": "from_shared",
+              "key": "t2",
+              "label": "2"
+            },
+            {
+              "type": "workspace",
+              "size": "large"
             },
             {
               "type": "workspace",
@@ -272,6 +325,10 @@
             {
               "type": "from_shared",
               "key": "exit_ticket"
+            },
+            {
+              "type": "workspace",
+              "size": "large"
             },
             {
               "type": "workspace",
@@ -320,7 +377,7 @@
           ]
         },
         {
-          "heading": "Sentence frames",
+          "heading": "Sentence supports",
           "blocks": [
             {
               "type": "from_shared",
@@ -333,7 +390,21 @@
           "blocks": [
             {
               "type": "from_shared",
-              "key": "problems"
+              "key": "t1",
+              "label": "1"
+            },
+            {
+              "type": "workspace",
+              "size": "large"
+            },
+            {
+              "type": "from_shared",
+              "key": "t2",
+              "label": "2"
+            },
+            {
+              "type": "workspace",
+              "size": "large"
             },
             {
               "type": "workspace",
@@ -360,6 +431,10 @@
             {
               "type": "from_shared",
               "key": "exit_ticket"
+            },
+            {
+              "type": "workspace",
+              "size": "large"
             },
             {
               "type": "workspace",

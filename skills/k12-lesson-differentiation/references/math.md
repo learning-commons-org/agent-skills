@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Anthropic, PBC
+SPDX-FileCopyrightText: 2026 Learning Commons
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # Math — differentiation pedagogy
 
 Loaded by `k12-lesson-differentiation` when the subject is **math**.
@@ -15,12 +21,12 @@ If a lesson was produced or discussed earlier in this conversation, use it direc
 Read the file first. Confirm: grade level, subject, standard, learning objective, lesson structure. If the file is unreadable on first attempt, surface the error clearly and ask the teacher to re-share. Do NOT silently fabricate a lesson.
 
 **Scenario B2 — Teacher links a source lesson by URL**
-Fetch the URL with the web fetch tool and read its content first (it handles both web pages and PDFs). Then confirm grade level, subject, standard, learning objective, and lesson structure exactly as in Scenario B. If the fetch fails or returns unusable content, surface the error clearly and ask the teacher to paste the lesson text or upload the file. Do NOT silently fabricate a lesson.
+Fetch the URL and read its content first. Then confirm grade level, subject, standard, learning objective, and lesson structure exactly as in Scenario B. If the fetch fails or returns unusable content, surface the error clearly and ask the teacher to paste the lesson text or upload the file. Do NOT silently fabricate a lesson.
 
 **Fetching the lesson completes Step 1 only — it does NOT replace standards grounding.** Continue to Step 2 — Ground in standards. Skipping Step 2 after a URL fetch is the same critical failure as skipping it for an uploaded lesson.
 
 **Scenario C — No source lesson present**
-Ask ONE question before proceeding:
+Ask before proceeding:
 > "Happy to differentiate. Do you have a specific lesson in mind? You can paste it, share a file, or tell me the grade + topic + standard and I'll work from that."
 
 ---
@@ -98,7 +104,7 @@ Failure modes:
 - ❌ Multiple-choice when original task requires open production
 
 Acceptable scaffolds:
-- ✓ Sentence frames: "I know ____ and ____. The part I don't know is ____."
+- ✓ Sentence supports: "I know ____ and ____. The part I don't know is ____."
 - ✓ Visual organizers matched to the mathematical concept (see table). Use k12-math-visuals to generate diagrams when available; if unavailable, describe the diagram structure in markdown.
 - ✓ Manipulative or concrete prompts bridging to the abstract task (CRA per R3)
 - ✓ Word banks for vocabulary (not for choosing the answer)
@@ -122,8 +128,8 @@ Acceptable scaffolds:
 
 | Type | Counts toward cap? |
 |---|:-:|
-| Embedded — printed on every problem (organizer, sentence frame, hint text) | YES |
-| Header-level — vocabulary box, sentence frames at top of worksheet | NO |
+| Embedded — printed on every problem (organizer, sentence support, hint text) | YES |
+| Header-level — vocabulary box, sentence supports at top of worksheet | NO |
 | Teacher-side — manipulatives on request, conferring prompts | NO |
 
 Pick a primary scaffold first. Only add a second if it contributes a genuinely different mode. If the second does the same cognitive work as the primary, drop it.
@@ -215,14 +221,14 @@ the bold fields).
 # Differentiation Plan: [Lesson Title]
 
 **Standard:** [verbatim]  **Grade:** [X]  **Duration:** [X min]  **Curriculum:** [IM / General]
-*Learner needs: [If no specific needs were provided: "UDL defaults applied — sentence frames and vocabulary support across all tiers." If learner needs were specified, describe them here instead.]*
+*Learner needs: [If no specific needs were provided: "UDL defaults applied — sentence supports and vocabulary support across all tiers." If learner needs were specified, describe them here instead.]*
 
 ## Learning Objective
 [Same objective across all tiers — preserved from source lesson]
 
 ## Differentiation Overview
-[1 short paragraph, ≤3 sentences: approach, prerequisite named by code + ≤10-word gist,
-forward standard named by code + ≤10-word gist. Never paste full standard text here — the
+[1 short paragraph, ≤3 sentences: approach, prerequisite named by code + short gist,
+forward standard named by code + short gist. Never paste full standard text here — the
 target standard is already verbatim in the header. Use KG-returned state standard (preferred when state is known and KG has it), CCSS proxy with reference in footnote, or concept-level fallback.]
 
 ## Tier Design
@@ -287,7 +293,7 @@ construction. The outline below defines each worksheet document's `sections`:
 ## Vocabulary
 [`from_shared: vocabulary` — the renderer formats the term–meaning pairs itself; never type a pipe-character table into a `text` field]
 
-**You can use these sentence frames:**
+**You can use these sentence supports:**
 - "I know ____ and ____. The part I don't know is ____."
 - "My strategy was ______ because ______."
 
@@ -295,7 +301,7 @@ construction. The outline below defines each worksheet document's `sections`:
 
 [Problems pulled ONE AT A TIME, each with its scaffold directly above it — per problem N:
 at most ONE scaffold block (Below only, "For Problem N — ...", per R4/R7 fade), then
-`{"type": "from_shared", "key": "problems", "only": N}`. Problem text identical on all
+`{"type": "from_shared", "key": "tN", "label": "N"} followed by a workspace block`. Problem text identical on all
 three tiers; never re-typed. Work space after each problem is automatic — do not add
 answer boxes for problems.]
 [Tier-only add-ons (e.g. Above "Go further" extension) as their own headed sections]
@@ -315,6 +321,6 @@ answer boxes for problems.]
 
 - `shared.subject`: `"Mathematics"`
 - `shared.anchor_task`: the shared problem context / hook
-- `shared.problems[]`: the core problem set shared by ALL tiers (with `difficulty`)
+- `shared.t1`..`tN`: the core problem set shared by ALL tiers, one task per key — faceted {teacher: "the difficulty and what to watch for, as a plain sentence", student: <the problem>}
 - Teacher document: differentiation plan, max 3 pages; worksheets max 2 pages each
 - **Copyright:** do NOT reproduce Illustrative Mathematics (IM) student-facing text verbatim — problem contexts, activity narratives, and cool-down prompts from IM materials must be rewritten as original content.
