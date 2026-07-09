@@ -7,8 +7,8 @@
 
 Same input schema and block vocabulary as render_lesson_html.py; consumes the same
 expand_document() / theme / alias / callout-kind helpers from lesson_common, so the two
-formats stay in sync by construction. Styling follows the Figma "Artifact visual design
-principles": minimal color, icon-prefixed callouts (no fill), B+W-safe.
+formats stay in sync by construction. Styling follows the same visual design principles:
+minimal color, icon-prefixed callouts (no fill), B+W-safe.
 
 Usage:
     python render_lesson_docx.py lesson.json -o lesson_plan.docx
@@ -25,6 +25,7 @@ from lesson_common import (  # noqa: E402
     Theme, CALLOUT_KINDS, FILL_IN_CHARS, btype as _btype,
     resolve_callout_kind, answer_profile, build_header, expand_document,
     md_tokens, workspace_height, label_text, label_sep, table_row_height, preamble_blocks,
+    coerce_headers, coerce_rows,
 )
 
 try:
@@ -332,8 +333,8 @@ def _emit_page_break(doc, blk, theme):
 
 
 def _emit_table(doc, blk, theme):
-    headers = blk.get("headers") or []
-    rows = blk.get("rows", [])
+    headers = coerce_headers(blk.get("headers"))
+    rows = coerce_rows(blk.get("rows"))
     ncols = max(len(headers), max((len(r) for r in rows), default=1), 1)
     tbl = doc.add_table(rows=0, cols=ncols)
     _set_borders(tbl, color=theme.safe("border").lstrip("#"))
@@ -383,7 +384,7 @@ def _emit_source_card(doc, blk, theme):
 
 
 def _emit_fill_table(doc, blk, theme):
-    headers = blk.get("headers") or []
+    headers = coerce_headers(blk.get("headers"))
     try:
         cols = max(1, len(headers) or int(blk.get("cols") or 2))
     except (TypeError, ValueError):
@@ -394,8 +395,8 @@ def _emit_fill_table(doc, blk, theme):
         # Mixed rows: a non-empty list renders its cells (a worked example);
         # an empty list [] renders a blank write-in row.
         rows = []
-        for r in rows_val[:50]:
-            cells = list(r)[:cols] if isinstance(r, list) else []
+        for r in coerce_rows(rows_val[:50]):
+            cells = r[:cols]
             rows.append(cells + [""] * (cols - len(cells)))
     else:
         try:
@@ -416,8 +417,8 @@ def _emit_number_line(doc, blk, theme):
     _emit_workspace(doc, {"height_pt": 40}, theme)
 
 
-# Adding a block type or text field? Add it to _shared/parity_fixture.json in the
-# same commit — check_render_parity.py only guards fields the fixture exercises.
+# Adding a block type or text field? Render it in render_lesson_html.py in the
+# same commit — the html and docx renderers must emit the same text.
 _EMITTERS = {
     "paragraph": _emit_paragraph,
     "labeled": _emit_labeled,
@@ -493,6 +494,7 @@ def render(data: dict, out_path: str) -> int:
         doc.add_paragraph(str(data["footer_note"]), style="LC Muted")
 
     doc.save(out_path)
+    # Post-expansion count, so multi-document sources report accurately.
     return len(data.get("sections", []))
 
 
@@ -502,8 +504,8 @@ def main() -> int:
     ap.add_argument("-o", "--output", default="lesson_plan.docx")
     args = ap.parse_args()
     data = json.loads(Path(args.input).read_text(encoding="utf-8"))
-    n = render(data, args.output)
-    print(f"wrote {args.output} ({n} sections)")
+    render(data, args.output)
+    print(f"wrote {args.output}")
     return 0
 
 

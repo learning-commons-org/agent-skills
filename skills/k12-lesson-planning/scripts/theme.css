@@ -27,7 +27,7 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;color:var(--text);margin:0;ba
 p{margin:0 0 8pt}
 .listlabel{margin:10pt 0 2pt}
 ul,ol{margin:0 0 10pt;padding-left:20pt}li{margin:0 0 5pt}
-ul.check{list-style:none;padding-left:4pt}ul.check li:before{content:"\2713  "}
+ul.check{list-style:none;padding-left:4pt}ul.check li:before{content:"\2610  "}
 .instr{color:var(--text);margin:8pt 0 10pt}
 
 /* --- callouts (icon-differentiated, B+W-safe) -------------------------- */

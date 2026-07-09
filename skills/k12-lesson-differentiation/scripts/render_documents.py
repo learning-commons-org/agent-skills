@@ -20,10 +20,10 @@ Material source shape:
                 {teacher, student, stimulus} value>, ...},
     "theme": {...},                              // default theme for every document
     "documents": [
-      {"id": "teacher_plan",     "audience": "teacher", "title": ..., "sections": [...]},
-      {"id": "worksheet_below",  "audience": "student", "title": ..., "sections": [...]},
-      {"id": "worksheet_at",     "audience": "student", "title": ..., "sections": [...]},
-      {"id": "worksheet_above",  "audience": "student", "title": ..., "sections": [...]}
+      {"id": "teacher_plan",      "audience": "teacher", "title": ..., "sections": [...]},
+      {"id": "worksheet_group_a", "audience": "student", "title": ..., "sections": [...]},
+      {"id": "worksheet_group_b", "audience": "student", "title": ..., "sections": [...]},
+      {"id": "worksheet_group_c", "audience": "student", "title": ..., "sections": [...]}
     ]
   }
 
@@ -32,7 +32,7 @@ Material source shape:
 Usage:
     python render_documents.py differentiation.json --format html             # all docs -> HTML previews
     python render_documents.py differentiation.json --format docx             # all docs -> editable .docx
-    python render_documents.py differentiation.json --only worksheet_below worksheet_at --format docx
+    python render_documents.py differentiation.json --only worksheet_group_a worksheet_group_b --format docx
 """
 from __future__ import annotations
 
@@ -83,8 +83,8 @@ def main() -> int:
         if args.only and doc_id_raw not in args.only and doc_id not in args.only:
             continue
         full = build_doc(source, doc)
-        # The HTML twin always ships — docx is the teacher deliverable, html is what
-        # downstream tooling reads. Rendering docx alone leaves the twin missing, so
+        # The HTML twin always ships — docx is the teacher deliverable, html is its
+        # always-available preview. Rendering docx alone leaves the twin missing, so
         # "docx" implies both.
         from render_lesson_html import render as render_html
         path = outdir / f"{doc_id}.html"

@@ -32,7 +32,9 @@ From the chosen standard, extract: the verbatim statement text, its `code`, and 
 
 ## Mathematics
 
-Call BEFORE drafting. Not calling when connected is a critical failure. Make all calls, extract only what is specified below, then proceed directly to Step 3 — do not summarize findings in chat.
+Call BEFORE drafting. Not calling when connected is a critical failure. Make all calls, extract only what is specified below, then proceed directly to Step 3 — KG findings surface in chat only through the draft's one-line standard read-back, never as a results summary.
+
+The only cross-call data dependencies are the standard's `caseIdentifierUUID` (used by steps 2–5) and the `lessonIdentifier` that `find_curriculum_lessons` returns (used by `find_materials_for_lesson`). So: resolve the standard, then issue the step 2–4 calls and `find_curriculum_lessons` — each with its full parameters as specified below — as one parallel batch, then fetch materials.
 
 **Available tools:** `find_standard_statement`, `find_standards_progression_from_standard`, `find_misconceptions_for_standard`, `find_learning_components_from_standard`, `list_standards_for_mathematical_practice`, `find_curriculum_lessons`, `find_materials_for_lesson`.
 
@@ -42,13 +44,13 @@ Call BEFORE drafting. Not calling when connected is a critical failure. Make all
 
 3. **Learning components**: Call `find_learning_components_from_standard(caseIdentifierUUID)` → extract: up to 5 sub-skill descriptions (unknown positions, problem types). Use directly as SWBAT bullets and as look-for row labels in the observation template. Discard the rest.
 
-4. **Misconceptions**: Call `find_misconceptions_for_standard(caseIdentifierUUID, subject="Mathematics")` → extract: the 3 most relevant misconceptions. For each keep: the student behavior and the teacher move. Strip all IM or EEDI attribution. If no results, draft 3 from training knowledge.
+4. **Misconceptions**: Call `find_misconceptions_for_standard(caseIdentifierUUID, subject="Mathematics")` → extract: the 3 most relevant misconceptions. For each keep only the student behavior and the teacher move, rewritten in your own words. If no results, draft 3 from training knowledge.
 
 5. **Lesson materials**: Call `find_curriculum_lessons(caseIdentifierUUID=<uuid from step 1>, author="Illustrative Mathematics")` → select the single most relevant lesson (grade-level match first). Call `find_materials_for_lesson(lessonIdentifier, materialSource=["lesson", "activity"])` for the lesson overview and activity materials in one call → extract: (a) activity names and sequence, (b) problem types and unknown positions addressed, (c) any explicit discourse moves. Discard full activity narratives and student-facing text — these must not be reproduced verbatim.
 
 6. **SMPs**: Choose 2–3 from training knowledge. No KG call needed.
 
-**Non-IM attribution check (if not IM-confirmed):** Before proceeding, scan your working notes and verify they contain zero mentions of "Illustrative Mathematics," "IM," any MLR name (MLR 1–8), "Compare and Connect," "Stronger and Clearer Each Time," or any IM lesson/activity title. Strip any that remain. Your output must not name or imply the data source.
+**Curriculum-terminology check (if not IM-confirmed):** Before proceeding, scan your working notes and verify they contain zero mentions of "Illustrative Mathematics," "IM," any MLR name (MLR 1–8), "Compare and Connect," "Stronger and Clearer Each Time," or any IM lesson/activity title. Remove any that remain — a teacher who has not confirmed IM must not receive IM-specific terminology in the lesson or in chat (the same rule as SKILL.md's Copyright guardrail).
 
 **If KG not connected:** draft from best knowledge; add footer: *"Generated without the Learning Commons Knowledge Graph. Standards and misconceptions reflect general best practice."*
 
@@ -58,7 +60,7 @@ Call BEFORE drafting. Not calling when connected is a critical failure. Make all
 
 ## ELA
 
-Call BEFORE drafting. Not calling when connected is a critical failure. Make all calls in sequence, extract only what is specified, then proceed directly to Step 3 — do not summarize findings in chat.
+Call BEFORE drafting. Not calling when connected is a critical failure. Make all calls in sequence, extract only what is specified, then proceed directly to Step 3 — KG findings surface in chat only through the draft's one-line standard read-back, never as a results summary.
 
 **Available tools:** `find_standard_statement`, `find_learning_components_from_standard`
 
@@ -76,7 +78,7 @@ Call BEFORE drafting. Not calling when connected is a critical failure. Make all
 
 ## Science
 
-Call BEFORE drafting. Not calling when connected is a critical failure. Make all calls in sequence, extract only what is specified, then proceed directly to Step 3 — do not summarize findings in chat.
+Call BEFORE drafting. Not calling when connected is a critical failure. Make all calls in sequence, extract only what is specified, then proceed directly to Step 3 — KG findings surface in chat only through the draft's one-line standard read-back, never as a results summary.
 
 **Available tools:** `find_standard_statement`, `find_curriculum_lessons`, `find_materials_for_lesson`.
 

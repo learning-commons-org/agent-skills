@@ -116,7 +116,7 @@ def _repair_inline_bullets(blk: dict) -> list[dict]:
                 # The block opens with bullets — keep its label as a lead-in line
                 # instead of silently dropping it.
                 out.append({"type": "labeled", "label": blk["label"], "text": ""})
-            out.append({"type": "bullets", "items": list(items)})
+            out.append({"type": "list", "items": list(items)})
             first = False
             items.clear()
 
@@ -143,7 +143,7 @@ def _repair_pipe_tables(blk: dict) -> list[dict]:
         return [dict(blk,
                      left=[rb for b in blk.get("left", []) for rb in _repair_pipe_tables(b)],
                      right=[rb for b in blk.get("right", []) for rb in _repair_pipe_tables(b)])]
-    if blk.get("type") in ("bullets", "checklist"):
+    if btype(blk) in ("list", "checklist"):
         # A pipe table inside a bullet item: split the list around it and lift the table out.
         out: list[dict] = []
         cur: list = []
@@ -379,18 +379,19 @@ def expand_blocks(blocks: list, shared: dict, audience: str = "teacher") -> list
     return out
 
 
-_PROMPT_TYPES = ("paragraph", "labeled", "callout", "bullets", "subheading")
+_PROMPT_TYPES = ("paragraph", "labeled", "callout", "list", "h3")
 
 
 def _pair_writing_space(blocks: list[dict]) -> list[dict]:
-    """Glue a prompt block to the answer_box that follows it so a page break can never
-    separate a question from its writing space (renderers keep groups together)."""
+    """Glue a prompt block to the workspace/answer_box that follows it so a page break can
+    never separate a question from its writing space (renderers keep groups together).
+    Types are compared post-alias (btype) so canonical and legacy names both pair."""
     out: list[dict] = []
     i = 0
     while i < len(blocks):
         b = blocks[i]
-        if (b.get("type") in _PROMPT_TYPES and i + 1 < len(blocks)
-                and blocks[i + 1].get("type") == "answer_box"):
+        if (btype(b) in _PROMPT_TYPES and i + 1 < len(blocks)
+                and btype(blocks[i + 1]) == "workspace"):
             out.append({"type": "group", "blocks": [b, blocks[i + 1]]})
             i += 2
             continue
@@ -644,6 +645,44 @@ def md_tokens(text) -> list:
         else:
             out.append((part, {}))
     return out
+
+
+def coerce_rows(rows) -> list[list]:
+    """Normalize model-emitted table rows. Each row must be a list of cells, but models
+    sometimes emit a bare string ("Total: $5.99"), a dict ({"label": ..., "value": ...}),
+    or null — coerce instead of crashing (docx KeyError) or garbling (one cell per
+    character); null becomes a blank write-in row."""
+    if isinstance(rows, str):
+        # The whole rows value drawn as one pipe string — restore rows and cells.
+        rows = _parse_pipe_rows(rows.splitlines()) if "|" in rows else [[rows]]
+    out: list[list] = []
+    for r in rows or []:
+        if isinstance(r, list):
+            out.append(r)
+        elif isinstance(r, dict):
+            out.append(list(r.values()))
+        elif r is None:
+            out.append([])
+        else:
+            out.append([str(r)])
+    return out
+
+
+def coerce_headers(headers) -> list:
+    """Normalize table headers. A bare string ("Item | Cost") is the pipe-joined header
+    row a model meant — split it; a dict's values are its labels; any other non-list
+    becomes a single header."""
+    if isinstance(headers, list):
+        return headers
+    if not headers:
+        return []
+    if isinstance(headers, dict):
+        return list(headers.values())
+    s = str(headers)
+    if "|" in s:
+        parsed = _parse_pipe_rows([s])
+        return parsed[0] if parsed else []
+    return [s]
 
 
 def table_row_height(blk: dict, theme: Theme, *, full_blank: bool) -> float:

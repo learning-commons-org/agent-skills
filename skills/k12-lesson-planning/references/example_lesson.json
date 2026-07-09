@@ -303,7 +303,7 @@
             },
             {
               "type": "labeled",
-              "label": "Coverage",
+              "label": "What each problem tests",
               "text": "unit price (baseline): Problems 1–2 · totals-vs-unit-price trap: Problem 3 · uneven division: Problem 4 · best-buy justification: Problem 5 · the trap again with fresh numbers: Exit Ticket"
             },
             {
@@ -511,7 +511,7 @@
                 },
                 {
                   "type": "paragraph",
-                  "text": "I (agree / disagree) with Tomas, because one pound of rice costs $__________ at FreshMart and $__________ at CostMart."
+                  "text": "I (agree / disagree) with Tomas, because one pound of rice costs $__________ at FreshMart and $__________ at ValueGro."
                 },
                 {
                   "type": "answer_box",

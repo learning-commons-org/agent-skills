@@ -102,7 +102,7 @@ The exit ticket is the last phase in Lesson Sequence (`from_shared:exit_ticket` 
 
 ## Writing lesson.json — math mapping
 
-When you reach Step 4 (Output) in SKILL.md, register math content in `shared` and compose
+When you reach Step 5 (Output) in SKILL.md, register math content in `shared` and compose
 `documents[]` like this:
 
 - `shared.subject`: `"Mathematics"`; `shared.smps`: the 2–3 SMPs, named verbatim.

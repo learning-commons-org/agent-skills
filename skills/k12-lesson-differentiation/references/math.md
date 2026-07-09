@@ -105,7 +105,7 @@ Failure modes:
 
 Acceptable scaffolds:
 - ✓ Sentence supports: "I know ____ and ____. The part I don't know is ____."
-- ✓ Visual organizers matched to the mathematical concept (see table). Use k12-math-visuals to generate diagrams when available; if unavailable, describe the diagram structure in markdown.
+- ✓ Visual organizers matched to the mathematical concept (see table).
 - ✓ Manipulative or concrete prompts bridging to the abstract task (CRA per R3)
 - ✓ Word banks for vocabulary (not for choosing the answer)
 - ✓ Reduced complexity with explicit transfer step: "Try with these first, then apply to the original problem."
@@ -232,7 +232,7 @@ forward standard named by code + short gist. Never paste full standard text here
 target standard is already verbatim in the header. Use KG-returned state standard (preferred when state is known and KG has it), CCSS proxy with reference in footnote, or concept-level fallback.]
 
 ## Tier Design
-[ONE `table` block — never three labeled paragraph stacks. Columns: Below / At / Above.
+[ONE `table` block — never three labeled paragraph stacks. Columns: Below (Group A) / At (Group B) / Above (Group C).
 Rows (a cell may be "—" where a field doesn't apply to that tier):
 - **Grounded in** — Below: prerequisite by code + gist (or "CCSS proxy: [code]" / "Prerequisite
   concept: [description]" per whichever R3 path applied). Above: forward standard by code +
@@ -278,7 +278,7 @@ or "Default profile applied — no diagnostic data available").]
 
 ```
 
-### Document content — worksheets (`id: worksheet_below` / `worksheet_at` / `worksheet_above`)
+### Document content — worksheets (`id: worksheet_group_a` / `worksheet_group_b` / `worksheet_group_c`)
 
 No teacher notes, look-fors, or rationale. All three include: vocabulary glossary + sentence
 frames + the "If you finish early" anchor task + open-ended reflective prompt (rubric O5 —
@@ -286,7 +286,7 @@ UDL across all tiers) — all pulled from `shared` so they are identical across 
 construction. The outline below defines each worksheet document's `sections`:
 
 ```markdown
-# [Below / At / Above Grade Level] — [Lesson Title]
+# [Group A / Group B / Group C] — [Lesson Title]
 
 **Name:** _________________ **Date:** _________
 

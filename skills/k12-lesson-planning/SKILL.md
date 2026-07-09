@@ -14,7 +14,7 @@ SPDX-License-Identifier: Apache-2.0
 # K-12 Lesson Planning
 
 Produces a teacher-ready, standards-aligned lesson plan + student-facing materials + teacher
-observation template as editable Word documents in Turn 1, rendered from one material-source JSON via
+observation template as editable Word documents in a single output turn, rendered from one material-source JSON via
 bundled scripts. Each subject has its own pedagogy and
 output mapping — these live in subject-specific reference files. This skill routes to the
 right one. Works with or without the Learning Commons Knowledge Graph.
@@ -27,13 +27,17 @@ students.
 
 ## Keeping the teacher posted
 
-Before any tool work, say in one or two sentences what you're about to make (e.g. *"I'll
-look up the standard and pull supporting ideas from curriculum lessons, then draft your
-lesson plan, student materials, and observation template — Word documents in a few
-minutes."*). If a task-list or to-do tool is
-available, also add those same 3–5 steps there in one call so they check off visibly; skip
-this when there's no such tool. Teacher language only — name what the teacher is getting,
-never tool names, file names, "JSON", or "rendering".
+Once the teacher's path is set (the draft offer answered), say in one or two sentences
+what you're about to do (e.g. *"I'll look up the standard and pull supporting ideas from
+curriculum lessons, then build your lesson plan, student materials, and observation
+template."*).
+
+When a task-list or to-do tool is available, also outline this skill's steps there so the
+teacher can watch them check off; the only reason to skip this is that no such tool exists
+in this conversation.
+
+Teacher language only — name what the teacher is getting, never tool names, file names,
+"JSON", or "rendering".
 
 ---
 
@@ -76,10 +80,14 @@ never tool names, file names, "JSON", or "rendering".
 
 ## Step 1 — Clarify
 
-Read the subject file first — its clarify section defines the priorities and defaults. Ask
-up to 3 questions, your judgment on what's relevant; the subject file's priorities come
-first when they're not already answered. Apply the defaults silently for everything you
-don't ask about.
+Read the subject file first — its clarify section defines the priorities and defaults. We
+usually ask 0–2 clarifying questions — your judgment on what's relevant; the subject
+file's priorities rank which missing answers matter most. Apply the defaults silently for
+everything you don't ask about.
+
+The **draft offer** (see *Step 4 — The draft offer* below) travels with this message's questions
+as its own separate question — output logistics, not lesson content, so it doesn't count
+toward the 0–2. When nothing needs clarifying, the offer is asked on its own.
 
 ---
 
@@ -116,11 +124,61 @@ curriculum materials.
 If the loaded reference identifies a source curriculum (e.g., IM for math, OpenSciEd for science) and the teacher is not curriculum-confirmed for it, never name
 that curriculum anywhere in the output or in any chat message — not in headers, footnotes,
 rationale sections, facilitation notes, or your message presenting the artifacts. The KG
-data is internal scaffolding.
+data informs the design without being cited.
 
 ---
 
-## Step 4 — Output (Turn 1)
+## Step 4 — The draft offer
+
+The teacher gets the choice of a fast draft before the build. The offer is
+asked the same way as the clarify questions — through the structured question tool when
+one is available, in chat otherwise — as its own separate question, batched with Step 1's
+questions when there are any and asked on its own when there aren't.
+
+- Question: *Should I go ahead and build the full classroom-ready packet (lesson plan + student materials, as
+  editable Word docs), or do you want to see a quick draft first?*
+- Options: **Go ahead and build it** · **Quick draft first** — the lesson at a glance,
+  right here in chat
+
+**The full packet is the default.** Declining, not answering, or anything like "proceed
+with your defaults" runs Steps 2–3 and goes straight to Step 5; the draft happens only on
+a clear yes.
+
+**The draft (on a yes) is built on Steps 2–3, never instead of them.** Run Step 2 in
+full — every KG call, exactly as written — and Step 3 before sketching anything. A draft
+sketched without the Step 2 grounding is a critical failure, the same failure as skipping
+the KG on the full build. Then present the lesson in chat — the draft is chat text only;
+rendering happens at Step 5 once the teacher approves. Show:
+
+- one line naming the grade, topic, and the standard the lesson is anchored to (code plus
+  a gist of ten words or fewer);
+- a summary of at most 3 sentences (what students do and why it works for this class);
+- the sequence as one bullet per phase (name, minutes, one line of what happens);
+- the student work at a glance — the actual tasks students will do, enough for the
+  teacher to skim and judge coverage;
+- what the lesson assumes students already know — the prerequisite skills or key
+  vocabulary in play — so the teacher can catch a mismatch with where their class is;
+- the exit ticket
+
+The draft borrows its names from the documents it previews — phases, tasks, tiers,
+and sections are called what the plan will call them.
+
+Afterwards, ask what's next — a structured question, two options:
+
+- **Make changes** — adjust any part of the draft
+- **Create the materials** — lesson plan, student materials, and observation template, as
+  editable Word documents
+
+Apply change requests to the draft in chat and re-present it — changes are quick at this
+stage. Step 5 runs in the turn the teacher gives the go-ahead ("Create the materials",
+"proceed with your defaults", or similar).
+
+---
+
+## Step 5 — Output (one turn)
+
+Runs immediately when the teacher chose the full packet, or in the turn the draft is
+approved.
 
 The artifacts are rendered by bundled scripts from **one material-source `lesson.json`**. The JSON
 holds a `shared` block (content registered once) and a `documents[]` array (each document
@@ -137,7 +195,7 @@ in `shared` under a key you choose and pulled into each document with
 Never write layout code, never re-type lesson content into another format, and never edit a
 generated document directly — every change goes into `lesson.json` and is re-rendered
 (re-rendering is instant). **Do not open, cat, head, or grep the renderer scripts** — their
-behavior is fully specified by the commands and output paths in §4a–4d, and
+behavior is fully specified by the commands and output paths in §5a–5d, and
 `references/example_lesson.json` is the complete schema. Reading script source tells you
 nothing this file doesn't already state.
 
@@ -248,7 +306,7 @@ Practice*, not bare *SEP* — a teacher should never need to look up an acronym.
   chain the lesson builds on (an energy pyramid's levels, a ratio table's entries, a coin
   total) produce the numbers the materials state.
 
-### 4a. Write the complete `lesson.json` (Turn 1)
+### 5a. Write the complete `lesson.json` (same turn)
 
 Write ONE `lesson.json` with two top-level keys: `shared` and `documents`.
 
@@ -281,7 +339,9 @@ Include at minimum:
 - `id: "student_materials"` (`audience: "student"`) — **only when students hold a printed
   page.** A K-2 phonics or oral lesson may have none; a source-heavy lesson may have this AND
   a separate `id: "source_packet"`. The subject file's *Student page layout* gives the
-  default skeleton; adapt it to the lesson.
+  default skeleton; adapt it to the lesson. If the teacher asked for leveled/tiered student
+  materials, label them Group A / B / C (A = below, B = at, C = above grade level) — level
+  wording stays in the teacher-facing documents.
 
 Inside any document, pull registered content with `{"type": "from_shared", "key": "…"}` —
 the same key on two pages renders the same content (faceted by audience). Adding
@@ -341,10 +401,10 @@ printed on it.
 | `fill_table` | An organizer students write into — observation log, comparison grid, evidence collector. `rows` as a count gives blank rows; `rows` as a list mixes filled and blank — `[["cap","cape"], [], []]` shows a worked first row, then write-in space, and `[["Shell", "", ""]]` gives a labeled row with blank cells students write in (say what goes in the blank — a ✓, yes/no, a word — in the instruction line above). |
 | `number_line` | A drawn number line (`min`, `max`, `ticks`, optional `marks`). |
 | `source_card` | A primary or secondary source excerpt students read: title/author/date + the excerpt text. |
-| `answer_box` | Writing space after a task. Grade-banded default heights: K-2 ~170pt, 3-5 ~150pt, 6+ ~120pt. Lower grades get ruled lines by default; `ruled: false` gives open blank space — the right surface for drawing, diagramming, or model-sketching tasks. |
+| `answer_box` | Writing space after a task. Grade-banded default heights: K-2 ~200pt, 3-5 ~150pt, 6-8 ~130pt, 9+ ~116pt. Lower grades get ruled lines by default; `ruled: false` gives open blank space — the right surface for drawing, diagramming, or model-sketching tasks. |
 | `group` | Keeps a task's prompt, stimulus, supports, and answer box together so a page break never separates them. |
 
-### 4b. Render every Word document — one command, same turn
+### 5b. Render every Word document — one command, same turn
 
 ```bash
 bash scripts/render_all.sh lesson.json "$OUTPUT_DIR"
@@ -353,8 +413,8 @@ bash scripts/render_all.sh lesson.json "$OUTPUT_DIR"
 This writes one editable `.docx` per `documents[]` entry, named by `id` (e.g.
 `$OUTPUT_DIR/lesson_plan.docx`, `student_materials.docx`, `observation_template.docx`,
 `source_packet.docx`), plus `.html` and `lesson.json` working files. Render straight into
-`$OUTPUT_DIR` and leave everything the script writes in place — downstream tooling reads the
-working files even though the teacher only sees the Word documents. Then list `$OUTPUT_DIR`
+`$OUTPUT_DIR` and leave everything the script writes in place — later revision turns
+re-render from the working files even though the teacher only sees the Word documents. Then list `$OUTPUT_DIR`
 and confirm every document has both its `.docx` and `.html`; if either is missing or tiny,
 rerun the script. Present the Word documents to the teacher together — attach the lesson plan
 last so it lands on top (chat surfaces stack newest-first). If there is no `student_materials`
@@ -363,7 +423,7 @@ work with …"). If the script errors, fix `lesson.json` (it is almost always ma
 and rerun. If file generation fails entirely, say so clearly — do not silently fall back to a
 chat-only delivery.
 
-### 4c. The satisfaction ask + iteration options (every output turn)
+### 5c. The satisfaction ask + iteration options (every output turn)
 
 End the turn with EXACTLY ONE closing message that does three things, in this order:
 
@@ -392,7 +452,7 @@ Example shape when materials are involved:
 >
 > And let me know if you'd like anything changed in the plan — I can also (1) …, (2) …, (3) ….
 
-### 4d. Revisions — one edit, every artifact stays in sync
+### 5d. Revisions — one edit, every artifact stays in sync
 
 Make **targeted edits to `lesson.json`**, then re-render all three documents (instant). Rules that
 keep the artifacts consistent:
@@ -411,7 +471,7 @@ keep the artifacts consistent:
   Artifacts use minimal color so they print cleanly in black-and-white; do not set
   per-section or per-phase colors.
 
-### 4e. Supplementary materials and other one-off artifacts
+### 5e. Supplementary materials and other one-off artifacts
 
 Supplementary materials (cards, mats, response sheets) are made when the teacher asks — use
 `lesson.json` or write the file directly, whichever fits. The same goes for anything else the

@@ -29,6 +29,8 @@ From the chosen standard, extract: the verbatim statement text, its `code`, and 
 
 Note any standard code the source lesson names — the resolution step searches by it when present.
 
+After the standard resolves, the progression calls (both directions), misconceptions, and learning components all depend only on its `caseIdentifierUUID` — issue those four as one parallel batch, each with its full parameters as specified below. Step 5 runs on its own terms (its own lookup modes and teacher confirmation), untouched by the batch.
+
 **Available tools:** `find_standard_statement`, `find_standards_progression_from_standard`, `find_misconceptions_for_standard`, `find_learning_components_from_standard`, `find_curriculum_lessons`, `find_materials_for_lesson`.
 
 1. **Standard**: Resolve the standard per *Resolving the standard* above with
@@ -40,7 +42,7 @@ Note any standard code the source lesson names — the resolution step searches 
 
 2. **Prerequisite and forward standard**: Call `find_standards_progression_from_standard(caseIdentifierUUID, direction="backward")` → extract the single primary prerequisite standard, verbatim — this grounds the Below tier. Call `find_standards_progression_from_standard(caseIdentifierUUID, direction="forward")` → extract the single primary forward standard, verbatim — this grounds the Above tier. Omitting either is a critical failure.
 
-3. **Misconceptions**: Call `find_misconceptions_for_standard(caseIdentifierUUID, subject="Mathematics")` → extract the 3 most relevant misconceptions. For each, keep: the student behavior and the teacher move. Strip all IM or EEDI attribution. If no results, draft 3 from training knowledge.
+3. **Misconceptions**: Call `find_misconceptions_for_standard(caseIdentifierUUID, subject="Mathematics")` → extract the 3 most relevant misconceptions. For each, keep only the student behavior and the teacher move, rewritten in your own words. If no results, draft 3 from training knowledge.
 
 4. **Learning components** (optional, for teacher plan): Call `find_learning_components_from_standard(caseIdentifierUUID)` → extract up to 5 sub-skill descriptions. Use to verify R2: all components must appear across all tiers.
 
@@ -51,6 +53,8 @@ Note any standard code the source lesson names — the resolution step searches 
    If multiple candidates return, echo `fullOrdinalName` and `lessonName` back to the teacher to confirm. Once confirmed, call `find_materials_for_lesson(lessonIdentifier, materialSource=["lesson", "activity"])` → extract: (a) activity names and sequence, (b) problem types and unknown positions addressed, (c) discourse moves. Use to ground tier task design in the actual lesson structure — do not reproduce student-facing text verbatim.
 
    If the teacher uploaded or linked the lesson (Scenarios B or B2), skip this step — lesson content is already available.
+
+**Curriculum-terminology check (if not IM-confirmed):** Before proceeding, scan your working notes and verify they contain zero mentions of "Illustrative Mathematics," "IM," any MLR name (MLR 1–8), "Compare and Connect," "Stronger and Clearer Each Time," or any IM lesson/activity title. Remove any that remain — a teacher who has not confirmed IM must not receive IM-specific terminology in any tier document, the teacher plan, or chat (the same rule as SKILL.md's Copyright guardrail).
 
 **If KG not connected:** proceed from best knowledge; add footer to teacher plan: *"Generated without the Learning Commons KG. Prerequisite grounding and misconceptions reflect general best practice."*
 

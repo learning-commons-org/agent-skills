@@ -240,7 +240,7 @@ type, essential question preserved across tiers. Standards by code + ≤10-word 
 target standard is already verbatim in the header.]
 
 ## Tier Design
-[ONE `table` block — never three labeled paragraph stacks. Columns: Below / At / Above.
+[ONE `table` block — never three labeled paragraph stacks. Columns: Below (Group A) / At (Group B) / Above (Group C).
 Rows (a cell may be "—" where a field doesn't apply to that tier):
 - **Entry point / grounding** — Below: the 4–6 key vocabulary terms addressed + sourcing
   routine status (scaffolded via [annotation frame type] or established). Above: forward
@@ -283,7 +283,7 @@ sentences per tier that needs one.]
 
 ```
 
-### Document content — worksheets (`id: worksheet_below` / `worksheet_at` / `worksheet_above`)
+### Document content — worksheets (`id: worksheet_group_a` / `worksheet_group_b` / `worksheet_group_c`)
 
 No teacher notes, look-fors, or rationale in any worksheet. All three include: vocabulary
 glossary + sentence stems + the "If you finish early" anchor task + open-ended reflective
@@ -291,7 +291,7 @@ prompt (rubric O5 — UDL across all tiers) — all pulled from `shared` so they
 across tiers by construction.
 
 ```markdown
-# [Below / At / Above Grade Level] — [Lesson Title]
+# [Group A / Group B / Group C] — [Lesson Title]
 
 **Name:** _________________ **Date:** _________
 

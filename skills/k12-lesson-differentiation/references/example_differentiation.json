@@ -61,7 +61,7 @@
       "audience": "teacher",
       "eyebrow": "Grade 4 Mathematics · Differentiation Plan",
       "title": "Adding Fractions with Like Denominators — Differentiation Plan",
-      "meta": "4.NF.B.3.d · 60 minutes · Below / At / Above tiers",
+      "meta": "4.NF.B.3.d · 60 minutes · Below (Group A) / At (Group B) / Above (Group C)",
       "sections": [
         {
           "heading": "Overview",
@@ -91,7 +91,22 @@
           ]
         },
         {
-          "heading": "Below tier",
+          "heading": "Flexible grouping",
+          "blocks": [
+            {
+              "type": "labeled",
+              "label": "Basis",
+              "text": "Default profile applied — no diagnostic data available. If you have a recent fractions exit ticket or work sample, place students from that instead."
+            },
+            {
+              "type": "labeled",
+              "label": "Revisable",
+              "text": "Tier placement holds for this lesson only. Regroup on today's exit ticket: a Below student who solves Problem 2 unaided moves up; anyone who adds the denominators works with the Below supports tomorrow."
+            }
+          ]
+        },
+        {
+          "heading": "Below tier (Group A)",
           "blocks": [
             {
               "type": "labeled",
@@ -110,7 +125,7 @@
           ]
         },
         {
-          "heading": "At tier",
+          "heading": "At tier (Group B)",
           "blocks": [
             {
               "type": "labeled",
@@ -120,7 +135,7 @@
           ]
         },
         {
-          "heading": "Above tier",
+          "heading": "Above tier (Group C)",
           "blocks": [
             {
               "type": "labeled",
@@ -130,8 +145,36 @@
           ]
         },
         {
+          "heading": "Why this works (1)",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The Below tier keeps both grade-level problems and adds a shaded-diagram entry and a know/need table before Problem 1 only. Students act on the model before the symbols, so the standard's full demand stays while the entry cost drops — and the scaffold fades by Problem 2."
+            }
+          ]
+        },
+        {
+          "heading": "Why this works (2)",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "The Above extension asks students to write and critique problems rather than compute more of them. Authoring a sum-greater-than-one story and explaining a wrong answer deepen 4.NF.B.3.d instead of moving past it, and both reuse the shared pizza context so tiers stay comparable."
+            }
+          ]
+        },
+        {
           "heading": "Formative check",
-          "blocks": []
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Collect the exit ticket from every tier and sort into three piles: correct with a matching model; adds the denominators; miscounts the shaded parts."
+            },
+            {
+              "type": "labeled",
+              "label": "Next day",
+              "text": "Denominator pile re-enters through the shaded diagram; miscount pile recounts a partitioned model with you; correct pile starts on the anchor task."
+            }
+          ]
         },
         {
           "heading": "Anchor activity",
@@ -150,10 +193,10 @@
       ]
     },
     {
-      "id": "worksheet_below",
+      "id": "worksheet_group_a",
       "audience": "student",
       "eyebrow": "Grade 4 Mathematics · 4.NF.B.3.d",
-      "title": "Pizza Fractions",
+      "title": "Group A — Pizza Fractions",
       "meta": "Name: ____________________    Date: ____________",
       "sections": [
         {
@@ -195,12 +238,6 @@
                 ]
               ],
               "empty_row_height_pt": 26
-            },
-            {
-              "type": "callout",
-              "kind": "student-note",
-              "label": "For Problem 1 — try it with the diagram",
-              "text": "The pizza below is cut into 8 equal slices. Shade the slices Maria's family ate first, then shade the slices they ate later a different way."
             },
             {
               "type": "from_shared",
@@ -249,6 +286,10 @@
             {
               "type": "from_shared",
               "key": "anchor_activity"
+            },
+            {
+              "type": "workspace",
+              "height_pt": 90
             }
           ]
         },
@@ -268,10 +309,10 @@
       ]
     },
     {
-      "id": "worksheet_at",
+      "id": "worksheet_group_b",
       "audience": "student",
       "eyebrow": "Grade 4 Mathematics · 4.NF.B.3.d",
-      "title": "Pizza Fractions",
+      "title": "Group B — Pizza Fractions",
       "meta": "Name: ____________________    Date: ____________",
       "sections": [
         {
@@ -342,6 +383,10 @@
             {
               "type": "from_shared",
               "key": "anchor_activity"
+            },
+            {
+              "type": "workspace",
+              "height_pt": 90
             }
           ]
         },
@@ -361,10 +406,10 @@
       ]
     },
     {
-      "id": "worksheet_above",
+      "id": "worksheet_group_c",
       "audience": "student",
       "eyebrow": "Grade 4 Mathematics · 4.NF.B.3.d",
-      "title": "Pizza Fractions",
+      "title": "Group C — Pizza Fractions",
       "meta": "Name: ____________________    Date: ____________",
       "sections": [
         {
@@ -448,6 +493,10 @@
             {
               "type": "from_shared",
               "key": "anchor_activity"
+            },
+            {
+              "type": "workspace",
+              "height_pt": 90
             }
           ]
         },
