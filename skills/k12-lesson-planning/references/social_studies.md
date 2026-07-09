@@ -55,7 +55,7 @@ Examples by grade band:
 ## Build the lesson plan
 
 Build the lesson plan with the following sections — these become the `sections` array of the
-`lesson.json` (the material source) in Step 4 — Output (one JSON section per `##` heading below; the template's
+`lesson.json` (the material source) in Step 5 — Output (one JSON section per `##` heading below; the template's
 formatting hints map to renderer block types: blockquotes → `callout` blocks, bold labels →
 `labeled` blocks, lists → `bullets`). Adjust vocabulary, task complexity, and source type by
 grade band (see guidance below).
@@ -145,7 +145,7 @@ Apply these adjustments throughout the lesson:
 
 ## Writing lesson.json — social studies mapping
 
-When you reach Step 4 (Output) in SKILL.md, register social-studies content in `shared` and
+When you reach Step 5 (Output) in SKILL.md, register social-studies content in `shared` and
 compose `documents[]` like this:
 
 - `shared.subject`: `"Social Studies"`.

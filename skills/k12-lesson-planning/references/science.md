@@ -148,7 +148,7 @@ Phases: Launch Phenomenon → Investigation → Scientific Argumentation → Exp
 6. **Lesson sequence** — phases per grade band above; in every investigation phase: 3+ look-fors each naming the specific student behavior, why it matters for the 3D standard, and what to do; in every discussion phase: specific science-based prompts (not generic)
 7. **Design notes** — last section, after the exit ticket: 2–3 elements to keep intact when adapting, each with a brief reason grounded in three-dimensional learning, including the lesson's central representation (model, diagram, or data display) and its one-sentence why.
 
-→ **Section structure complete. Proceed immediately to Step 4 to generate output files.**
+→ **Section structure complete. Proceed to the draft (when the teacher chose one) or Step 5.**
 
 ## Exit ticket guidance
 
@@ -159,7 +159,7 @@ The exit ticket is the last phase in Lesson Sequence (`from_shared:exit_ticket` 
 
 ## Writing lesson.json — science mapping
 
-When you reach Step 4 (Output) in SKILL.md, map science content to the material-source JSON like this:
+When you reach Step 5 (Output) in SKILL.md, map science content to the material-source JSON like this:
 
 - `shared.subject`: `"Science"`
 - `shared.standard_code` / `shared.standard_text`: the Performance Expectation, verbatim

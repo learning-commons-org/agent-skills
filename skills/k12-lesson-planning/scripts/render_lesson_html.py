@@ -5,7 +5,7 @@
 
 """Render lesson JSON -> a styled, self-contained HTML preview (the teacher-facing view).
 
-Design-system spec (Figma "Artifact visual design principles", Jun 2026):
+Visual design principles:
   - Minimal color. Callouts are distinguished by an icon prefix, not background fill, so they
     survive B+W printing. Student worksheets avoid color entirely.
   - Horizontal rule above each H1 section; no colored section bars.
@@ -35,6 +35,7 @@ from lesson_common import (  # noqa: E402
     btype as _btype, resolve_callout_kind as _resolve_callout_kind,
     answer_profile, expand_document, build_header, preamble_blocks,
     workspace_height, normalize_text, label_text, label_sep, table_row_height,
+    coerce_headers, coerce_rows,
 )
 
 FILL_IN_SIZES = {"short": "6em", "med": "14em", "long": "100%"}
@@ -86,8 +87,8 @@ def css(theme: Theme) -> str:
 
 
 def render_block(blk: dict, theme: Theme) -> str:
-    # Adding a block type or text field? Add it to _shared/parity_fixture.json in
-    # the same commit — check_render_parity.py only guards what the fixture exercises.
+    # Adding a block type or text field? Render it in render_lesson_docx.py in
+    # the same commit — the html and docx renderers must emit the same text.
     t = _btype(blk)
     if t == "paragraph":
         return f"<p>{md(blk.get('text', ''))}</p>"
@@ -151,13 +152,13 @@ def render_block(blk: dict, theme: Theme) -> str:
     if t == "page_break":
         return "<hr class=\"pagebreak\">"
     if t == "table":
-        headers = blk.get("headers") or []
+        headers = coerce_headers(blk.get("headers"))
         head = ""
         if headers:
             head = ("<tr>" + "".join(f"<th>{md(str(h).rstrip(': '))}</th>" for h in headers)
                     + "</tr>")
         rows = []
-        for r in blk.get("rows", []):
+        for r in coerce_rows(blk.get("rows")):
             # An underscore run is the model writing "blank to fill in" — render it as a
             # real blank cell, not literal underscores.
             r = ["" if str(c).strip().strip("_") == "" and "_" in str(c) else c for c in r]
@@ -188,7 +189,7 @@ def render_block(blk: dict, theme: Theme) -> str:
         return (f"<div class=\"sourcecard\"><div class=\"sc-head\"><b>{title}</b>{meta}</div>"
                 f"<div class=\"sc-body\">{excerpt}</div></div>")
     if t == "fill_table":
-        headers = blk.get("headers") or []
+        headers = coerce_headers(blk.get("headers"))
         row_h = table_row_height(blk, theme, full_blank=True)
         head = ("<tr>" + "".join(f"<th>{md(h)}</th>" for h in headers) + "</tr>") if headers else ""
         try:
@@ -201,9 +202,13 @@ def render_block(blk: dict, theme: Theme) -> str:
             # Mixed rows: a non-empty list renders its cells (a worked example);
             # an empty list [] renders a blank write-in row.
             body = ""
-            for r in rows_val[:50]:
-                cells = list(r)[:cols] if isinstance(r, list) else []
+            for r in coerce_rows(rows_val[:50]):
+                cells = r[:cols]
                 cells += [""] * (cols - len(cells))
+                # Underscore runs are write-in blanks, not text (same rule as `table`,
+                # and as the docx fill_table path which forwards through _emit_table).
+                cells = ["" if str(c).strip().strip("_") == "" and "_" in str(c) else c
+                         for c in cells]
                 tds = "".join(
                     f"<td>{md(c)}</td>" if str(c).strip()
                     else f"<td style=\"height:{row_h:g}pt\"></td>" for c in cells)
@@ -239,7 +244,7 @@ def render_block(blk: dict, theme: Theme) -> str:
         return (f"<div class=\"numberline\"><div class=\"nl-bar\">{tick_html}{mark_html}"
                 f"</div></div>")
     # NEVER dump raw JSON into the page — a printed worksheet with {"type": ...} on it is a
-    # blocking print-safety failure (caught in eval 6/2; "list" and "labeled_box" in the wild).
+    # blocking print-safety failure (seen in real model output: "list" and "labeled_box").
     if blk.get("text"):
         return f"<p>{md(blk.get('text'))}</p>"
     if blk.get("items"):
@@ -308,7 +313,7 @@ def main() -> int:
     args = ap.parse_args()
     data = json.loads(Path(args.input).read_text(encoding="utf-8"))
     Path(args.output).write_text(render(data), encoding="utf-8")
-    print(f"wrote {args.output} ({len(data.get('sections', []))} sections)")
+    print(f"wrote {args.output}")
     return 0
 
 

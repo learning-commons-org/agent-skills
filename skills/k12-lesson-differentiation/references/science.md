@@ -266,7 +266,7 @@ profile applied — no FA data available").]
 ## [Phase Name — tiered activity]
 **ALL STUDENTS:** [shared setup — same phenomenon, same materials; ONE sentence]
 
-[ONE `table` block — never three labeled paragraph stacks. Columns: Below / At / Above.
+[ONE `table` block — never three labeled paragraph stacks. Columns: Below (Group A) / At (Group B) / Above (Group C).
 Two rows:
 - **Students do** — ≤25 words per cell, fragments not sentences: the task path and the
   scaffolds in play (plus the extension prompt in the Above cell).
@@ -303,7 +303,7 @@ paragraph.]
 
 ```
 
-### Document content — worksheets (`id: worksheet_below` / `worksheet_at` / `worksheet_above`)
+### Document content — worksheets (`id: worksheet_group_a` / `worksheet_group_b` / `worksheet_group_c`)
 
 No teacher notes, look-fors, or rationale in any worksheet. Vocabulary, CER sentence supports,
 the "If you finish early" anchor task, and the reflective prompt are pulled from `shared` so
@@ -320,7 +320,7 @@ Reasoning*; the sensemaking frame is introduced as *"Check your thinking"*.
 | Above | Same investigation + extension prompt per R7. CER + counter-argument / rebuttal prompt. |
 
 ```markdown
-# [Below / At / Above Grade Level] — [Lesson Title]
+# [Group A / Group B / Group C] — [Lesson Title]
 
 **Name:** _________________ **Date:** _________
 

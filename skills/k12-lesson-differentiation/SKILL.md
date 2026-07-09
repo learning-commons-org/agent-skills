@@ -1,6 +1,6 @@
 ---
 name: k12-lesson-differentiation
-description: Adapts an existing K-12 lesson (math, ELA, science, or social studies) for students at different proficiency levels (below / at / above grade level). Load this skill BEFORE asking the teacher any clarifying question about the lesson, tiers, or student levels. Triggers on explicit asks to differentiate, tier, or scaffold a lesson, and on implicit signals like "my students are at different levels". Produces 1 teacher-facing differentiation plan + 3 student-ready tier documents as editable Word documents in Turn 1, rendered from one material-source JSON via bundled scripts (shared content is written once so tiers cannot drift). Uses the Learning Commons Knowledge Graph when connected; works without it. This skill adapts a lesson the teacher brings or names. Not for creating a new lesson from scratch — a new-lesson request that asks for differentiated or leveled materials is k12-lesson-planning's job, one package. Not for grading, rubrics, assessment feedback, or quizzes.
+description: Adapts an existing K-12 lesson (math, ELA, science, or social studies) for students at different proficiency levels (below / at / above grade level). Load this skill BEFORE asking the teacher any clarifying question about the lesson, tiers, or student levels. Triggers on explicit asks to differentiate, tier, or scaffold a lesson, and on implicit signals like "my students are at different levels". Produces 1 teacher-facing differentiation plan + 3 student-ready tier documents as editable Word documents in a single output turn, rendered from one material-source JSON via bundled scripts (shared content is written once so tiers cannot drift). Uses the Learning Commons Knowledge Graph when connected; works without it. This skill adapts a lesson the teacher brings or names. Not for creating a new lesson from scratch — a new-lesson request that asks for differentiated or leveled materials is k12-lesson-planning's job, one package. Not for grading, rubrics, assessment feedback, or quizzes.
 license: Complete terms in LICENSE
 ---
 
@@ -24,20 +24,23 @@ students.
 
 ## Keeping the teacher posted
 
-Before any tool work, say in one or two sentences what you're about to make (e.g. *"I'll
-read your lesson, ground it in the standard and curriculum materials, design the three
-tiers, and build the worksheets — Word documents in a few minutes."*). If a task-list or to-do tool is available, also add those same 3–5 steps there
-in one call so they check off visibly; skip this when there's no such tool. Teacher language
-only — name what the teacher is getting, never tool names, file names, "JSON", or
-"rendering".
+Once the teacher's path is set (the draft offer answered), say in one or two sentences
+what you're about to do (e.g. *"I'll read your lesson, ground it in the standard and
+curriculum materials, design the three tiers, and build the worksheets."*).
+
+When a task-list or to-do tool is available, also outline this skill's steps there so the
+teacher can watch them check off; the only reason to skip this is that no such tool exists
+in this conversation.
+
+Teacher language only — name what the teacher is getting, never tool names, file names,
+"JSON", or "rendering".
 
 ---
 
 ## Step 0 — Route (silent, before anything else)
 
 1. **Subject.** Detect math / ELA / science / social studies from the source lesson or the
-   request, then read the matching reference file NOW using the `view` action on the file
-   editor tool:
+   request, then read the matching reference file NOW:
 
    - math → `references/math.md`
    - ELA → `references/ela.md`
@@ -60,7 +63,7 @@ only — name what the teacher is getting, never tool names, file names, "JSON",
    **If curriculum is NOT confirmed** (not detectable from upload or link, no explicit mention):
    never name a specific module, unit number, lesson number, or proprietary routine name anywhere
    in the output OR in any chat message — even if you recognize the routine from training.
-   Paraphrase the instructional move without curriculum attribution ("a compare-strategies
+   Describe the instructional move in your own generic terms ("a compare-strategies
    discussion", not the routine's trademarked name). This is a hard rule; violating it fails P9,
    and chat messages count. See **Copyright guardrail** (after Step 3) for the companion rule on
    verbatim reproduction.
@@ -159,12 +162,59 @@ Each subject reference file carries a **Copyright** line with subject-specific d
 
 If curriculum is NOT confirmed (see Step 0.2 detection rules), never name a specific
 curriculum, module, unit number, lesson number, or proprietary routine name anywhere in the
-output or in any chat message — even if recognizable from training. See Step 0.2 for the
-full rule (P9).
+output or in any chat message — even if recognizable from training. The source lesson and
+KG data inform the design without being cited. See Step 0.2 for the full rule (P9).
 
 ---
 
-## Step 4 — Output (Turn 1)
+## Step 4 — The draft offer
+
+The teacher gets the choice of a fast draft before the build. The offer is
+asked the same way as the clarify questions — through the structured question tool when
+one is available, in chat otherwise — as its own separate question, batched with whatever
+you ask before Step 2 (state, source lesson, learner needs) and asked on its own when
+nothing else needs asking.
+
+- Question: *Should I go ahead and build the full classroom-ready set (teacher plan + three tier documents, as
+  editable Word docs), or do you want to see a quick draft first?*
+- Options: **Go ahead and build it** · **Quick draft first** — what changes for each
+  tier, right here in chat
+
+**The full set is the default.** Declining, not answering, or anything like "proceed with
+your defaults" runs Steps 2–3 and goes straight to Step 5; the draft happens only on a clear yes.
+
+**The draft (on a yes) is built on Steps 2–3, never instead of them.** Run Step 2 in
+full — every KG call, exactly as written — and Step 3 before sketching anything. A draft
+sketched without the Step 2 grounding is a critical failure, the same failure as skipping
+the KG on the full build. Then present the design in chat — the draft is chat text only;
+rendering happens at Step 5 once the teacher approves. Show:
+
+- one line reading back the source lesson, standard, and grade;
+- for each tier (below / at / above), 2–3 bullets on what changes and why;
+- the student work at a glance — each tier's actual tasks, enough for the teacher to
+  skim and judge coverage;
+- one line on what every tier shares — the essential question or core task — and the
+  regroup rule
+
+The draft borrows its names from the documents it previews — phases, tasks, tiers,
+and sections are called what the plan will call them.
+
+Afterwards, ask what's next — a structured question, two options:
+
+- **Make changes** — adjust any tier or the shared task
+- **Create the materials** — teacher plan and the three tier documents, as editable Word
+  documents
+
+Apply change requests to the draft in chat and re-present it — changes are quick at this
+stage. Step 5 runs in the turn the teacher gives the go-ahead ("Create the materials",
+"proceed with your defaults", or similar).
+
+---
+
+## Step 5 — Output (one turn)
+
+Runs immediately when the teacher chose the full set, or in the turn the draft is
+approved.
 
 Four artifacts — **1 teacher-facing plan + 3 student tier documents (below / at / above)** —
 are all rendered by a bundled script from **one `differentiation.json` (the material source)**. Anything that
@@ -238,7 +288,7 @@ must be named on every tier, not only in the teacher plan. Fix mismatches before
   These sections are required and cannot be dropped to meet page caps — tighten other content
   instead.
 
-### 4a. Write the complete `differentiation.json` (Turn 1)
+### 5a. Write the complete `differentiation.json` (same turn)
 
 1. Write `differentiation.json`: top-level `theme`, the **`shared` block** (write this FIRST —
    the identity fields, the standard verbatim, each tier task under its own key (`t1`, `t2`, …),
@@ -246,7 +296,7 @@ must be named on every tier, not only in the teacher plan. Fix mismatches before
    also `anchor_activity` (early-finisher task in student-facing second person — directions
    only, no rationale) and `reflect_prompt` (the closing reflective question)), and a
    `documents` array with 4 entries: `{"id": "teacher_plan", "audience": "teacher", …}` and
-   `{"id": "worksheet_below" / "worksheet_at" / "worksheet_above", "audience": "student", …}`.
+   `{"id": "worksheet_group_a" / "worksheet_group_b" / "worksheet_group_c", "audience": "student", …}`.
    Each document's `sections` follow the subject file's document content templates.
 
    **Schema** — the complete field skeleton (`blocks` shows one of each type). This is
@@ -256,11 +306,12 @@ must be named on every tier, not only in the teacher plan. Fix mismatches before
    theme: {primary: "#…"}
    shared:
      subject, grade, standard_code, standard_text        (required identity)
+     duration?
      <any key you choose>: string
                          | block | block[]
-                         | {teacher: …, student: … or null}
+                         | {teacher: …, student: … or null, stimulus?: block[]}
      (only `standard` is special — it assembles standard_code+standard_text)
-   documents[]: {id: teacher_plan|worksheet_below|worksheet_at|worksheet_above,
+   documents[]: {id: teacher_plan|worksheet_group_a|worksheet_group_b|worksheet_group_c,
                  audience: teacher|student, eyebrow, title, meta,
                  sections[]: {heading, blocks[]}}
      block types:
@@ -268,9 +319,14 @@ must be named on every tier, not only in the teacher plan. Fix mismatches before
        {type: labeled, label, text} | {type: paragraph, text}
        {type: callout, kind: special|student-task|teacher-note|student-note, label, text}
        {type: h2, text} | {type: h3, text} | {type: list, label?, ordered?, items[]}
+       {type: checklist, label?, items[]} | {type: fill_in, label?, size: short|med|long}
        {type: phase_header, name, minutes}   (science teacher plan; supported by all renderers)
        {type: table, headers[]?, rows[[]], empty_row_height_pt?}
-       {type: cards, items[{title, text}]} | {type: workspace, size: small|med|large}
+       {type: fill_table, headers[], blank_rows: int, row_height_pt?}
+       {type: number_line, min, max, ticks?, marks[]?}
+       {type: source_card, title, author?, date?, origin?, excerpt}
+       {type: cards, items[{title, text}]} | {type: workspace, size: small|med|large, height_pt?}
+       {type: group, blocks[]} | {type: columns, left[], right[]} | {type: page_break}
    ```
 
    **`shared` is a content registry.** Register each tier task under its own key (`t1`,
@@ -332,26 +388,28 @@ must be named on every tier, not only in the teacher plan. Fix mismatches before
    sub-question) is its own headed block — never an edit to shared task text. Below-tier scaffolds follow R4; the Above-tier extension passes R7's quality
    test. Asset framing rules (below) apply to every student-facing block.
 
-### 4b. Render all four Word documents — one command, same turn
+### 5b. Render all four Word documents — one command, same turn
 
 ```bash
 bash scripts/render_all.sh differentiation.json "$OUTPUT_DIR"
 ```
 
-This writes `$OUTPUT_DIR/teacher_plan.docx`, `$OUTPUT_DIR/worksheet_below.docx`,
-`$OUTPUT_DIR/worksheet_at.docx`, and `$OUTPUT_DIR/worksheet_above.docx` in one invocation,
+This writes `$OUTPUT_DIR/teacher_plan.docx`, `$OUTPUT_DIR/worksheet_group_a.docx`,
+`$OUTPUT_DIR/worksheet_group_b.docx`, and `$OUTPUT_DIR/worksheet_group_c.docx` in one invocation,
 plus `.html` working files — no copy step needed; leave everything
-the script writes in place (downstream tooling reads the working files). Then list
+the script writes in place (later revision turns re-render from the working files). Then list
 `$OUTPUT_DIR` and confirm every document has both its `.docx` and `.html`; if either is
 missing or tiny, rerun the script. Present all four Word documents to the teacher together —
 attach the teacher plan last so it lands on top (chat surfaces stack newest-first). If the script errors, fix
 `differentiation.json` (it is almost always malformed JSON) and rerun. If file generation
 fails entirely, say so clearly — do not silently fall back to a chat-only delivery.
 
-### 4c. The close (every output turn)
+### 5c. The close (every output turn)
 
 The chat message that delivers artifacts ends with three things, in order. Each must appear in
-the chat message itself — saying it only inside the printed plan does not count.
+the chat message itself — saying it only inside the printed plan does not count. When the
+message mentions the sheets, use their group names with the association noted once
+(Group A = below grade level, etc.).
 
 1. **Learner-variability statement (first output turn, when you didn't ask).** If you never
    asked about specific learner needs in this conversation (the R8 question), state in chat
@@ -369,7 +427,7 @@ the chat message itself — saying it only inside the printed plan does not coun
 3. **The satisfaction ask.** Ask whether the teacher is satisfied with **all four artifacts**
    or wants changes. Do not skip the ask — on every output turn, including revisions.
 
-### 4d. Revisions — one edit, every artifact stays in sync
+### 5d. Revisions — one edit, every artifact stays in sync
 
 Make **targeted edits to `differentiation.json`**, then re-render all four documents (instant).
 Rules that keep the artifacts consistent:
@@ -387,7 +445,7 @@ Rules that keep the artifacts consistent:
 - Styling: top-level `theme` applies to all four documents; per-document `theme` overrides
   stay available.
 
-### 4e. Fallback — bespoke generation code (exception path only)
+### 5e. Fallback — bespoke generation code (exception path only)
 
 Only if the user explicitly asks for an artifact or layout the bundled renderer cannot express
 (a different document type, landscape poster, slide deck, etc.): write generation code from
@@ -404,6 +462,11 @@ worksheet they read as labels about the student, not for the student.
 - ❌ "sensemaking check", "formative check", "misconception", "scaffold", "tier",
   "differentiation", "anchor task" — use student words: *"Check your thinking"*, *"Try this
   together"*, *"If you finish early"*.
+- On a student document the tier is named **Group A** (below), **Group B** (at), or
+  **Group C** (above): the `title` carries the group letter per the subject template; the
+  `eyebrow` stays `"[Grade] [Subject] · [standard_code]"` with no level wording. Grade-level
+  labels are teacher words — the teacher plan's tier labels ("Below (Group A)" etc.) carry
+  the association.
 - Scaffold prompts get a SHORT student-friendly `h3` on its own line (e.g.
   *"Observe the data first"*, *"Check your thinking"*), then the prompt as a normal
   paragraph below it — never a long bold inline label like
@@ -424,8 +487,8 @@ design, not announced supports.
 
 ---
 
-## Step 5 — Complete
+## Step 6 — Complete
 
 The skill is complete when the teacher has confirmed they are satisfied with all four Word
-documents (4c). The closing message pairs the FA follow-up prompt from the subject
-reference's R8 section with the lesson-specific next-step options from 4c.
+documents (5c). The closing message pairs the FA follow-up prompt from the subject
+reference's R8 section with the lesson-specific next-step options from 5c.

@@ -5,7 +5,7 @@
 
 # Render all four artifacts (teacher plan + three tier worksheets) from one
 # differentiation.json in a single invocation. Writes editable .docx (the teacher
-# deliverable) and an .html twin of each (harness graders read the twin).
+# deliverable) and an .html twin of each (a preview that renders even without python-docx).
 # Fail-fast: any renderer error stops the run.
 #
 # Usage: bash scripts/render_all.sh differentiation.json "$OUTPUT_DIR"
@@ -18,23 +18,27 @@ here="$(cd "$(dirname "$0")" && pwd)"
 mkdir -p "$outdir"
 # python-docx powers the .docx output; the .html twins render without it. If the install
 # can't complete (offline container), render html now so the twins always exist.
-if ! python -c "import docx" 2>/dev/null; then
-  pip install -q "python-docx==1.1.2" || true
+if ! python3 -c "import docx" 2>/dev/null; then
+  python3 -m pip install -q "python-docx==1.1.2" || true
 fi
-if python -c "import docx" 2>/dev/null; then
-  python "$here/render_documents.py" "$json" --format both --outdir "$outdir"
+if python3 -c "import docx" 2>/dev/null; then
+  python3 "$here/render_documents.py" "$json" --format both --outdir "$outdir"
 else
-  # Render the html twins so graders have something, then fail loudly: the teacher's
-  # .docx deliverables could not be produced.
-  python "$here/render_documents.py" "$json" --format html --outdir "$outdir"
+  # Render the html twins so a readable preview still exists, then fail loudly: the
+  # teacher's .docx deliverables could not be produced.
+  python3 "$here/render_documents.py" "$json" --format html --outdir "$outdir"
   echo "error: python-docx could not be installed — no .docx deliverables were produced" >&2
   exit 1
 fi
+# Persist the source JSON alongside the rendered artifacts so later revision
+# turns can re-render from it (same guarantee the lesson-planning renderer
+# makes with lesson.json).
+cp "$json" "$outdir/differentiation.json" 2>/dev/null || true
 
 # Delivery guarantee: when $OUTPUT_DIR is set and the render went elsewhere
 # (a staging dir like /tmp/out), mirror EVERYTHING into $OUTPUT_DIR too.
-# Downstream tooling reads the .html twins from $OUTPUT_DIR; hand-copying a
-# subset there is the failure this removes.
-if [ -n "${OUTPUT_DIR:-}" ] && [ "$(cd "$outdir" && pwd)" \!= "$(mkdir -p "$OUTPUT_DIR" && cd "$OUTPUT_DIR" && pwd)" ]; then
+# Revision turns re-render from the differentiation.json that lands there;
+# hand-copying a subset there is the failure this removes.
+if [ -n "${OUTPUT_DIR:-}" ] && [ "$(cd "$outdir" && pwd)" != "$(mkdir -p "$OUTPUT_DIR" && cd "$OUTPUT_DIR" && pwd)" ]; then
   cp -R "$outdir"/. "$OUTPUT_DIR"/
 fi

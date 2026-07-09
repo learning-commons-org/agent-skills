@@ -273,7 +273,7 @@ CCSS/CCSS-aligned. Source from state vertical alignment when state is known; foo
 when using as proxy for a non-CCSS state.]
 
 ## Tier Design
-[ONE `table` block — never three labeled paragraph stacks. Columns: Below / At / Above.
+[ONE `table` block — never three labeled paragraph stacks. Columns: Below (Group A) / At (Group B) / Above (Group C).
 Rows (a cell may be "—" where a field doesn't apply to that tier):
 - **Grounded in** — Below: concept-level prerequisite by code + gist from CCSS vertical
   alignment. Above: forward standard by code + gist. At: "—".
@@ -322,7 +322,7 @@ for it.]
 
 ```
 
-### Document content — student materials (`id: worksheet_below` / `worksheet_at` / `worksheet_above`)
+### Document content — student materials (`id: worksheet_group_a` / `worksheet_group_b` / `worksheet_group_c`)
 
 No teacher notes, look-fors, or rationale. All three include: vocabulary glossary + sentence
 frames + the "If you finish early" anchor task + open-ended reflective prompt (rubric O5 —
@@ -338,7 +338,7 @@ Format by strand:
 | Combined | Reading tasks followed by writing tasks, scaffolds at the appropriate fade per R7 |
 
 ```markdown
-# [Below / At / Above Grade Level] — [Lesson Title]
+# [Group A / Group B / Group C] — [Lesson Title]
 
 **Name:** _________________ **Date:** _________
 

@@ -167,7 +167,7 @@ counterclaim by grade 11, and rhetorical analysis attends to audience, purpose, 
 4. **Lesson sequence** — phases per grade band above; in every phase where students work (reading, word work, writing, sorting): 3+ look-fors each naming the specific student behavior, why it matters for the standard, and what to do; in every discussion phase: specific text-dependent prompts (not generic)
 5. **Design notes** — last section, after the exit ticket: 2–3 elements to keep intact when adapting, each with a brief reason grounded in the research (Science of Reading for K–2 phonics; text complexity for 3–12), including the lesson's central representation or routine and its one-sentence why.
 
-→ **Section structure complete. Proceed immediately to Step 4 to generate output files.**
+→ **Section structure complete. Proceed to the draft (when the teacher chose one) or Step 5.**
 
 ## Exit ticket guidance
 
@@ -177,7 +177,7 @@ The exit ticket is the last phase in Lesson Sequence (`from_shared:exit_ticket` 
 
 ## Writing lesson.json — ELA mapping
 
-When you reach Step 4 (Output) in SKILL.md, register ELA content in `shared` and compose
+When you reach Step 5 (Output) in SKILL.md, register ELA content in `shared` and compose
 `documents[]` like this:
 
 - `shared.subject`: `"ELA"`.
