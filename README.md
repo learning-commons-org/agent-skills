@@ -11,7 +11,7 @@ Use cases include:
 * **Lesson planning**: Builds classroom-ready, standards-aligned lesson plans, optionally aligned to a teacher's curriculum.  
 * **Lesson differentiation**: Adapts an existing lesson into tiered versions (below / at / above proficiency-level) and for specific student needs, keeping core content consistent across tiers.
 
-The initial set of skills and evals in this repository was co-developed with [Anthropic](https://www.anthropic.com/). A companion [repository from Anthropic](https://github.com/anthropics/PLACEHOLDER) accompanies this work.
+Both of these initial set of skills and rubrics were co-developed with [Anthropic](https://www.anthropic.com/). A companion [repository from Anthropic](https://github.com/anthropics/PLACEHOLDER) accompanies this work.
 
 To get started, see [Quick Start](#quick-start) below and the [skills/](skills/) directory for what each skill does.
 
@@ -29,6 +29,8 @@ This quick start guide walks you through getting set up with the Learning Common
 
 ### 1\. Install the skills
 
+> **Note for Claude Code:** if your project doesn't have a `.claude/` directory yet, run `mkdir -p .claude` before installing.
+
 ```shell
 npx skills add learning-commons-org/agent-skills
 ```
@@ -37,7 +39,7 @@ This installs the skills into any agent runtime that supports the open skills fo
 
 ### 2\. Connect Knowledge Graph (recommended)
 
-The skills are grounded in Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) via its MCP server — not required, but strongly recommended for accurate, standards- and pedagogy-aligned output. Create an API key in the [Learning Commons Platform](https://platform.learningcommons.org/), then add the server to your agent. For example, in Claude Code:
+The skills are grounded in Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) via its MCP server — not required, but strongly recommended for accurate, standards- and pedagogy-aligned output. Create an API key in the [Learning Commons Platform](https://platform.learningcommons.org/), then add the server to your agent. Knowledge Graph datasets carry various licenses, some tools might be inaccessible for certain users. For example, in Claude Code:
 
 ```shell
 claude mcp add --transport http learning-commons-kg \

@@ -19,16 +19,16 @@ Each rubric is a CSV with the following fields:
 
 | Field | Description |
 | ----- | ----- |
-| `id` | Unique criterion identifier (e.g., `P1`, `R3`) |
-| `bucket` | Top-level category: `P` (Pedagogy), `R` (Rigor), `O` (Output/Formatting), or `M` (Model Scaffolding) |
-| `criterion` | Short name for the criterion |
-| `what_pass_requires` | The specific, scoreable condition that constitutes a pass |
-| `conditional` | If non-empty, the criterion applies only when this condition is met (e.g., `K-5`, `ELA-Gr8+`) |
-| `notes` | Rationale or design notes |
+| `ID` | Unique criterion identifier (e.g., `P1`, `R3`) |
+| `Bucket` | Top-level category: `P — Pedagogy`, `R — Rigor`, `O — Output / Formatting`, or `M — Model Scaffolding` |
+| `Criterion` | Short name for the criterion |
+| `What pass requires` | The specific, scoreable condition that constitutes a pass |
+| `Notes` | Rationale or design notes |
+| `Conditional` | If non-empty, the criterion applies only when this condition is met (e.g., `K-5-CGI`, `Gr8+-argument-writing`) |
 
 For lesson plan generation, apply `shared.csv` first, then layer in the relevant subject-specific file. Subject-specific criteria extend the shared set. For a 7th grade ELA lesson, you'd score against `shared.csv` \+ `ela.csv`.
 
-Conditional criteria (marked in the `conditional` column) apply only when the specified condition is met. For example, a criterion requiring CGI-style number talk structures applies to K-5 math only; a criterion requiring source range applies to social studies but not ELA. If the condition isn't met, the criterion is skipped (not failed).
+Conditional criteria (marked in the `Conditional` column) apply only when the specified condition is met. For example, a criterion requiring CGI-style number talk structures applies to K-5 math only; a criterion requiring source range applies to social studies but not ELA. If the condition isn't met, the criterion is skipped (not failed).
 
 Criteria score independently — a failing `R2` tells you something specific about cognitive demand, not just that the output is "bad." Depending on your situation, consider tracking per-criterion pass rates across a prompt suite rather than relying on aggregate scores, since aggregate pass rates can mask meaningful gaps.
 
@@ -39,7 +39,7 @@ You'll have to do some manual setup to use the rubrics, or you can feed them int
 1. Start with a set of lesson materials (you can use the skills in this repo to generate a new set)
 2. Use an LLM and pass the lesson materials and associated rubric CSVs along with an LLM as judge prompt to instruct the model to score the lesson materials as either `0` or `1` against each rubric criterion
 
-You can use this system prompt to set up your LLM as judge:
+You can use this system prompt to set up your LLM as judge (this is the exact system prompt we've used in our evaluation harness):
 
 ```
 You are a rigorous educational content evaluator. Your job is to assess whether
@@ -66,7 +66,7 @@ trailing text. Each element: {"id": "...", "pass": true|false,
 
 You may also want to create individual LLM judges with prompts that provide more detailed instructions for each rubric criterion.
 
-Over time, an important aspect of using these criteria effectively is calibrating the judging by modifying the `what_pass_requires` or tuning the prompt for your LLM judges. We suggest a simple loop of partnering with education practitioners or researchers.
+Over time, an important aspect of using these criteria effectively is calibrating the judging by modifying the `What pass requires` or tuning the prompt for your LLM judges. We suggest a simple loop of partnering with education practitioners or researchers.
 
 ## **The P/R/O/M framework**
 
