@@ -8,7 +8,7 @@ The skills are developed to be grounded in learning science and leverage Learnin
 
 Use cases include:
 
-* **Lesson planning**: Builds classroom-ready, standards-aligned lesson plans, optionally aligned to a teacher's curriculum.  
+* **Lesson planning**: Builds classroom-ready, standards-aligned lesson plans, optionally aligned to a teacher's curriculum.
 * **Lesson differentiation**: Adapts an existing lesson into tiered versions (below / at / above proficiency-level) and for specific student needs, keeping core content consistent across tiers.
 
 Both of these initial set of skills and rubrics were co-developed with [Anthropic](https://www.anthropic.com/). A companion [repository from Anthropic](https://github.com/anthropics/PLACEHOLDER) accompanies this work.
@@ -20,7 +20,7 @@ To get started, see [Quick Start](#quick-start) below and the [skills/](skills/)
 | Path | Description |
 | :---- | :---- |
 | [skills/](skills/) | The published agent skills and example prompts to use the skills |
-| [evals/](evals/) | Evaluation rubrics used to benchmark the quality of skill outputs |
+| [evals/](evals/) | Evaluation rubrics used to evaluate the quality of skill outputs |
 | [LICENSE](LICENSE) | Open source license details |
 
 ## **Quick Start**
@@ -51,14 +51,14 @@ claude mcp add --transport http learning-commons-kg \
 
 Prompt your agent with a typical teaching request — the matching skill loads automatically:
 
-- *"I need a lesson for tomorrow on rounding to the nearest hundred for my 3rd graders."*  
+- *"I need a lesson for tomorrow on rounding to the nearest hundred for my 3rd graders."*
 - *"Differentiate this 6th grade food webs lesson for students below / at / and above proficiency level (find the lesson here: https://www.calacademy.org/educators/lesson-plans/how-stable-is-your-food-web)"*
 
 See [skills/example-prompts.md](skills/example-prompts.md) for more examples.
 
 ### 4\. Evaluate the output
 
-Check the generated materials against the same rubrics we use to benchmark these skills — pedagogy, rigor, formatting, and model scaffolding. See [evals/](evals/) for the rubrics and instructions on running them as an LLM-as-judge.
+Check the generated materials against the same rubrics we use to evaluate these skills — pedagogy, rigor, formatting, and model scaffolding. See [evals/](evals/) for the rubrics and instructions on running them as an LLM-as-judge.
 
 ## **Support & Feedback**
 
@@ -68,8 +68,8 @@ We want to hear from you. For questions or feedback, please [open an issue](http
 
 **Learn more about our work or partner with us to:**
 
-* Co-develop new skills for K-12 workflows  
-* Get early access to new skills, tools, and Knowledge Graph  
+* Co-develop new skills for K-12 workflows
+* Get early access to new skills, tools, and Knowledge Graph
 * Receive personalized support from the Learning Commons team
 
 Contact us [here](https://learningcommons.org/contact/?utm_source=github&utm_medium=agent-skills&utm_campaign=partner).
@@ -84,8 +84,8 @@ The resources provided in this repository are made available "as-is", without wa
 
 By accessing or using these resources, you acknowledge that:
 
-* You are responsible for evaluating their suitability for your specific use case.  
-* Learning Commons makes no representations about the accuracy, completeness, or fitness of these resources for any particular purpose.  
+* You are responsible for evaluating their suitability for your specific use case.
+* Learning Commons makes no representations about the accuracy, completeness, or fitness of these resources for any particular purpose.
 * Any use of the materials is at your own risk, and Learning Commons is not liable for any direct or indirect consequences that may result.
 
 Please refer to each resource's README, license, and associated docs for any additional limitations, attribution requirements, or guidance specific to that resource.
