@@ -80,7 +80,7 @@ If you believe you have found a security issue, please responsibly disclose by c
 
 ## **Disclaimer**
 
-The resources provided in this repository are made available "as-is", without warranties or guarantees of any kind. They may contain inaccuracies, limitations, or other constraints depending on the context of use. Use of these resources is subject to [our Terms of Use](https://learningcommons.org/terms-of-use/).
+The resources provided in this repository are made available "as-is", without warranties or guarantees of any kind. They may contain inaccuracies, limitations, or other constraints depending on the context of use. Use of Learning Commons services, including the MCP server, is subject to [our Terms of Use](https://learningcommons.org/terms-of-use/).
 
 By accessing or using these resources, you acknowledge that:
 
