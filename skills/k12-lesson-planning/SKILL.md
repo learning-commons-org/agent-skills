@@ -239,11 +239,13 @@ because every part agrees with every other part:
 
 - The materials list and the phases agree exactly: every listed item is used by a named
   phase, and every counted set matches its enumeration ("Picture cards, 18" lists 18 words).
-- A printable a phase depends on (cards, mats, handouts) is either shipped as a page in
-  this package or listed as teacher prep with its full contents enumerated in the plan.
-  Documents reference only pages that exist: offers to produce more live in your chat
-  message, and no document mentions them ("see offer", "offer at end", "shipped with this
-  lesson" are authoring notes that must never reach a teacher).
+- **Classroom-ready:** the lesson runs on what the teacher already holds. Every Materials
+  item is a page this package ships, equipment the classroom has, or a sourced resource
+  with its access path stated — exact title and source, a link when you could confirm one.
+  Anything harder to get than that stays out of the lesson unless the teacher steered
+  toward it. A printable the lesson depends on ships with the package — as lesson pages
+  when the document set expresses it, or as its own file in the format that renders it
+  best (5e).
 - A task worded in two places (plan's "Students see" and the student page) uses identical
   wording in both.
 - Student tasks match the skill the standard names, in both directions. Decoding, spelling,
@@ -293,10 +295,7 @@ Practice*, not bare *SEP* — a teacher should never need to look up an acronym.
   projector, paper) plus the pages this lesson ships. A separate printable or manipulative
   earns its place only when the activity genuinely needs it — and the same thinking work on
   the worksheet usually serves. When a printable earns it (cards, mats, a template), ship it
-  as a document in the package; equipment a classroom owns is simply listed.
-- Every material is findable, shipped, or offered: a sourced visual (image, video, diagram)
-  comes with where to get it — a specific archive or image library, with a link when you have
-  web search to confirm one — in the Materials line or your chat message.
+  with the package (5e picks the format); equipment a classroom owns is simply listed.
 - Phase minutes include the transitions they cause (handing out, regrouping, collecting), at
   a pace real students of this grade manage, and the phases sum to exactly the stated
   period — transition time lives inside the phases, never as invisible buffer.
@@ -399,9 +398,9 @@ printed on it.
 | `table` (no `headers`) | Term/definition pairs, label/value reference rows. |
 | `table` / `data_table` with `headers` | Real tabular data with column labels (misconceptions, scaffolds, the data set students analyze). `display: "large"` renders cells in big centered type — a word grid young students point to and read. |
 | `fill_table` | An organizer students write into — observation log, comparison grid, evidence collector. `rows` as a count gives blank rows; `rows` as a list mixes filled and blank — `[["cap","cape"], [], []]` shows a worked first row, then write-in space, and `[["Shell", "", ""]]` gives a labeled row with blank cells students write in (say what goes in the blank — a ✓, yes/no, a word — in the instruction line above). |
-| `number_line` | A drawn number line (`min`, `max`, `ticks`, optional `marks`). |
+| `number_line` | A drawn number line (`min`, `max`, `ticks`, optional `marks`). `ticks` omitted defaults to 10 evenly spaced segments; `ticks: 0` draws a bare line with only the `min`/`max` end labels and no tick marks, for students to partition themselves. |
 | `source_card` | A primary or secondary source excerpt students read: title/author/date + the excerpt text. |
-| `answer_box` | Writing space after a task. Grade-banded default heights: K-2 ~200pt, 3-5 ~150pt, 6-8 ~130pt, 9+ ~116pt. Lower grades get ruled lines by default; `ruled: false` gives open blank space — the right surface for drawing, diagramming, or model-sketching tasks. |
+| `answer_box` | Writing space after a task. With no `height_pt` it sizes itself to the grade band (K-2 ~200pt, 3-5 ~150pt, 6-8 ~130pt, 9-12 ~115pt). K-5 boxes draw ruled handwriting lines except in math, which defaults to open space; `ruled: true` draws lines at any grade — the surface for answers of composed sentences — and `ruled: false` gives open space for drawing or model-sketching. A task answered in a `fill_table` or on a `number_line` already has its surface. |
 | `group` | Keeps a task's prompt, stimulus, supports, and answer box together so a page break never separates them. |
 
 ### 5b. Render every Word document — one command, same turn
@@ -427,14 +426,12 @@ chat-only delivery.
 
 End the turn with EXACTLY ONE closing message that does three things, in this order:
 
-1. **If the lesson's Materials list names physical materials the teacher would otherwise have
-   to make** — picture cards, word cards, number cards, sorting mats, response cards,
-   manipulative templates — lead with a bolded offer to make them: *"**This lesson uses
-   picture cards and a sorting mat — want me to make a print-and-cut set?**"* Name the
-   specific items from this lesson. This is the first and most prominent question. Printable
-   card sets, mats, and templates always get the offer even when the lesson also needs
-   equipment you can't make (a pocket chart, a real book) — skip the offer only when NOTHING
-   in Materials is printable beyond what you already produced.
+1. **If Materials names equipment the classroom has that a paper version can stand in
+   for** — coins, blocks, dice, a hundred chart — lead with a bolded offer to print it:
+   *"**This lesson uses base-ten blocks — want me to make a printable set in case
+   yours are short?**"* Anything whose content this lesson wrote — word cards, a
+   source excerpt, a sorting mat with this lesson's categories — already ships with
+   the package.
 2. Asks whether the teacher is satisfied with **every artifact produced** or wants changes —
    e.g. *"Take a look at the lesson plan, student materials, and observation template — anything
    you'd like me to adjust?"* Do not skip the ask.
@@ -444,17 +441,9 @@ End the turn with EXACTLY ONE closing message that does three things, in this or
    English learners, (2) differentiate by proficiency level, or (3) adapt to be specific to
    your state standards?"*
 
-Example shape when materials are involved:
-
-> Here's your lesson plan, student page, and observation tracker.
->
-> **This lesson uses picture cards and a sorting mat — want me to make a print-and-cut set?**
->
-> And let me know if you'd like anything changed in the plan — I can also (1) …, (2) …, (3) ….
-
 ### 5d. Revisions — one edit, every artifact stays in sync
 
-Make **targeted edits to `lesson.json`**, then re-render all three documents (instant). Rules that
+Make **targeted edits to `lesson.json`**, then re-render every document (instant). Rules that
 keep the artifacts consistent:
 
 - If the change touches content registered in `shared` (a problem, a source, the exit ticket,
@@ -471,9 +460,11 @@ keep the artifacts consistent:
   Artifacts use minimal color so they print cleanly in black-and-white; do not set
   per-section or per-phase colors.
 
-### 5e. Supplementary materials and other one-off artifacts
+### 5e. Supplementary artifacts in their best format
 
-Supplementary materials (cards, mats, response sheets) are made when the teacher asks — use
-`lesson.json` or write the file directly, whichever fits. The same goes for anything else the
-renderer can't express (poster, slide deck); source content from `shared` so it stays
-consistent.
+The `lesson.json` pipeline is for the lesson's document set: pages a student or teacher
+reads or writes on. An artifact whose value depends on its form — exact card
+dimensions for cutting, poster-scale type — belongs outside it, as its own file in
+whatever format produces the best version (e.g. a print-ready PDF). Your judgment
+picks the format; source any shared content from `shared` so pages can't drift, and name
+the file in Materials like any other page.

@@ -20,7 +20,15 @@ Before asking anything, assess the following from all available conversation sig
 - **6–8**: literary and rhetorical analysis
 - **9–12**: sophisticated analysis and argument
 
-**3. Anchor text.** Note whether the teacher has specified a text. If not, select one from training knowledge appropriate to the grade and standard — or draw from the KG lesson-materials call (see learning-commons-kg.md). Sources are real, high-quality, and specifically cited (title, author, date, archive). If you have web search, confirm before using. Flag the selection in Section 1 as suggested.
+**3. Anchor text.** Note whether the teacher has specified a text. If not, select one from training knowledge appropriate to the grade and standard — or draw from the KG lesson-materials call (see learning-commons-kg.md). Flag your own selection in Section 1 as [suggested].
+
+The anchor text's Materials line says where the text comes from, so the teacher can put
+it in front of students. Public-domain text ships with the package. Copyrighted text
+is cited — title, author, date, source — and the teacher provides copies; say so in chat
+as well. Include a URL only after confirming it resolves; otherwise the citation stands
+on its own. Example: *"Ain't I a Woman?" — Sojourner Truth, 1851 — public domain, ships
+on the student page; full text: https://www.nps.gov/articles/sojourner-truth.htm
+(confirmed).*
 
 When key information is missing, ask. Priority: (1) grade level if missing, (2) topic or text if missing, (3) lesson type for K–2 if standard doesn't clarify, (4) state if not inferrable. Infer everything else. Defaults applied silently: 45–60 min (K–2: allow 45 min), universal access design, CCSS (overridden by the detected state's framework when State Detection finds one).
 
@@ -161,7 +169,7 @@ counterclaim by grade 11, and rhetorical analysis attends to audience, purpose, 
 
 ### Section structure — all grade bands
 
-1. **At a glance** — standard verbatim in a `special` callout (the ONE verbatim quote — everywhere else standards go by code + a short gist); a one-line lesson arc naming the phases with minutes so the period's shape is visible before any detail; anchor text (title + genre + Lexile if known, or [suggested] flag); materials list — name each item plainly (e.g. "Picture cards, 18"); the offer to produce printable items belongs in your chat message, never inside a document
+1. **At a glance** — standard verbatim in a `special` callout (the ONE verbatim quote — everywhere else standards go by code + a short gist); a one-line lesson arc naming the phases with minutes so the period's shape is visible before any detail; anchor text (title + genre + Lexile if known, or [suggested] flag); materials list — name each item plainly (e.g. "Picture cards, 18")
 2. **Learning goal** — Big Idea (enduring understanding, 1 sentence tied to the text and unit); SWBAT bullets drawn from KG learning components (learning-commons-kg.md, ELA call 2), naming specific sub-skills; Prerequisite (prior standard by code + gist + 1 sentence on prior knowledge assumed)
 3. **Vocabulary & anticipated challenges** — 2–3 Tier 2 target words with definitions and text context; 3 misconceptions specific to this text and task, drawn from the KG or training knowledge, each formatted: *What students do* / *Why it happens* / *Teacher move*
 4. **Lesson sequence** — phases per grade band above; in every phase where students work (reading, word work, writing, sorting): 3+ look-fors each naming the specific student behavior, why it matters for the standard, and what to do; in every discussion phase: specific text-dependent prompts (not generic)

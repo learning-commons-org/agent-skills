@@ -154,6 +154,27 @@
           "text": "Agrees with Maya by comparing totals ($4.20 < $5.00) or compares bag counts, without finding any price per bag."
         }
       ]
+    },
+    "hint_cards": {
+      "type": "cards",
+      "items": [
+        {
+          "title": "Start here",
+          "text": "What does exactly 1 cost? Try price ÷ how many."
+        },
+        {
+          "title": "Ratio table",
+          "text": "Write the deal as a row: items | price. Divide both by the number of items to get the 1 row."
+        },
+        {
+          "title": "Cents card",
+          "text": "Uneven division? Switch to cents. $3.00 for 4 erasers → 300 ÷ 4 = 75 cents each."
+        },
+        {
+          "title": "Say it with per",
+          "text": "Your answer is a price for exactly 1: \"____ per ____.\""
+        }
+      ]
     }
   },
   "documents": [
@@ -198,7 +219,7 @@
               "items": [
                 "Projector or anchor chart",
                 "Showdown handout (1 per pair)",
-                "Fraction scaffold cards (1 per table)",
+                "Hint cards, 4, cut apart — 1 set per table",
                 "Whiteboards"
               ]
             },
@@ -232,7 +253,7 @@
             {
               "type": "labeled",
               "label": "Prerequisites",
-              "text": "6.RP.A.1: students can already read and write ratios; today turns those ratios into per-1 prices. The fraction scaffold leans on 5.NF.B.3."
+              "text": "6.RP.A.1: students can already read and write ratios; today turns those ratios into per-1 prices. The cents hint card leans on 5.NF.B.3."
             }
           ]
         },
@@ -290,7 +311,7 @@
             },
             {
               "type": "paragraph",
-              "text": "Pairs work the five Showdown items. Every answer uses 'per'. Scaffold cards sit face-down on each table."
+              "text": "Pairs work the five Showdown items. Every answer uses 'per'. Hint cards sit face-down on each table."
             },
             {
               "type": "labeled",
@@ -453,8 +474,7 @@
                   "key": "anchor_task"
                 },
                 {
-                  "type": "answer_box",
-                  "height_pt": 110
+                  "type": "answer_box"
                 }
               ]
             }
@@ -482,8 +502,7 @@
                   "label": "1"
                 },
                 {
-                  "type": "answer_box",
-                  "height_pt": 120
+                  "type": "answer_box"
                 }
               ]
             },
@@ -496,8 +515,7 @@
                   "label": "2"
                 },
                 {
-                  "type": "answer_box",
-                  "height_pt": 120
+                  "type": "answer_box"
                 }
               ]
             },
@@ -515,7 +533,7 @@
                 },
                 {
                   "type": "answer_box",
-                  "height_pt": 140
+                  "ruled": true
                 }
               ]
             },
@@ -528,8 +546,7 @@
                   "label": "4"
                 },
                 {
-                  "type": "answer_box",
-                  "height_pt": 140
+                  "type": "answer_box"
                 }
               ]
             },
@@ -542,8 +559,7 @@
                   "label": "5"
                 },
                 {
-                  "type": "answer_box",
-                  "height_pt": 140
+                  "type": "answer_box"
                 }
               ]
             }
@@ -561,9 +577,30 @@
                 },
                 {
                   "type": "answer_box",
-                  "height_pt": 160
+                  "ruled": true
                 }
               ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hint_cards",
+      "audience": "student",
+      "eyebrow": "Grade 6 Mathematics · Hint Cards",
+      "title": "Stuck? Pick a hint card",
+      "sections": [
+        {
+          "heading": "Hint cards",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Take one card only when your pair is stuck."
+            },
+            {
+              "type": "from_shared",
+              "key": "hint_cards"
             }
           ]
         }

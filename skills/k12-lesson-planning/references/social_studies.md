@@ -77,7 +77,8 @@ Be sure that overall timing and timing for each section is realistic - do not ov
    verbatim quote — everywhere else standards go by code + short gist); a one-line lesson arc
    naming the phases with their minutes (e.g. "Hook 5 -> source work 20 -> discussion 15 ->
    exit 10") so the shape of the lesson is visible before any detail; the lesson's C3 inquiry
-   focus in plain words (e.g. "C3: evaluating sources and using evidence"); materials.
+   focus in plain words (e.g. "C3: evaluating sources and using evidence"); materials —
+   name each item plainly.
 2. **Compelling & supporting questions** — the unit-level question, and the narrower question
    this single lesson investigates (one of the 3–5 that would make up the full unit).
 3. **Lesson goals & background for the teacher** — 1–2 SWBATs; assumed prior knowledge,

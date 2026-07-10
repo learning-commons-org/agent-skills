@@ -80,6 +80,8 @@ table.headless td:first-child{font-weight:600}
 .numberline .nl-mark{position:absolute;top:-10pt;width:0;height:0;border-left:5pt solid transparent;
                      border-right:5pt solid transparent;border-top:8pt solid var(--primary);
                      transform:translateX(-5pt)}
+.numberline .nl-mlab{position:absolute;top:-22pt;left:0;transform:translateX(-50%);
+                     font-size:8.5pt;font-weight:600;white-space:nowrap;color:var(--primary)}
 
 /* --- misc -------------------------------------------------------------- */
 .pagebreak{page-break-after:always;border:none;margin:0;height:0}
