@@ -6,12 +6,12 @@ Agent Skills are open, ready-to-use skills that help AI assistants produce high-
 
 The skills are developed to be grounded in learning science and leverage Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph). They are built to be cross-platform and model-agnostic: usable with any agent runtime that supports the open skills format.
 
-Use cases include:
+Current use cases include:
 
 * **Lesson planning**: Builds classroom-ready, standards-aligned lesson plans, optionally aligned to a teacher's curriculum.
 * **Lesson differentiation**: Adapts an existing lesson into tiered versions (below / at / above proficiency-level) and for specific student needs, keeping core content consistent across tiers.
 
-Both of these initial set of skills and rubrics were co-developed with [Anthropic](https://www.anthropic.com/). A companion [repository from Anthropic](https://github.com/anthropics/PLACEHOLDER) accompanies this work.
+Both of these initial use cases were co-developed with [Anthropic](https://www.anthropic.com/). A companion [K-12 teacher skills repository from Anthropic](https://github.com/anthropics/k12-teacher-skills) accompanies this work.
 
 To get started, see [Quick Start](#quick-start) below and the [skills/](skills/) directory for what each skill does.
 
