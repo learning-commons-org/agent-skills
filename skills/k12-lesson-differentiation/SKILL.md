@@ -275,6 +275,13 @@ blocks and plan prose. Also confirm the exact `shared.standard_code` string appe
 the three tier documents' `eyebrow` (`"[Grade] [Subject] · [standard_code]"`) — the standard
 must be named on every tier, not only in the teacher plan. Fix mismatches before rendering.
 
+**Classroom-ready (every document):** the tiers run on what the teacher already holds.
+Every resource a worksheet or the plan names is a printed block in this package, equipment
+the classroom has, or a sourced resource with its access path stated — exact title and
+source, a link when you could confirm one. A visual a task depends on prints on the
+worksheet that uses it, or the task is rewritten to work from what does print. Anything
+harder to get than that stays out unless the teacher steered toward it.
+
 **P8 — Flexible grouping (confirm in teacher plan JSON):**
 - The `Flexible Grouping` section states the evidence or basis used to assign students to each
   tier (e.g., a specific prior exit ticket, diagnostic score, or "Default profile applied — no
@@ -355,6 +362,7 @@ must be named on every tier, not only in the teacher plan. Fix mismatches before
    | `cards` | 2–4 parallel items of roughly equal length — tier summaries, sort buckets. Never for long or unbalanced items. |
    | `table` (no `headers`) | Term/definition pairs, label/value reference rows. |
    | `table` with `headers` | Real tabular data with column labels (per-tier scaffolds, misconceptions). |
+   | `number_line` | A drawn number line (`min`, `max`, `ticks`, optional `marks`). `ticks` omitted defaults to 10 evenly spaced segments; `ticks: 0` draws a bare line with only the `min`/`max` end labels and no tick marks, for students to partition themselves. |
    | `workspace` | Student writing space; `size: small|med|large` or grade-banded default. |
    Tabular content — data tables, "complete the table" tasks, row-and-column organizers — must
    be a `{"type": "table", "headers": [...], "rows": [[...]]}` block (a row of empty strings

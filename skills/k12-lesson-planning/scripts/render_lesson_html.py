@@ -33,7 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from lesson_common import (  # noqa: E402
     DEFAULT_THEME, Theme, CALLOUT_KINDS,
     btype as _btype, resolve_callout_kind as _resolve_callout_kind,
-    answer_profile, expand_document, build_header, preamble_blocks,
+    answer_profile, expand_document, build_header, preamble_blocks, coerce_marks,
     workspace_height, normalize_text, label_text, label_sep, table_row_height,
     coerce_headers, coerce_rows,
 )
@@ -54,8 +54,8 @@ def md(text) -> str:
 def answer_space(blk: dict, theme) -> str:
     """Open writing space — blank whitespace, or ruled lines for lower-grade prose."""
     h = workspace_height(blk, theme)
-    if blk.get("ruled", theme.answer_gap is not None):
-        gap = float(theme.answer_gap or 22)
+    if blk.get("ruled", theme.ruled_default):
+        gap = float(theme.answer_gap)
         n = max(2, int(round(h / gap)))
         lines = f"<div class=\"ansline\" style=\"height:{gap:g}pt\"></div>" * n
         return f"<div class=\"ans\">{lines}</div>"
@@ -224,23 +224,32 @@ def render_block(blk: dict, theme: Theme) -> str:
     if t == "number_line":
         lo, hi = blk.get("min", 0), blk.get("max", 10)
         try:
-            ticks = int(blk.get("ticks") or 10)
+            raw_ticks = None if blk.get("ticks") is None else int(blk.get("ticks"))
         except (TypeError, ValueError):
-            ticks = 10
+            raw_ticks = None
+        # An explicit 0 means "blank line — students partition it themselves": the
+        # bar and its end labels still draw, but with no tick marks at all.
+        is_blank = raw_ticks == 0
+        ticks = 10 if raw_ticks is None else raw_ticks
         ticks = min(max(1, ticks), 100)
-        marks = blk.get("marks") or []
+        marks = coerce_marks(blk.get("marks"))
         try:
             lo_f, hi_f = float(lo), float(hi)
             span = hi_f - lo_f or 1.0
         except (TypeError, ValueError):
             lo_f, hi_f, span = 0.0, float(ticks), float(ticks)
+        eps = abs(span) * 0.002
+        marks = [(v, lab) for v, lab in marks
+                 if abs(v - lo_f) > eps and abs(v - hi_f) > eps]
         tick_html = "".join(
-            f"<span class=\"nl-tick\" style=\"left:{(i/ticks)*100:.2f}%\">"
+            f"<span class=\"nl-tick\" style=\"left:{(i/ticks)*100:.2f}%"
+            + (";border-left:none" if is_blank else "") + "\">"
             f"<span class=\"nl-lab\">{md(lo if i == 0 else hi if i == ticks else '')}</span></span>"
             for i in range(ticks + 1))
         mark_html = "".join(
-            f"<span class=\"nl-mark\" style=\"left:{((float(m)-lo_f)/span)*100:.2f}%\"></span>"
-            for m in marks if isinstance(m, (int, float)))
+            f"<span class=\"nl-mark\" style=\"left:{((v-lo_f)/span)*100:.2f}%\"></span>"
+            + (f"<span class=\"nl-mlab\" style=\"left:{((v-lo_f)/span)*100:.2f}%\">{md(lab)}</span>" if lab else "")
+            for v, lab in marks)
         return (f"<div class=\"numberline\"><div class=\"nl-bar\">{tick_html}{mark_html}"
                 f"</div></div>")
     # NEVER dump raw JSON into the page — a printed worksheet with {"type": ...} on it is a
@@ -257,7 +266,8 @@ def render_block(blk: dict, theme: Theme) -> str:
 def render(data: dict) -> str:
     data = expand_document(data, data.get("audience", "teacher"))
     theme = Theme(data.get("theme"))
-    theme.answer_height, theme.answer_gap, theme.answer_row = answer_profile(data)
+    (theme.answer_height, theme.answer_gap,
+     theme.answer_row, theme.ruled_default) = answer_profile(data)
     theme.student_doc = data.get("audience") == "student"
     hdr = build_header(data)
     out = ["<div class=\"hdr\">"]

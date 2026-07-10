@@ -79,7 +79,7 @@ Coverage rules:
 
 ### Section structure — both paths
 
-1. **At a glance** — standard verbatim in a `special` callout (the ONE verbatim quote — everywhere else standards go by code + a short gist); a one-line lesson arc naming the phases with minutes ("Launch 8 → Explore 15 → Discuss 12 → Synthesize 5 → Exit 5") so the period's shape is visible before any detail; materials — name each item plainly (e.g. "Number cards 0-20"); the offer to produce printable items belongs in your chat message, never inside a document; SMPs named
+1. **At a glance** — standard verbatim in a `special` callout (the ONE verbatim quote — everywhere else standards go by code + a short gist); a one-line lesson arc naming the phases with minutes ("Launch 8 → Explore 15 → Discuss 12 → Synthesize 5 → Exit 5") so the period's shape is visible before any detail; materials — name each item plainly (e.g. "Number cards 0-20"); SMPs named
 2. **Learning goal** — Big Idea (enduring understanding, 1 sentence); SWBAT; Prerequisite (prior standard by code + one plain sentence on what students can already do and how today builds on it)
 3. **Vocabulary & anticipated challenges** — 3–5 key terms with brief definitions; 2–3 misconceptions each as: *What students do* / *Why it happens* / *Teacher move*
 4. **Lesson sequence** — phases per curriculum branch above; **Discuss gets at least 10 minutes** (in a short warm-up-style request, shrink the other phases, not Discuss); in Explore: 3+ look-fors each naming the student response, why it matters, and what to do with it — and if the anchor task admits more than one correct response or equation, one look-for must say so explicitly so the teacher accepts all of them; in Discuss: at least one named student-to-student talk move (Think-Pair-Share, Turn-and-Talk, partner compare, agree/disagree) + specific discourse prompts (not generic)
@@ -130,7 +130,7 @@ and adapt:
 
 ```
 sections:
-  "<warm-up heading, kid-facing>"  group[ from_shared:anchor_task, answer_box ~110pt ]
+  "<warm-up heading, kid-facing>"  group[ from_shared:anchor_task, answer_box ]
   "<practice heading>"     optional callout(student-note) — a brief reminder, only when one helps
                            from_shared:<visual-scaffold key>   ← only when it is something
                              students work with (blank fill_table, number_line, the data
@@ -138,12 +138,13 @@ sections:
                              teacher-only
                            for each problem k:
                              group[ {type: from_shared, key: pk, label: "k"},
-                                    answer_box (K-2 ~170pt, 3-5 ~150pt, 6+ ~120pt) ]
+                                    answer_box (bare -- it sizes to the grade band;
+                                    ruled: true when the answer is composed sentences) ]
                            on the ONE problem whose hard part is the writing move, its
                              group also carries the sentence support -- plain text before
                              the answer_box (see Sentence supports in SKILL.md)
                            page_break
-  "<exit heading, kid-facing>"     group[ from_shared:exit_ticket, answer_box ~160pt ]
+  "<exit heading, kid-facing>"     group[ from_shared:exit_ticket, answer_box ]
 ```
 
 **Observation template layout** (the `id: "observation_template"` document):

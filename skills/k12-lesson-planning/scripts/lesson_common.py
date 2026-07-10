@@ -277,8 +277,9 @@ def _facet_text(v) -> str:
 def _faceted(val: dict, audience: str) -> list[dict]:
     """Expand a {teacher?, student?, stimulus?} value.
 
-    Student pages: stimulus + student facet only — teacher script never reaches the worksheet,
-    and a null/absent student facet renders nothing (so oral/teacher-led tasks leave no trace).
+    Student pages: student facet, then stimulus — the worksheet reads task-then-surface —
+    and nothing else: teacher script never reaches the worksheet, and a null/absent
+    student facet renders nothing (so oral/teacher-led tasks leave no trace).
 
     Teacher pages: stimulus + teacher facet as plain script, then the
     student facet as ONE quoted "Students see" line — the teacher reads their own script and
@@ -286,23 +287,23 @@ def _faceted(val: dict, audience: str) -> list[dict]:
     Neither facet is a callout: callouts are reserved for the few moments a teacher must not
     miss, and a page where every task is boxed highlights nothing."""
     out: list[dict] = list(_as_blocks(val.get("stimulus")))
-    if audience == "teacher":
-        t_blocks = _as_blocks(val.get("teacher"))
-        if len(t_blocks) == 1 and t_blocks[0].get("type") == "list":
-            # A list-form script renders as a real list — one glanceable move per line —
-            # not a paragraph with dash-prefixed lines.
-            out.append(t_blocks[0])
+    if audience != "teacher":
+        out[:0] = _as_blocks(val.get("student"))
+        return out
+    t_blocks = _as_blocks(val.get("teacher"))
+    if len(t_blocks) == 1 and t_blocks[0].get("type") == "list":
+        # A list-form script renders as a real list — one glanceable move per line —
+        # not a paragraph with dash-prefixed lines.
+        out.append(t_blocks[0])
+    else:
+        t = _facet_text(val.get("teacher"))
+        if t:
+            out.append({"type": "instructions", "text": t})
         else:
-            t = _facet_text(val.get("teacher"))
-            if t:
-                out.append({"type": "instructions", "text": t})
-            else:
-                out.extend(t_blocks)
-        s = _facet_text(val.get("student"))
-        if s:
-            out.append({"type": "labeled", "label": "Students see", "text": s})
-        else:
-            out.extend(_as_blocks(val.get("student")))
+            out.extend(t_blocks)
+    s = _facet_text(val.get("student"))
+    if s:
+        out.append({"type": "labeled", "label": "Students see", "text": s})
     else:
         out.extend(_as_blocks(val.get("student")))
     return out
@@ -340,24 +341,27 @@ def expand_from_shared(key: str, shared: dict, audience: str = "teacher",
         out = _as_blocks(val)
 
     # `{type: from_shared, key: p1, label: "1"}` — fold the label into the first text-bearing
-    # block so a numbered prompt renders on one line, not an orphan number above a paragraph.
-    # A label must never render alone. Dispatch on the first block's FIELDS, not its
+    # block (scanning past leading diagram blocks, which have nothing to fold into) so a
+    # numbered prompt renders on one line, not an orphan number above a paragraph.
+    # A label must never render alone. Dispatch on that block's FIELDS, not its
     # type name — type names change (callout -> instructions broke the old version of
     # this); the text/label/items field shapes are the schema's stable contract.
     label = (blk or {}).get("label")
     if label and out:
-        first = out[0]
+        i = next((j for j, b in enumerate(out)
+                  if b.get("label") or b.get("text") or b.get("items")), 0)
+        first = out[i]
         if first.get("label"):
-            out[0] = {**first, "label": f"{label}. {first['label']}"}
+            out[i] = {**first, "label": f"{label}. {first['label']}"}
         elif first.get("text"):
-            out[0] = {"type": "labeled", "label": str(label), "text": first["text"]}
+            out[i] = {"type": "labeled", "label": str(label), "text": first["text"]}
         elif first.get("items"):
             items = list(first["items"])
-            out[0] = {"type": "labeled", "label": str(label), "text": str(items[0])}
+            out[i] = {"type": "labeled", "label": str(label), "text": str(items[0])}
             if items[1:]:
-                out.insert(1, {**first, "items": items[1:]})
+                out.insert(i + 1, {**first, "items": items[1:]})
         else:
-            out.insert(0, {"type": "labeled", "label": str(label), "text": ""})
+            out.insert(i, {"type": "labeled", "label": str(label), "text": ""})
     return out
 
 
@@ -509,7 +513,8 @@ class Theme:
         t = dict(DEFAULT_THEME)
         t.update(overrides or {})
         self.raw = t
-        self.answer_height, self.answer_gap, self.answer_row = 120.0, None, 96.0
+        self.answer_height, self.answer_gap, self.answer_row = 120.0, 22.0, 96.0
+        self.ruled_default = False
         self.student_doc = False
 
     def safe(self, key: str) -> str:
@@ -563,10 +568,14 @@ def grade_number(data: dict):
 
 
 def answer_profile(data: dict) -> tuple:
-    """Grade-banded writing-space defaults: (height pt, ruled gap pt or None, table-row pt)."""
+    """Grade-banded writing-space defaults:
+    (height pt, ruled line gap pt, table-row pt, ruled by default).
+
+    Math work space is open by default; a block's explicit `ruled: true`
+    still gets the band's gap, so a grade-1 sentence answer gets K-2 pitch."""
     n = grade_number(data)
     if n is None:
-        return 120.0, None, 96.0
+        return 120.0, 22.0, 96.0, False
     shared = data.get("shared")
     shared = shared if isinstance(shared, dict) else {}
     # smps (Standards for Mathematical Practice) is the most reliable math signal — it is
@@ -574,12 +583,28 @@ def answer_profile(data: dict) -> tuple:
     is_math = bool(shared.get("smps")) or "math" in " ".join(str(x or "") for x in (
         shared.get("subject"), data.get("eyebrow"), data.get("title"))).lower()
     if n <= 2:
-        return 200.0, (None if is_math else 40.0), 160.0
+        return 200.0, 40.0, 160.0, not is_math
     if n <= 5:
-        return 150.0, (None if is_math else 28.0), 126.0
+        return 150.0, 28.0, 126.0, not is_math
     if n <= 8:
-        return 130.0, None, 108.0
-    return 116.0, None, 96.0
+        return 130.0, 24.0, 108.0, False
+    return 116.0, 22.0, 96.0, False
+
+
+def coerce_marks(raw):
+    """Number-line marks: bare numbers or {position/value, label} dicts -> [(value, label)].
+    Models write both forms; a mark the renderer can't read must never vanish silently —
+    a task that says "the point for 1/6 is shown" depends on it being drawn."""
+    out = []
+    for m in raw or []:
+        if isinstance(m, (int, float)) and not isinstance(m, bool):
+            out.append((float(m), None))
+        elif isinstance(m, dict):
+            v = m.get("position", m.get("value", m.get("x")))
+            if isinstance(v, (int, float)) and not isinstance(v, bool):
+                lab = m.get("label")
+                out.append((float(v), str(lab) if lab not in (None, "") else None))
+    return out
 
 
 WORKSPACE_SIZES = {"small": 70.0, "med": 130.0, "large": 220.0}
@@ -687,9 +712,11 @@ def coerce_headers(headers) -> list:
 
 def table_row_height(blk: dict, theme: Theme, *, full_blank: bool) -> float:
     """Minimum height (pt) for a table row containing empty writing-space cells.
-    Honors explicit empty_row_height_pt / row_height_pt (both names are used by
-    models; reading only one silently dropped the other in docx); falls back to
-    grade band for student docs."""
+    An explicit empty_row_height_pt / row_height_pt wins (floored at the 40pt
+    writable minimum the deterministic checks enforce) — a sort grid whose cells
+    take an X is deliberately shorter than a sentence row, and flooring it to
+    the grade band printed near-blank pages of grid. The band sizes rows only
+    when the model didn't say."""
     try:
         explicit = float(blk.get("empty_row_height_pt")
                          or blk.get("row_height_pt") or 0)
@@ -697,8 +724,9 @@ def table_row_height(blk: dict, theme: Theme, *, full_blank: bool) -> float:
         explicit = 0.0
     band = theme.answer_row
     if theme.student_doc:
-        return (max(explicit or band, 0.75 * band) if full_blank
-                else max(0.45 * band, explicit))
+        if explicit:
+            return max(explicit, 40.0)
+        return band if full_blank else 0.45 * band
     return explicit or 36.0
 
 
