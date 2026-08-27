@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2026 Anthropic, PBC
-SPDX-FileCopyrightText: 2026 Learning Commons
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Science — differentiation pedagogy
 
 Loaded by `k12-lesson-differentiation` when the subject is **science**.
@@ -310,7 +304,7 @@ the "If you finish early" anchor task, and the reflective prompt are pulled from
 they are identical across tiers by construction.
 
 On the printed page, never label anything "CER" or "sensemaking" — those are teacher terms
-(see SKILL.md, Student-facing language). Organizer labels read *Claim / Evidence /
+(see `references/output.md`, Student-facing language). Organizer labels read *Claim / Evidence /
 Reasoning*; the sensemaking frame is introduced as *"Check your thinking"*.
 
 | Level | Worksheet features |
@@ -360,3 +354,7 @@ do not add answer boxes for tasks.]
 - `shared.sentence_frames`: CER frames as plain text with blanks sized for handwriting, placed with the task's writing space
 - Teacher document: **integrated differentiated lesson plan** (organized by phase), max 5 pages; worksheets max 2 pages each
 - **Copyright:** do NOT reproduce OpenSciEd (OSE) student-facing text verbatim — this applies to investigation instructions, phenomenon descriptions, and CER prompts drawn from OSE materials.
+
+---
+
+Copyright 2026 Anthropic, PBC · Copyright 2026 Learning Commons · SPDX-License-Identifier: Apache-2.0

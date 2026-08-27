@@ -8,8 +8,10 @@ These skills are one part of Learning Commons AI developer tools for education. 
 
 | Skill | What it does |
 | :---- | :---- |
-| [k12-lesson-planning/](k12-lesson-planning/) | Builds classroom-ready, standards-aligned lesson plans, optionally aligned to a teacher's curriculum. |
+| [k12-check-for-understanding/](k12-check-for-understanding/) | Generates a short, targeted math Check for Understanding (typically 1–3 items) that surfaces what a student currently understands about a specific standard. |
 | [k12-lesson-differentiation/](k12-lesson-differentiation/) | Adapts an existing lesson into tiered versions (below / at / above proficiency-level) and for specific student needs, keeping core content consistent across tiers. |
+| [k12-lesson-plan-creation/](k12-lesson-plan-creation/) | Builds classroom-ready, standards-aligned lesson plans, optionally aligned to a teacher's curriculum. |
+| [k12-lesson-prep/](k12-lesson-prep/) | Helps a teacher internalize an existing lesson through conversation — anticipate where students will get stuck and get ready to respond in the moment. |
 
 Each skill folder includes its own instructions (`SKILL.md`). See [example-prompts.md](example-prompts.md) for example prompts that exercise each workflow.
 

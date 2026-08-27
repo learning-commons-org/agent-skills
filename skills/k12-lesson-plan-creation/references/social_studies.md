@@ -1,12 +1,6 @@
-<!--
-SPDX-FileCopyrightText: 2026 Anthropic, PBC
-SPDX-FileCopyrightText: 2026 Learning Commons
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Social Studies — lesson pedagogy
 
-Loaded by `k12-lesson-planning` when the subject is **social studies / history**. This subject
+Loaded by `k12-lesson-plan-creation` when the subject is **social studies / history**. This subject
 follows the C3 inquiry arc, generates a **single lesson** positioned within a unit arc, and
 **points to** primary sources rather than reproducing them.
 
@@ -169,7 +163,7 @@ compose `documents[]` like this:
 - `shared.exit_ticket`: `{student: <exit-ticket prompt>, teacher?: <collection note>}`.
   The three sort entries (standard labels, explicit criteria) are a `cards` block you place
   in the lesson plan after pulling the exit ticket (see `example_lesson.json`).
-- `shared.vocabulary`, `shared.misconceptions`, `shared.look_fors` as in the SKILL.md schema.
+- `shared.vocabulary`, `shared.misconceptions`, `shared.look_fors` as in the `references/output.md` schema.
 
 **Documents to emit.** Social-studies inquiry lessons always have written analysis
 questions, so **always include `id: "student_materials"`** alongside `lesson_plan` and
@@ -198,3 +192,7 @@ it* live only in the `lesson_plan` document — pull them with their teacher-onl
 
 Alongside the documents, briefly note which source collection(s) likely have the recommended
 sources, and any coherence flag about assumed prior knowledge.
+
+---
+
+Copyright 2026 Anthropic, PBC · Copyright 2026 Learning Commons · SPDX-License-Identifier: Apache-2.0

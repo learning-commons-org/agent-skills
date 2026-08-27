@@ -1,6 +1,44 @@
 # Example Prompts
 
-## Lesson Planning
+## Check for Understanding
+
+### Math
+
+- I need a check for understanding on counting money for 2nd grade — coins and dollar bills.
+- I'm teaching 3rd grade fractions on a number line this week. Can you make me a check for understanding so I can see who's actually getting it?
+- I just taught multiplication as equal groups to my 3rd graders. I need an exit ticket to see who got it before I move on tomorrow.
+- We're on long division with two-digit divisors in my 5th grade class. They're getting the first digit of the quotient in the wrong place value, so 518 ÷ 14 comes out as 3 remainder something instead of 37. Can you make me a quick check for understanding for tomorrow? I want to see who's actually misaligning vs. who just can't multiply.
+- I need a quick check on solving one-step equations for my 6th graders — we've been practicing all week and I want to see where they are before the quiz.
+- Create a check for understanding for 7th grade proportional relationships — I want to know whether they understand what the constant of proportionality actually means.
+- I teach Algebra 2 and we're on transformations of functions. I'd like a check for understanding on whether students can predict how a change to the equation moves the graph.
+
+## Lesson Differentiation
+
+### Math
+
+- Differentiate Illustrative Mathematics grade 2 unit 4 lesson 3 for students below / at / and above proficiency level
+- Differentiate Illustrative Mathematics' 7th grade lesson "Comparing Relationships with Tables" for students below / at / and above proficiency level
+- Differentiate this 6th grade one-step equations lesson for students below / at / and above proficiency level (link here: https://greatminds.org/hubfs/knowledge/resources/math/EM_Basic_Curriculum_Files/Teacher_Editions/G6_TeacherEditions/EM_G6_M4_TeacherEdition.pdf)
+- Differentiate this Algebra 2 transformations of functions lesson for students below / at / and above proficiency level (link here: https://learn.k20center.ou.edu/lesson/295)
+
+### ELA
+
+- Differentiate this 7th grade central idea across informational texts lesson for students below / at / and above proficiency level (link here: https://www.eleducation.org/curriculum/language-arts/grade-7/module-lessons/2019-edition/module-2/unit-2/lesson-4/)
+- Differentiate this 11th grade argument writing lesson for students below / at / and above proficiency level (link here: https://www.uen.org/core/languagearts/downloads/11_12_W1_on_demand_writing.pdf)
+
+### Science
+
+- Differentiate this 6th grade food webs lesson for students below / at / and above proficiency level (link here: https://www.calacademy.org/educators/lesson-plans/how-stable-is-your-food-web)
+- Differentiate OpenSciEd's 6th grade unit 2 lesson 3 on thermal energy for students below / at / and above proficiency level
+- Differentiate the OpenSciEd biology lesson "Natural Selection and Adaptation" for students below / at / and above proficiency level
+
+### Social studies
+
+- Differentiate this 4th grade California early settlements lesson for students below / at / and above proficiency level (link here: https://www.csusb.edu/sites/default/files/6.Unit4_.1Lesson1WhereintheWorld.pdf)
+- Differentiate this 8th grade causes of the American Revolution lesson for students below / at / and above proficiency level (link here: https://www.masshist.org/revolution/teachers/lessons/lesson_concept_2.php)
+- Differentiate this 11th grade Great Migration lesson for students below / at / and above proficiency level. I teach in Illinois (link here: https://www.trumanlibrary.gov/education/lesson-plans/great-migration-lesson-plan)
+
+## Lesson Plan Creation
 
 ### Math
 
@@ -31,28 +69,23 @@
 - Create a lesson for 8th grade on the causes of the American Revolution — I want students to evaluate which cause was most significant and back it up with evidence. We're in Texas.
 - Plan a lesson for 11th grade US History on the economic and social impacts of the Great Migration. We're in our early 20th century unit and I want students working with primary sources. I teach in Oklahoma.
 
-## Lesson Differentiation
+## Lesson Prep
 
 ### Math
 
-- Differentiate Illustrative Mathematics grade 2 unit 4 lesson 3 for students below / at / and above proficiency level
-- Differentiate Illustrative Mathematics' 7th grade lesson "Comparing Relationships with Tables" for students below / at / and above proficiency level
-- Differentiate this 6th grade one-step equations lesson for students below / at / and above proficiency level (link here: https://greatminds.org/hubfs/knowledge/resources/math/EM_Basic_Curriculum_Files/Teacher_Editions/G6_TeacherEditions/EM_G6_M4_TeacherEdition.pdf)
-- Differentiate this Algebra 2 transformations of functions lesson for students below / at / and above proficiency level (link here: https://learn.k20center.ou.edu/lesson/295)
+- Help me get ready to teach this 6th grade one-step equations lesson — I teach it tomorrow and want to walk through it before class (link here: https://greatminds.org/hubfs/knowledge/resources/math/EM_Basic_Curriculum_Files/Teacher_Editions/G6_TeacherEditions/EM_G6_M4_TeacherEdition.pdf)
+- Can you walk through this Algebra 2 transformations of functions lesson with me before I teach it? I want to make sure I know where students will get stuck (link here: https://learn.k20center.ou.edu/lesson/295)
+- We use Illustrative Mathematics. Can you help me get ready to teach grade 6 unit 6 lesson 2? I have it tomorrow.
 
 ### ELA
 
-- Differentiate this 7th grade central idea across informational texts lesson for students below / at / and above proficiency level (link here: https://www.eleducation.org/curriculum/language-arts/grade-7/module-lessons/2019-edition/module-2/unit-2/lesson-4/)
-- Differentiate this 11th grade argument writing lesson for students below / at / and above proficiency level (link here: https://www.uen.org/core/languagearts/downloads/11_12_W1_on_demand_writing.pdf)
+- We use EL Education. Help me get ready to teach grade 5 module 2 unit 1 lesson 4 — it's tomorrow.
 
 ### Science
 
-- Differentiate this 6th grade food webs lesson for students below / at / and above proficiency level (link here: https://www.calacademy.org/educators/lesson-plans/how-stable-is-your-food-web)
-- Differentiate OpenSciEd's 6th grade unit 2 lesson 3 on thermal energy for students below / at / and above proficiency level
-- Differentiate the OpenSciEd biology lesson "Natural Selection and Adaptation" for students below / at / and above proficiency level
+- I'm teaching this 6th grade food webs lesson tomorrow — can you help me prepare and think through where kids might get stuck? (link here: https://www.calacademy.org/educators/lesson-plans/how-stable-is-your-food-web)
+- I'm teaching this 6th grade food webs lesson next week and want to prep — but honestly this isn't my strongest area, so before we get into where students will struggle, can you make sure I've got it straight myself? My understanding is that energy cycles through a food web the same way matter does — is that right? (link here: https://www.calacademy.org/educators/lesson-plans/how-stable-is-your-food-web)
 
 ### Social studies
 
-- Differentiate this 4th grade California early settlements lesson for students below / at / and above proficiency level (link here: https://www.csusb.edu/sites/default/files/6.Unit4_.1Lesson1WhereintheWorld.pdf)
-- Differentiate this 8th grade causes of the American Revolution lesson for students below / at / and above proficiency level (link here: https://www.masshist.org/revolution/teachers/lessons/lesson_concept_2.php)
-- Differentiate this 11th grade Great Migration lesson for students below / at / and above proficiency level. I teach in Illinois (link here: https://www.trumanlibrary.gov/education/lesson-plans/great-migration-lesson-plan)
+- Help me get ready to teach this 8th grade causes of the American Revolution lesson. I teach in Massachusetts (link here: https://www.masshist.org/revolution/teachers/lessons/lesson_concept_2.php)

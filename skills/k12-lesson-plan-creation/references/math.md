@@ -1,12 +1,6 @@
-<!--
-SPDX-FileCopyrightText: 2026 Anthropic, PBC
-SPDX-FileCopyrightText: 2026 Learning Commons
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Math — lesson pedagogy
 
-Loaded by `k12-lesson-planning` when the subject is **math**.
+Loaded by `k12-lesson-plan-creation` when the subject is **math**.
 
 ## Clarify
 Before asking anything, assess the following from all available conversation signals:
@@ -142,7 +136,7 @@ sections:
                                     ruled: true when the answer is composed sentences) ]
                            on the ONE problem whose hard part is the writing move, its
                              group also carries the sentence support -- plain text before
-                             the answer_box (see Sentence supports in SKILL.md)
+                             the answer_box (see Sentence supports in `references/output.md`)
                            page_break
   "<exit heading, kid-facing>"     group[ from_shared:exit_ticket, answer_box ]
 ```
@@ -159,3 +153,7 @@ sections:
 ```
 
 Worked example: `references/example_lesson.json`.
+
+---
+
+Copyright 2026 Anthropic, PBC · Copyright 2026 Learning Commons · SPDX-License-Identifier: Apache-2.0

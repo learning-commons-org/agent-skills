@@ -1,12 +1,6 @@
-<!--
-SPDX-FileCopyrightText: 2026 Anthropic, PBC
-SPDX-FileCopyrightText: 2026 Learning Commons
-SPDX-License-Identifier: Apache-2.0
--->
-
 # ELA — lesson pedagogy
 
-Loaded by `k12-lesson-planning` when the subject is **ELA**.
+Loaded by `k12-lesson-plan-creation` when the subject is **ELA**.
 
 ## Clarify
 
@@ -201,7 +195,7 @@ When you reach Step 5 (Output) in SKILL.md, register ELA content in `shared` and
 - `shared.exit_ticket`: `{student: <prompt>, teacher?: <collection note>}`. The sort
   criteria are a `cards` block you place in the lesson plan after pulling the exit
   ticket (see `example_lesson.json`).
-- `shared.vocabulary`, `shared.misconceptions`, `shared.look_fors` as in the SKILL.md schema.
+- `shared.vocabulary`, `shared.misconceptions`, `shared.look_fors` as in the `references/output.md` schema.
 
 **Which documents to emit.** A K-2 phonemic-awareness or oral-language lesson (RF.*.2,
 RF.*.3 phonics warm-ups, listening-comprehension) often has **no `student_materials`
@@ -225,3 +219,6 @@ sections:
 
 **Observation template layout** matches the math layout in `references/math.md`.
 
+---
+
+Copyright 2026 Anthropic, PBC · Copyright 2026 Learning Commons · SPDX-License-Identifier: Apache-2.0

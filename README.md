@@ -8,10 +8,12 @@ The skills are developed to be grounded in learning science and leverage Learnin
 
 Current use cases include:
 
-* **Lesson planning**: Builds classroom-ready, standards-aligned lesson plans, optionally aligned to a teacher's curriculum.
+* **Check for understanding**: Generates a short, targeted math Check for Understanding (typically 1–3 items) that surfaces what a student currently understands about a specific standard.
 * **Lesson differentiation**: Adapts an existing lesson into tiered versions (below / at / above proficiency-level) and for specific student needs, keeping core content consistent across tiers.
+* **Lesson plan creation**: Builds classroom-ready, standards-aligned lesson plans, optionally aligned to a teacher's curriculum.
+* **Lesson prep**: Helps a teacher internalize an existing lesson through conversation — anticipate where students will get stuck and get ready to respond in the moment.
 
-Both of these initial use cases were co-developed with [Anthropic](https://www.anthropic.com/). A companion [K-12 teacher skills repository from Anthropic](https://github.com/anthropics/k12-teacher-skills) accompanies this work.
+Each skill carries its own attribution in its `NOTICE` file. A companion [K-12 teacher skills repository from Anthropic](https://github.com/anthropics/k12-teacher-skills) accompanies this work.
 
 To get started, see [Quick Start](#quick-start) below and the [skills/](skills/) directory for what each skill does.
 

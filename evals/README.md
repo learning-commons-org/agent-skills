@@ -10,8 +10,10 @@ Each rubric criterion represents a specific aspect of an LLM-generated classroom
 
 | Path | Description |
 | :---- | :---- |
-| [k12-lesson-planning/rubrics/](k12-lesson-planning/rubrics/) | Rubrics for scoring lesson-plan outputs: `shared.csv` (core criteria for all lessons) plus subject-specific `math.csv`, `ela.csv`, `science.csv`, and `social_studies.csv` |
+| [k12-check-for-understanding/rubrics/](k12-check-for-understanding/rubrics/) | Rubric for scoring check-for-understanding outputs: `math.csv` (35 criteria covering item quality, distractor sourcing, and the teacher guide) |
 | [k12-lesson-differentiation/rubrics/](k12-lesson-differentiation/rubrics/) | Rubrics for scoring differentiation outputs: `differentiation.csv` (tiered differentiation criteria) and `clarifying_question.csv` (scorer for model clarification behavior) |
+| [k12-lesson-plan-creation/rubrics/](k12-lesson-plan-creation/rubrics/) | Rubrics for scoring lesson-plan outputs: `shared.csv` (core criteria for all lessons) plus subject-specific `math.csv`, `ela.csv`, `science.csv`, and `social_studies.csv` |
+| [k12-lesson-prep/rubrics/](k12-lesson-prep/rubrics/) | Rubric for scoring lesson-prep outputs: `internalization.csv` (16 criteria covering the prep conversation and the prep note) |
 
 ## **How to use these rubrics**
 
@@ -39,7 +41,7 @@ You'll have to do some manual setup to use the rubrics, or you can feed them int
 1. Start with a set of lesson materials (you can use the skills in this repo to generate a new set)
 2. Use an LLM and pass the lesson materials and associated rubric CSVs along with an LLM as judge prompt to instruct the model to score the lesson materials as either `0` or `1` against each rubric criterion
 
-You can use this system prompt to set up your LLM as judge (this is the exact system prompt we've used in our evaluation harness):
+You can use this system prompt to set up your LLM as judge. It is one example — the prompt we've used to judge lesson plan creation outputs — not a prompt that covers every skill in this repo. Skills whose output isn't a lesson-plan document set, or whose criteria are judged partly on the conversation rather than the artifacts, need a prompt adapted to them.
 
 ```
 You are a rigorous educational content evaluator. Your job is to assess whether AI-generated lesson plan documents meet specific rubric criteria.
