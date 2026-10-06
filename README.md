@@ -7,7 +7,7 @@
    •
   <a href="https://platform.learningcommons.org/login?tab=signin" target="_blank">Platform</a>
   •
-  <a href="https://docs.learningcommons.org/evaluators/" target="_blank">Docs</a>
+  <a href="https://docs.learningcommons.org/agent-skills/" target="_blank">Docs</a>
 </p>
 
 Agent Skills are open, ready-to-use skills that help AI assistants produce high-quality, standards-aligned K-12 teaching materials. Each skill packages the instructions, references, and guardrails an agent needs to reliably complete a teacher workflow — so the same task produces consistent, classroom-ready results.
