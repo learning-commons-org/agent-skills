@@ -27,6 +27,8 @@ npx skills add learning-commons-org/agent-skills
 
 The skills are grounded in Learning Commons [Knowledge Graph](https://github.com/learning-commons-org/knowledge-graph) through a set of MCP tools that let the agent resolve standards, understand their more granular learning components, trace learning progressions, and find aligned curriculum lessons and common misconceptions. When Knowledge Graph is unavailable, the skills still run and fall back to the model's general knowledge — but outputs grounded in Knowledge Graph are more accurate and better aligned to specific state standards.
 
+Material creation is modular and kept separate from each skill's pedagogy and instructional design. The core instructions decide what the materials contain; separate reference files tell the agent how to produce them in the environment it's running in — for example, native documents where the agent supports them and editable Word documents elsewhere. Supporting a new output format means adding a reference file, not rewriting the core skill content.
+
 ## **Pedagogical foundations**
 
 These skills don't just generate plausible-looking materials — they're grounded in research-backed principles and refined with expert practitioners. Every skill is anchored in:
