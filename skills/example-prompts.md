@@ -89,3 +89,68 @@
 ### Social studies
 
 - Help me get ready to teach this 8th grade causes of the American Revolution lesson. I teach in Massachusetts (link here: https://www.masshist.org/revolution/teachers/lessons/lesson_concept_2.php)
+
+## Reviewable lesson-plan workflow with LazyMind
+
+This optional runtime recipe turns `k12-lesson-plan-creation` into a multi-stage
+workflow while keeping this repository's Skill and rubrics as the source of
+truth. The original Skill remains the simpler path for a one-session lesson
+plan. Use the workflow path when a team needs separate draft, evaluation, and
+teacher-review states that can be inspected or retried.
+
+### Setup
+
+1. Install the Learning Commons Skills as described in the repository
+   [Quick Start](../README.md#1-install-the-skills).
+2. Install [LazyMind](https://github.com/LazyAGI/LazyMind#quick-start), add the
+   public `learning-commons-org/agent-skills` repository to its Skills workspace,
+   and select `k12-lesson-plan-creation` as the source Skill.
+3. Choose **Skill → Workflow**. Review the generated steps and material
+   contracts before publishing or running the Workflow; conversion is not a
+   substitute for checking the original Skill instructions.
+
+### Example request
+
+Use a request with no student names or records:
+
+> Create a 6th grade science lesson on energy transfer in food webs. The class
+> has 45 minutes. Produce the lesson plan, student-facing materials, and teacher
+> observation template, then evaluate the packet before asking for teacher
+> approval.
+
+### Workflow contract
+
+Ask the conversion to preserve this sequence:
+
+1. **Clarify and ground** — follow the Skill's routing and clarification rules,
+   then resolve the relevant standard with the Learning Commons Knowledge Graph
+   when it is connected. Preserve the Skill's required fallback disclosure when
+   the Knowledge Graph is unavailable.
+2. **Build the packet** — produce the lesson plan, student materials, and
+   observation template from one consistent lesson representation, following
+   the Skill's subject-specific references and copyright guardrail.
+3. **Evaluate the packet** — apply
+   `evals/k12-lesson-plan-creation/rubrics/shared.csv` and the matching subject
+   rubric. Save per-criterion results separately from the lesson artifacts;
+   do not turn an aggregate score into an automatic quality claim.
+4. **Teacher review** — present the packet and failed rubric criteria together.
+   Keep the run pending until the teacher approves it or requests a revision.
+   A completed generation step and a teacher-approved packet are different
+   states.
+5. **Revise without drift** — when the teacher requests a change, update the
+   shared lesson representation first, regenerate every affected document, and
+   rerun the applicable rubric criteria before returning to review.
+
+### Checks for a trial run
+
+- Compare the Workflow packet with a native Skill run using the same request;
+  both should contain the three required deliverables.
+- Confirm that the selected subject reference and subject rubric are recorded.
+- Force one rubric failure and verify that the failed criterion remains visible
+  through revision instead of being reported as a completed approval.
+- Confirm that no student data, API key, or Knowledge Graph credential appears
+  in saved artifacts.
+
+This recipe defines an evaluation and review boundary. It does not claim that
+conversion improves lesson quality, that every generated Workflow uses these
+steps automatically, or that Learning Commons endorses LazyMind.
