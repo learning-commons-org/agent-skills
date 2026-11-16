@@ -84,7 +84,7 @@ We want to hear from you. For questions or feedback, please [open an issue](http
 * Get early access to new skills, tools, and Knowledge Graph
 * Receive personalized support from the Learning Commons team
 
-Contact us [here](https://learningcommons.org/contact/?utm_source=github&utm_medium=agent-skills&utm_campaign=partner).
+[See partnership options](https://learningcommons.org/partnerships/?utm_source=github&utm_medium=agent-skills&utm_campaign=partner) or [contact the team](https://learningcommons.org/contact/?utm_source=github&utm_medium=agent-skills&utm_campaign=partner).
 
 ## **Reporting Security Issues**
 
