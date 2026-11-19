@@ -17,6 +17,7 @@ The skills are developed to be grounded in learning science and leverage Learnin
 Current use cases include:
 
 * **Check for understanding**: Generates a short, targeted math Check for Understanding (typically 1–3 items) that surfaces what a student currently understands about a specific standard.
+* **Fixing lesson plans**: Audits an existing lesson plan against the standards it cites, ranks its instructional shortcomings by severity, and returns an audit with paste-ready fixes plus a separate, revised lesson.
 * **Lesson differentiation**: Adapts an existing lesson into tiered versions (below / at / above proficiency-level) and for specific student needs, keeping core content consistent across tiers.
 * **Lesson plan creation**: Builds classroom-ready, standards-aligned lesson plans, optionally aligned to a teacher's curriculum.
 * **Lesson prep**: Helps a teacher internalize an existing lesson through conversation — anticipate where students will get stuck and get ready to respond in the moment.

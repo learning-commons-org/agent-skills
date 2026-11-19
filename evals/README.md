@@ -11,6 +11,7 @@ Each rubric criterion represents a specific aspect of an LLM-generated classroom
 | Path | Description |
 | :---- | :---- |
 | [k12-check-for-understanding/rubrics/](k12-check-for-understanding/rubrics/) | Rubric for scoring check-for-understanding outputs: `math.csv` (35 criteria covering item quality, distractor sourcing, and the teacher guide) |
+| [k12-fixing-lesson-plans/rubrics/](k12-fixing-lesson-plans/rubrics/) | Rubric for scoring fixing-lesson-plans outputs: `k12_fixing_lesson_plans.csv` (50 criteria covering how findings are evidenced and triaged, the quality of the proposed fixes, and the revised lesson) |
 | [k12-lesson-differentiation/rubrics/](k12-lesson-differentiation/rubrics/) | Rubrics for scoring differentiation outputs: `differentiation.csv` (tiered differentiation criteria) and `clarifying_question.csv` (scorer for model clarification behavior) |
 | [k12-lesson-plan-creation/rubrics/](k12-lesson-plan-creation/rubrics/) | Rubrics for scoring lesson-plan outputs: `shared.csv` (core criteria for all lessons) plus subject-specific `math.csv`, `ela.csv`, `science.csv`, and `social_studies.csv` |
 | [k12-lesson-prep/rubrics/](k12-lesson-prep/rubrics/) | Rubric for scoring lesson-prep outputs: `internalization.csv` (16 criteria covering the prep conversation and the prep note) |

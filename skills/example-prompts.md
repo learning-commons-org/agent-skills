@@ -12,6 +12,25 @@
 - Create a check for understanding for 7th grade proportional relationships — I want to know whether they understand what the constant of proportionality actually means.
 - I teach Algebra 2 and we're on transformations of functions. I'd like a check for understanding on whether students can predict how a change to the equation moves the graph.
 
+## Fixing Lesson Plans
+
+### Math
+
+- can you check this multiplication lesson for my 3rd graders? i want to know what's missing and how to fix it (link here: https://achievethecore.org/page/853/multiplication-and-the-meaning-of-the-factors)
+- Our Algebra 1 teachers want to adopt this lesson. Before I approve it, what are the biggest problems and what would a revised version look like? (link here: https://www.map.mathshell.org/lessons.php?unit=9225&collection=8)
+
+### ELA
+
+- Here is my 3rd grade lesson built around a chapter of Because of Winn-Dixie. Do the text-dependent questions in the lesson actually require going back to the text for evidence, or whether a student could answer them from a general sense of the story. I need to know if the vocabulary work connects to understanding the passage or just sits as a separate list. Tell me single question or task that asks the most of a student, and tell me if it requires textual evidence or just recall. (link here: https://achievethecore.org/content/upload/Because%20of%20Winn%20Dixie%20-%20Lesson.doc)
+
+### Science
+
+- Here's a 5th grade food chain lesson. Do students ever revise their model or just draw it once? Can you fix that (link here: https://www.khanacademy.org/science/science-activities/x36e94577fc10b360:5th-grade-science-activities/x36e94577fc10b360:how-much-energy-does-a-carnivore-need-to-survive/a/how-much-energy-does-a-carnivore-need-to-survive)
+
+### Social studies
+
+- Look at this American Revolution lesson on the letters between Abigail and John Adams for my 7th graders. Do the questions really get students comparing their two perspectives? Revise it if not (link here: https://achievethecore.org/page/2765)
+
 ## Lesson Differentiation
 
 ### Math
